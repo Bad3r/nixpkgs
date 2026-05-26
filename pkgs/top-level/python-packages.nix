@@ -37,8 +37,6 @@ self: super: with self; {
 
   aardwolf = callPackage ../development/python-modules/aardwolf { };
 
-  abjad = callPackage ../development/python-modules/abjad { };
-
   about-time = callPackage ../development/python-modules/about-time { };
 
   absl-py = callPackage ../development/python-modules/absl-py { };
@@ -2121,6 +2119,8 @@ self: super: with self; {
   bitstruct = callPackage ../development/python-modules/bitstruct { };
 
   bittensor-drand = callPackage ../development/python-modules/bittensor-drand { };
+
+  bittensor-wallet = callPackage ../development/python-modules/bittensor-wallet { };
 
   bitvavo-aio = callPackage ../development/python-modules/bitvavo-aio { };
 
@@ -5565,6 +5565,8 @@ self: super: with self; {
 
   fiblary3-fork = callPackage ../development/python-modules/fiblary3-fork { };
 
+  fica = callPackage ../development/python-modules/fica { };
+
   fickling = callPackage ../development/python-modules/fickling { };
 
   fido2 = callPackage ../development/python-modules/fido2 { };
@@ -8783,8 +8785,6 @@ self: super: with self; {
     inherit (pkgs) libarchive;
   };
 
-  libarcus = callPackage ../development/python-modules/libarcus { protobuf = pkgs.protobuf_21; };
-
   libasyncns = callPackage ../development/python-modules/libasyncns { inherit (pkgs) libasyncns; };
 
   libbs = callPackage ../development/python-modules/libbs { };
@@ -10408,6 +10408,8 @@ self: super: with self; {
   mpmath = callPackage ../development/python-modules/mpmath { };
 
   mpris-api = callPackage ../development/python-modules/mpris-api { };
+
+  mpris-server = callPackage ../development/python-modules/mpris-server { };
 
   mprisify = callPackage ../development/python-modules/mprisify { };
 
@@ -12113,6 +12115,8 @@ self: super: with self; {
   otr = callPackage ../development/python-modules/otr { };
 
   ots-python = callPackage ../development/python-modules/ots-python { };
+
+  otter-grader = callPackage ../development/python-modules/otter-grader { };
 
   otxv2 = callPackage ../development/python-modules/otxv2 { };
 
@@ -20905,8 +20909,6 @@ self: super: with self; {
   uptime-kuma-monitor = callPackage ../development/python-modules/uptime-kuma-monitor { };
 
   uqbar = callPackage ../development/python-modules/uqbar { };
-
-  uranium = callPackage ../development/python-modules/uranium { };
 
   uri-template = callPackage ../development/python-modules/uri-template { };
 
