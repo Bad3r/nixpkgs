@@ -99,19 +99,18 @@ buildPythonPackage (finalAttrs: {
     "test_cli_vectors"
     "test_module_misc"
 
-    # Require the optional [az-content-understanding] extra, which pulls in
-    # azure-ai-contentunderstanding (>=1.2.0b1) for the to_llm_input() helper.
-    # That beta SDK is not packaged in nixpkgs, so converters/_cu_converter.py
-    # falls back to stub classes (its single try-import block fails on the
-    # first line). These two tests patch _dependency_exc_info=None to bypass
-    # the MissingDependencyException guard and then instantiate the converter,
-    # hitting `UserAgentPolicy(user_agent=...)` on the stub:
-    # "TypeError: UserAgentPolicy() takes no arguments".
+    # Require optional azure-ai-contentunderstanding, unavailable in nixpkgs.
+    # The fallback stubs hit `UserAgentPolicy() takes no arguments`.
     "test_nonexistent_analyzer_raises_value_error"
     "test_cu_registered_before_docintel"
   ];
 
-  passthru.updateScript = gitUpdater { };
+  passthru.updateScript = gitUpdater {
+    # Drop the "v" tag prefix before version comparison.
+    rev-prefix = "v";
+    # Skip PEP 440 pre-release tags.
+    ignoredVersions = "(a|b|rc)[0-9]+$";
+  };
 
   meta = {
     description = "Python tool for converting files and office documents to Markdown";
