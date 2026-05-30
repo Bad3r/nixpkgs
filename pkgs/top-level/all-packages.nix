@@ -1191,15 +1191,6 @@ with pkgs;
 
   github-cli = gh;
 
-  git-annex-remote-dbx = callPackage ../applications/version-management/git-annex-remote-dbx {
-    inherit (python3Packages)
-      buildPythonApplication
-      dropbox
-      annexremote
-      humanfriendly
-      ;
-  };
-
   git-credential-manager = callPackage ../applications/version-management/git-credential-manager { };
 
   git-credential-aol = callPackage ../by-name/gi/git-credential-email/git-credential-aol { };
@@ -1454,24 +1445,6 @@ with pkgs;
       throw "freshBootstrapTools: unknown hostPlatform ${stdenv.hostPlatform.config}";
 
   crystfel-headless = crystfel.override { withGui = false; };
-
-  amule-daemon = amule.override {
-    monolithic = false;
-    enableDaemon = true;
-    mainProgram = "amuled";
-  };
-
-  amule-gui = amule.override {
-    monolithic = false;
-    client = true;
-    mainProgram = "amulegui";
-  };
-
-  amule-web = amule.override {
-    monolithic = false;
-    httpServer = true;
-    mainProgram = "amuleweb";
-  };
 
   inherit (callPackages ../tools/security/bitwarden-directory-connector { })
     bitwarden-directory-connector-cli
@@ -2078,10 +2051,6 @@ with pkgs;
   blacken-docs = with python3Packages; toPythonApplication blacken-docs;
 
   bluetooth_battery = python3Packages.callPackage ../applications/misc/bluetooth_battery { };
-
-  calyx-vpn = qt6Packages.callPackage ../tools/networking/bitmask-vpn {
-    provider = "calyx";
-  };
 
   cffconvert = python3Packages.toPythonApplication python3Packages.cffconvert;
 
@@ -3130,10 +3099,6 @@ with pkgs;
   pydeps = with python3Packages; toPythonApplication pydeps;
 
   remarshal = with python3Packages; toPythonApplication remarshal;
-
-  riseup-vpn = qt6Packages.callPackage ../tools/networking/bitmask-vpn {
-    provider = "riseup";
-  };
 
   rtaudio = rtaudio_5;
 
@@ -5285,10 +5250,7 @@ with pkgs;
       in
       {
         electron_38 = electron_38-bin;
-        electron_39 = getElectronPkg {
-          src = electron-source.electron_39;
-          bin = electron_39-bin;
-        };
+        electron_39 = electron_39-bin;
         electron_40 = getElectronPkg {
           src = electron-source.electron_40;
           bin = electron_40-bin;
@@ -5786,11 +5748,7 @@ with pkgs;
     // (config.radare or { })
   );
 
-  rizin = pkgs.callPackage ../development/tools/analysis/rizin { };
-
   rizinPlugins = recurseIntoAttrs rizin.plugins;
-
-  cutter = qt6.callPackage ../development/tools/analysis/rizin/cutter.nix { };
 
   cutterPlugins = recurseIntoAttrs cutter.plugins;
 
@@ -5902,10 +5860,6 @@ with pkgs;
         wrap ${stdenv.cc.bintools.targetPrefix}ld ${ldWrapper} ${lib.getExe buildPackages.wild-unwrapped}
       '';
     };
-
-  whatstyle = callPackage ../development/tools/misc/whatstyle {
-    inherit (llvmPackages) clang-unwrapped;
-  };
 
   whisper-cpp-vulkan = whisper-cpp.override {
     vulkanSupport = true;
@@ -7211,6 +7165,7 @@ with pkgs;
     s6-portable-utils-man-pages
     s6-rc
     s6-rc-man-pages
+    sdnotify-wrapper
     skalibs
     skalibs_2_10
     tipidee
@@ -8276,8 +8231,6 @@ with pkgs;
   };
 
   dmraid = callPackage ../os-specific/linux/dmraid { lvm2 = lvm2_dmeventd; };
-
-  drbd = callPackage ../os-specific/linux/drbd/utils.nix { };
 
   # unstable until the first 1.x release
   fwts = callPackage ../os-specific/linux/fwts { };
@@ -9472,14 +9425,6 @@ with pkgs;
     callPackages ../applications/graphics/inkscape/extensions.nix { }
   );
 
-  jabcode-writer = jabcode.override {
-    subproject = "writer";
-  };
-
-  jabcode-reader = jabcode.override {
-    subproject = "reader";
-  };
-
   jackmix_jack1 = jackmix.override { jack = jack1; };
 
   inherit (callPackage ../applications/networking/cluster/k3s { })
@@ -9489,10 +9434,6 @@ with pkgs;
     k3s_1_36
     ;
   k3s = k3s_1_35;
-
-  okteta = kdePackages.callPackage ../applications/editors/okteta { };
-
-  klayout = qt6Packages.callPackage ../applications/misc/klayout { };
 
   kotatogram-desktop =
     callPackage ../applications/networking/instant-messengers/telegram/kotatogram-desktop
@@ -9511,25 +9452,6 @@ with pkgs;
   linkerd = callPackage ../applications/networking/cluster/linkerd { };
   linkerd_edge = callPackage ../applications/networking/cluster/linkerd/edge.nix { };
   linkerd_stable = linkerd;
-
-  kuma = callPackage ../applications/networking/cluster/kuma { isFull = true; };
-  kuma-experimental = callPackage ../applications/networking/cluster/kuma {
-    isFull = true;
-    enableGateway = true;
-    pname = "kuma-experimental";
-  };
-  kumactl = callPackage ../applications/networking/cluster/kuma {
-    components = [ "kumactl" ];
-    pname = "kumactl";
-  };
-  kuma-cp = callPackage ../applications/networking/cluster/kuma {
-    components = [ "kuma-cp" ];
-    pname = "kuma-cp";
-  };
-  kuma-dp = callPackage ../applications/networking/cluster/kuma {
-    components = [ "kuma-dp" ];
-    pname = "kuma-dp";
-  };
 
   kubernetes-helm = callPackage ../applications/networking/cluster/helm { };
 
@@ -9720,8 +9642,6 @@ with pkgs;
   ostinato = libsForQt5.callPackage ../applications/networking/ostinato {
     protobuf = protobuf_21;
   };
-
-  p4v = qt6Packages.callPackage ../applications/version-management/p4v { };
 
   pcmanfm-qt = lxqt.pcmanfm-qt;
 
@@ -10523,16 +10443,6 @@ with pkgs;
 
   alfis-nogui = alfis.override {
     withGui = false;
-  };
-
-  bitcoin = qt6Packages.callPackage ../applications/blockchains/bitcoin {
-    withGui = true;
-    zeromq = zeromq.override {
-      enableCurve = false;
-      enableDrafts = false;
-      libsodium = null;
-    };
-    inherit (darwin) autoSignDarwinBinariesHook;
   };
 
   bitcoind = bitcoin.override {
@@ -11897,8 +11807,6 @@ with pkgs;
   netbsd = callPackage ../os-specific/bsd/netbsd { };
 
   openbsd = callPackage ../os-specific/bsd/openbsd { };
-
-  xp-pen-deco-01-v2-driver = libsForQt5.xp-pen-deco-01-v2-driver;
 
   radicle-node-unstable = callPackage ../by-name/ra/radicle-node/unstable.nix { };
 
