@@ -2060,6 +2060,7 @@ with pkgs;
     cudaPackages_13_0
     cudaPackages_13_1
     cudaPackages_13_2
+    cudaPackages_13_3
     ;
 
   cudaPackages_12 = cudaPackages_12_9;
@@ -10365,9 +10366,6 @@ with pkgs;
     )
       haskellPackages.bench;
 
-  cri-o = callPackage ../applications/virtualization/cri-o/wrapper.nix { };
-  cri-o-unwrapped = callPackage ../applications/virtualization/cri-o { };
-
   ### GAMES
 
   inherit (callPackages ../games/fteqw { })
@@ -10991,7 +10989,7 @@ with pkgs;
     enableUnfree = true;
   };
 
-  inherit (ocaml-ng.ocamlPackages_5_3) hol_light;
+  inherit (ocamlPackages) hol_light;
 
   isabelle-components = recurseIntoAttrs (callPackage ../by-name/is/isabelle/components { });
 

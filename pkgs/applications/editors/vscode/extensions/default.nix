@@ -1145,8 +1145,8 @@ let
         mktplcRef = {
           name = "vscode-database-client2";
           publisher = "cweijan";
-          version = "8.4.6";
-          hash = "sha256-GBz0hS75VgfuGuHY/K/VHxp5sFptUCJaz/CXrm6wFPc=";
+          version = "8.4.7";
+          hash = "sha256-HiyLNVtdJgzwn6BSR4ojHOkLrQ49PhRQa4twst69j7Q=";
         };
         meta = {
           description = "Database Client For Visual Studio Code";
@@ -1760,8 +1760,8 @@ let
         mktplcRef = {
           name = "foam-vscode";
           publisher = "foam";
-          version = "0.40.4";
-          hash = "sha256-WqFIWt3c3XtdsXys+V4tQWxzDMefYOQ88MzTSPDHOKE=";
+          version = "0.42.0";
+          hash = "sha256-mk4ZgaBxLFPvrm3EU+hdidorhdWp7EGfRP0e/kARd1A=";
         };
         meta = {
           changelog = "https://marketplace.visualstudio.com/items/foam.foam-vscode/changelog";
@@ -2014,8 +2014,8 @@ let
         mktplcRef = {
           name = "gleam";
           publisher = "gleam";
-          version = "2.12.1";
-          hash = "sha256-zU/iwaJ6ShEHYq7OeM6+RF/RVIx6SmJJKxtebN/tSGI=";
+          version = "2.12.2";
+          hash = "sha256-41HgkDcgyStJtyeE0x1H9rFOZ18imcKF7XQixDOmurE=";
         };
         meta = {
           description = "Support for the Gleam programming language";
