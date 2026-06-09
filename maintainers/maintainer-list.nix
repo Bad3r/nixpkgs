@@ -5150,6 +5150,13 @@
     githubId = 68239;
     name = "Christine Koppelt";
   };
+  ckruse = {
+    email = "cjk@defunct.ch";
+    github = "ckruse";
+    githubId = 175095;
+    name = "Christian Kruse";
+    keys = [ { fingerprint = "BC5D 9F4E F7FB 4382 6056  E834 B8E0 F342 A99A 9D73"; } ];
+  };
   clacke = {
     email = "claes.wallin@greatsinodevelopment.com";
     github = "clacke";
@@ -10655,6 +10662,11 @@
     github = "hce";
     githubId = 147689;
     name = "Hans-Christian Esperer";
+  };
+  hchokshi = {
+    github = "hchokshi";
+    githubId = 10136407;
+    name = "Harsh Chokshi";
   };
   hdhog = {
     name = "Serg Larchenko";
@@ -16532,6 +16544,11 @@
     github = "Macbucheron1";
     githubId = 95475157;
   };
+  mach = {
+    name = "Mach";
+    github = "MachXNU";
+    githubId = 42501418;
+  };
   macronova = {
     name = "Sicheng Pan";
     email = "trivial@invariantspace.com";
@@ -18488,6 +18505,11 @@
     githubId = 3579600;
     name = "Jacob Moody";
   };
+  mooses = {
+    name = "Remu Salminen";
+    github = "RemuSalminen";
+    githubId = 85031022;
+  };
   moosingin3space = {
     email = "moosingin3space@gmail.com";
     github = "moosingin3space";
@@ -19146,6 +19168,11 @@
     github = "namore";
     githubId = 1222539;
     name = "Roman Naumann";
+  };
+  NanamiNakano = {
+    name = "Nanami Nakano";
+    github = "NanamiNakano";
+    githubId = 64841155;
   };
   nanotwerp = {
     email = "nanotwerp@gmail.com";
@@ -20974,6 +21001,12 @@
     github = "ozkutuk";
     githubId = 5948762;
     name = "Berk Özkütük";
+  };
+  ozturkkl = {
+    email = "97kemalozturk@gmail.com";
+    github = "ozturkkl";
+    githubId = 51798197;
+    name = "Kemal Ozturk";
   };
   ozwaldorf = {
     email = "self@ossian.dev";
@@ -25321,7 +25354,7 @@
   shelvacu = {
     name = "Shelvacu";
     email = "nix-maint@shelvacu.com";
-    matrix = "@s:consortium.chat";
+    matrix = "@s:sv.mt";
     github = "shelvacu";
     githubId = 1731537;
   };
@@ -25415,13 +25448,6 @@
     github = "Shou";
     githubId = 819413;
     name = "Benedict Aas";
-  };
-  shreerammodi = {
-    name = "Shreeram Modi";
-    email = "shreerammodi10@gmail.com";
-    github = "shreerammodi";
-    githubId = 67710369;
-    keys = [ { fingerprint = "EA88 EA07 26E9 6CBF 6365  3966 163B 16EE 76ED 24CE"; } ];
   };
   shunueda = {
     name = "Shun Ueda";
@@ -27813,6 +27839,12 @@
     email = "mr.trubach@icloud.com";
     github = "tie";
     githubId = 14792994;
+  };
+  tiebe = {
+    name = "Tiebe Groosman";
+    email = "tiebe@groosman.nl";
+    github = "Tiebe";
+    githubId = 9307389;
   };
   tiferrei = {
     name = "Tiago Ferreira";
