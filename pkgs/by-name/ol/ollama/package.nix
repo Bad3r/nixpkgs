@@ -152,13 +152,13 @@ let
 in
 goBuild (finalAttrs: {
   pname = "ollama";
-  version = "0.30.5";
+  version = "0.30.7";
 
   src = fetchFromGitHub {
     owner = "ollama";
     repo = "ollama";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-jh/B/FkmAliCVzqc8DGCPYa5+XejE3cFZTzSuRxjPvw=";
+    hash = "sha256-pS6Wd//g+Q1Oqw32+mr2h5ag7C2HNwf/8ZVrTKOvdWE=";
   };
 
   vendorHash = "sha256-lZdGzGb9xRjTm1Rm7/wHjqM490gLznLEndmb4mNbCX0=";
