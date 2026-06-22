@@ -14,6 +14,8 @@ name: "Edited base branch"
 
 on:
   pull_request_target:
+    branches-ignore:
+      - nixpkgs-unstable
     types: [edited]
 
 concurrency:

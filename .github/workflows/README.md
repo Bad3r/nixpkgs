@@ -68,6 +68,8 @@ The "Required Status Checks" branch ruleset is implemented in two top-level work
 
 The PR workflow defines all checks that need to succeed to add a Pull Request to the Merge Queue.
 If no Merge Queue is set up for a branch, the PR workflow defines the checks required to merge into the target branch.
+In this fork, PR-triggered workflows are ignored when a Pull Request targets `nixpkgs-unstable`,
+so that branch can be used as a direct target without running the upstream PR gate.
 
 The Merge Group workflow defines all checks that are run as part of the Merge Queue.
 Only when these pass, a Pull Request is finally merged into the target branch.
