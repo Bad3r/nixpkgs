@@ -2,6 +2,8 @@ name: Test
 
 on:
   pull_request:
+    branches-ignore:
+      - nixpkgs-unstable
 
 concurrency:
   group: test-${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}

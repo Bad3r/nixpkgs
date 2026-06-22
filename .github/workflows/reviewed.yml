@@ -13,5 +13,6 @@ defaults:
 jobs:
   trigger:
     runs-on: ubuntu-slim
+    if: github.event.pull_request.base.ref != 'nixpkgs-unstable'
     steps:
       - run: echo This is a no-op only used as a trigger for workflow_run.
