@@ -12330,6 +12330,8 @@ self: super: with self; {
 
   pandas-datareader = callPackage ../development/python-modules/pandas-datareader { };
 
+  pandas-flavor = callPackage ../development/python-modules/pandas-flavor { };
+
   pandas-stubs = callPackage ../development/python-modules/pandas-stubs { };
 
   pandas-ta = callPackage ../development/python-modules/pandas-ta { };
@@ -12784,6 +12786,8 @@ self: super: with self; {
   pinecone-plugin-interface = callPackage ../development/python-modules/pinecone-plugin-interface { };
 
   ping3 = callPackage ../development/python-modules/ping3 { };
+
+  pingouin = callPackage ../development/python-modules/pingouin { };
 
   pinocchio = callPackage ../development/python-modules/pinocchio { inherit (pkgs) pinocchio; };
 
@@ -16341,6 +16345,10 @@ self: super: with self; {
 
   python-string-utils = callPackage ../development/python-modules/python-string-utils { };
 
+  python-subunit = callPackage ../development/python-modules/python-subunit {
+    inherit (pkgs) subunit cppunit check;
+  };
+
   python-swiftclient = callPackage ../development/python-modules/python-swiftclient { };
 
   python-tado = callPackage ../development/python-modules/python-tado { };
@@ -19204,10 +19212,6 @@ self: super: with self; {
 
   subprocess4 = callPackage ../development/python-modules/subprocess4 { };
 
-  subunit = callPackage ../development/python-modules/subunit {
-    inherit (pkgs) subunit cppunit check;
-  };
-
   subzerod = callPackage ../development/python-modules/subzerod { };
 
   succulent = callPackage ../development/python-modules/succulent { };
@@ -20081,6 +20085,8 @@ self: super: with self; {
   traceback2 = callPackage ../development/python-modules/traceback2 { };
 
   tracerite = callPackage ../development/python-modules/tracerite { };
+
+  trackers = callPackage ../development/python-modules/trackers { };
 
   trackpy = callPackage ../development/python-modules/trackpy { };
 
