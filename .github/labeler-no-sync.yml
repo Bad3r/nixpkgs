@@ -31,7 +31,7 @@
               - .github/labeler*.yml
               - ci/**/*.*
               - maintainers/github-teams.json
-      - base-branch: ['master']
+      - base-branch: ['master', 'nixpkgs-unstable']
 
 "backport release-26.05":
   - all:
@@ -42,6 +42,6 @@
               - .github/labeler*.yml
               - ci/**/*.*
               - maintainers/github-teams.json
-      - base-branch: ['master']
+      - base-branch: ['master', 'nixpkgs-unstable']
 
 # keep-sorted end
