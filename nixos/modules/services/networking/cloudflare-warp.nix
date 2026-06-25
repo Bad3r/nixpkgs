@@ -32,21 +32,30 @@ in
       '';
     };
 
+    # Cloudflare WARP 2025.7.176.0 made MASQUE the default tunnel protocol for
+    # new Linux device profiles. Keep WireGuard's UDP 2408 ingress port in the
+    # default list so existing profiles continue to work.
     udpPort = lib.mkOption {
-      type = lib.types.port;
-      default = 2408;
+      type = lib.types.coercedTo lib.types.port lib.singleton (lib.types.listOf lib.types.port);
+      default = [
+        443
+        2408
+      ];
+      example = [
+        443
+        2408
+        500
+        1701
+        4500
+        4443
+        8443
+        8095
+      ];
       description = ''
-        The UDP port to open in the firewall. Warp uses port 2408 by default, but fallback ports can be used
-        if that conflicts with another service. See the [firewall documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/firewall#warp-udp-ports)
-        for the pre-configured available fallback ports.
-      '';
-    };
-
-    proxyPort = lib.mkOption {
-      type = lib.types.port;
-      default = 40000;
-      description = ''
-        Localhost port used by WARP local proxy mode. Cloudflare WARP uses port 40000 by default.
+        UDP ports to open in the firewall for Cloudflare WARP ingress. MASQUE uses UDP 443 by default
+        and WireGuard uses UDP 2408. Fallback ports can be added when needed. See the
+        [firewall documentation](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/)
+        for the available fallback ports.
       '';
     };
 
@@ -71,7 +80,7 @@ in
     environment.systemPackages = [ cfg.package ];
 
     networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedUDPPorts = [ cfg.udpPort ];
+      allowedUDPPorts = cfg.udpPort;
     };
 
     systemd.tmpfiles.rules = [
@@ -125,20 +134,6 @@ in
           Group = "root";
         };
 
-      postStart = lib.mkIf (cfg.proxyPort != 40000) ''
-        attempt=1
-        while [ "$attempt" -le 10 ]; do
-          if ${cfg.package}/bin/warp-cli --accept-tos proxy port ${toString cfg.proxyPort}; then
-            exit 0
-          fi
-
-          sleep 1
-          attempt=$((attempt + 1))
-        done
-
-        echo "failed to configure Cloudflare WARP proxy port ${toString cfg.proxyPort}" >&2
-        exit 1
-      '';
     };
 
     systemd.user.services.warp-taskbar = {
