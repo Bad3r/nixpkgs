@@ -69,7 +69,8 @@ module.exports = async ({ github, context, core, dry }) => {
       // These requests take a while, when comparing against the wrong release - they need
       // to look at way more than 10k commits in that case. Thus, we try to minimize the
       // number of requests across releases:
-      // - First, we look at the primary development branches only: master and release-xx.yy.
+      // - First, we look at the primary development branches only: unstable primary branches
+      //   such as master or nixpkgs-unstable, plus release-xx.yy.
       //   The branch with the fewest commits gives us the release this PR belongs to.
       // - We then compare this number against the relevant staging branches for this release
       //   to find the exact branch that this belongs to.
@@ -107,7 +108,24 @@ module.exports = async ({ github, context, core, dry }) => {
 
       // Multiple branches can be OK at the same time, if the PR was created of a merge-base,
       // thus storing as array.
-      let candidates = [await mergeBase(classify('master'))]
+      const unstablePrimary = branches
+        .filter(({ stable, type }) => type.includes('primary') && !stable)
+        .sort((a, b) => a.order - b.order || a.branch.localeCompare(b.branch))
+      const unstablePrimaryCandidates = unstablePrimary.length
+        ? unstablePrimary
+        : [classify('master')]
+
+      const unstablePrimaryResults = await Promise.all(
+        unstablePrimaryCandidates.map((branch) => mergeBase(branch)),
+      )
+      let candidates = []
+      for (const nextCandidate of unstablePrimaryResults) {
+        if (candidates.length === 0) candidates.push(nextCandidate)
+        else if (candidates[0].commits === nextCandidate.commits)
+          candidates.push(nextCandidate)
+        else if (candidates[0].commits > nextCandidate.commits)
+          candidates = [nextCandidate]
+      }
       for (const release of releases) {
         const nextCandidate = await mergeBase(release)
         if (candidates[0].commits === nextCandidate.commits)
