@@ -6,6 +6,17 @@
 }:
 let
   cfg = config.services.cloudflare-warp;
+
+  systemdLogLevels = [
+    "emerg"
+    "alert"
+    "crit"
+    "err"
+    "warning"
+    "notice"
+    "info"
+    "debug"
+  ];
 in
 {
   options.services.cloudflare-warp = {
@@ -31,7 +42,27 @@ in
       '';
     };
 
+    proxyPort = lib.mkOption {
+      type = lib.types.port;
+      default = 40000;
+      description = ''
+        Localhost port used by WARP local proxy mode. Cloudflare WARP uses port 40000 by default.
+      '';
+    };
+
+    logLevelMax = lib.mkOption {
+      type = lib.types.enum systemdLogLevels;
+      default = "warning";
+      description = ''
+        Maximum log level emitted by the cloudflare-warp systemd service.
+      '';
+    };
+
     openFirewall = lib.mkEnableOption "opening UDP ports in the firewall" // {
+      default = true;
+    };
+
+    taskbar.enable = lib.mkEnableOption "Cloudflare WARP taskbar service" // {
       default = true;
     };
   };
@@ -69,6 +100,7 @@ in
         {
           Type = "simple";
           ExecStart = "${cfg.package}/bin/warp-svc";
+          LogLevelMax = cfg.logLevelMax;
           ReadWritePaths = [
             "${cfg.rootDir}"
             "/etc/resolv.conf"
@@ -92,6 +124,42 @@ in
           User = "root";
           Group = "root";
         };
+
+      postStart = lib.mkIf (cfg.proxyPort != 40000) ''
+        attempt=1
+        while [ "$attempt" -le 10 ]; do
+          if ${cfg.package}/bin/warp-cli --accept-tos proxy port ${toString cfg.proxyPort}; then
+            exit 0
+          fi
+
+          sleep 1
+          attempt=$((attempt + 1))
+        done
+
+        echo "failed to configure Cloudflare WARP proxy port ${toString cfg.proxyPort}" >&2
+        exit 1
+      '';
+    };
+
+    systemd.user.services.warp-taskbar = {
+      enable = cfg.taskbar.enable;
+      description = "Cloudflare Zero Trust Client Taskbar";
+      requires = [ "dbus.socket" ];
+      after = [
+        "dbus.socket"
+        "graphical-session.target"
+      ];
+      partOf = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
+
+      serviceConfig = {
+        Type = "dbus";
+        BusName = "com.cloudflare.WarpTaskbar";
+        ExecStart = "${cfg.package}/bin/warp-taskbar";
+        Restart = "always";
+        RestartSec = 5;
+        BindReadOnlyPaths = [ "${cfg.package}:/usr:" ];
+      };
     };
   };
 
