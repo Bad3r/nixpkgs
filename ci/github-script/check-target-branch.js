@@ -61,6 +61,8 @@ async function checkTargetBranch({ github, context, core, dry }) {
   const head = prInfo.head.ref
   const baseClassification = classify(base)
   const headClassification = classify(head)
+  const baseIsUnstablePrimary =
+    baseClassification.type.includes('primary') && !baseClassification.stable
 
   // Don't run on, e.g., staging-nixos to master merges.
   if (headClassification.type.includes('development')) {
@@ -137,8 +139,9 @@ async function checkTargetBranch({ github, context, core, dry }) {
     !isExemptHomeAssistantUpdate &&
     !isExemptKernelUpdate
   ) {
-    const desiredBranch =
-      base === 'master' ? 'staging' : `staging-${split(base).version}`
+    const desiredBranch = baseIsUnstablePrimary
+      ? 'staging'
+      : `staging-${split(base).version}`
     const body = [
       `The PR's base branch is set to \`${base}\`, but this PR causes ${maxRebuildCount} rebuilds.`,
       'It is therefore considered a mass rebuild.',
@@ -156,9 +159,9 @@ async function checkTargetBranch({ github, context, core, dry }) {
     })
   } else if (rebuildsAllTests && !isExemptKernelUpdate) {
     let branchText
-    if (base === 'master' && maxRebuildCount >= 500) {
+    if (baseIsUnstablePrimary && maxRebuildCount >= 500) {
       branchText = '(probably either `staging-nixos` or `staging`)'
-    } else if (base === 'master') {
+    } else if (baseIsUnstablePrimary) {
       branchText = '(probably `staging-nixos`)'
     } else if (maxRebuildCount >= 500) {
       branchText = `(probably either \`staging-nixos-${split(base).version}\` or \`staging-${split(base).version}\`)`
@@ -167,7 +170,7 @@ async function checkTargetBranch({ github, context, core, dry }) {
     }
     const body = [
       `The PR's base branch is set to \`${base}\`, but this PR rebuilds all NixOS tests.`,
-      base === 'master' && maxRebuildCount >= 500
+      baseIsUnstablePrimary && maxRebuildCount >= 500
         ? `Since this PR also causes ${maxRebuildCount} rebuilds, it may also be considered a mass rebuild.`
         : '',
       `Please [change the base branch](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/changing-the-base-branch-of-a-pull-request) to [the right base branch for your changes](https://github.com/NixOS/nixpkgs/blob/master/CONTRIBUTING.md#branch-conventions) ${branchText}.`,
@@ -187,8 +190,9 @@ async function checkTargetBranch({ github, context, core, dry }) {
     !isExemptKernelUpdate &&
     !isExemptHomeAssistantUpdate
   ) {
-    const stagingBranch =
-      base === 'master' ? 'staging' : `staging-${split(base).version}`
+    const stagingBranch = baseIsUnstablePrimary
+      ? 'staging'
+      : `staging-${split(base).version}`
     const body = [
       `The PR's base branch is set to \`${base}\`, and this PR causes ${maxRebuildCount} rebuilds.`,
       `Please consider whether this PR causes a mass rebuild according to [our conventions](https://github.com/NixOS/nixpkgs/blob/master/CONTRIBUTING.md#branch-conventions).`,
