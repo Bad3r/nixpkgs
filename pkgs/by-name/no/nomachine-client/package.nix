@@ -9,10 +9,10 @@
   libpulseaudio,
 }:
 let
-  versionMajor = "9.5";
-  versionMinor = "7";
-  versionBuild_x86_64 = "2";
-  versionBuild_i686 = "2";
+  versionMajor = "9.7";
+  versionMinor = "3";
+  versionBuild_x86_64 = "1";
+  versionBuild_i686 = "1";
 in
 stdenv.mkDerivation rec {
   pname = "nomachine-client";
@@ -22,12 +22,12 @@ stdenv.mkDerivation rec {
     if stdenv.hostPlatform.system == "x86_64-linux" then
       fetchurl {
         url = "https://download.nomachine.com/download/${versionMajor}/Linux/nomachine_${version}_${versionBuild_x86_64}_x86_64.tar.gz";
-        sha256 = "sha256-8f4ZL3Ko5VunojXLvTS9P3oB+ZVCSYIA0GIjM8VpUO4=";
+        sha256 = "sha256-9urNmfZKqgi041J7xGJg4n/GN/+89ec61/o9wPCEei0=";
       }
     else if stdenv.hostPlatform.system == "i686-linux" then
       fetchurl {
         url = "https://download.nomachine.com/download/${versionMajor}/Linux/nomachine_${version}_${versionBuild_i686}_i686.tar.gz";
-        sha256 = "sha256-Yr0bw7PW34Nga8vj3TxdFFyDiVVnHJ6lBdNskOyQ8m8=";
+        sha256 = "sha256-5A6BDWFFo5vjpSfhjh6IkFHzXD77AI6Wova0IvQUZ8w=";
       }
     else
       throw "NoMachine client is not supported on ${stdenv.hostPlatform.system}";
@@ -77,7 +77,7 @@ stdenv.mkDerivation rec {
     cp share/applnk/runner/xdg-mime/*.xml $out/share/mime/packages/
 
     for i in $out/share/applications/*.desktop; do
-      substituteInPlace "$i" --replace /usr/NX/bin $out/bin
+      substituteInPlace "$i" --replace-fail /usr/NX/bin $out/bin
     done
   '';
 
