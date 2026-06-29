@@ -196,7 +196,6 @@ with pkgs;
   inherit (nix-update) nix-update-script;
 
   nixos-test-driver = pkgs.python3Packages.callPackage ../../nixos/lib/test-driver {
-    qemu_pkg = pkgs.qemu;
     imagemagick_light = pkgs.imagemagick_light.override { inherit (pkgs) libtiff; };
     tesseract4 = pkgs.tesseract4.override { enableLanguages = [ "eng" ]; };
     # We want `pkgs.systemd`, *not* `python3Packages.system`.
@@ -2131,6 +2130,7 @@ with pkgs;
     godotPackages_4_4
     godotPackages_4_5
     godotPackages_4_6
+    godotPackages_4_7
     godotPackages_4
     godotPackages
     godot_4_3
@@ -2145,6 +2145,9 @@ with pkgs;
     godot_4_6
     godot_4_6-mono
     godot_4_6-export-templates-bin
+    godot_4_7
+    godot_4_7-mono
+    godot_4_7-export-templates-bin
     godot_4
     godot_4-mono
     godot_4-export-templates-bin
@@ -2327,6 +2330,7 @@ with pkgs;
     definitions = {
       clojure = clojupyter.definition;
       octave = octave-kernel.definition;
+      r = r-ark-kernel.definition;
       # wolfram = wolfram-for-jupyter-kernel.definition; # unfree
     };
   };
@@ -2808,6 +2812,7 @@ with pkgs;
     pnpm_8
     pnpm_9
     pnpm_10_29_2
+    pnpm_10_34_0
     pnpm_10
     pnpm_11
     ;
@@ -4557,6 +4562,8 @@ with pkgs;
 
   octave-kernel = recurseIntoAttrs (callPackage ../applications/editors/jupyter-kernels/octave { });
 
+  r-ark-kernel = callPackage ../applications/editors/jupyter-kernels/r-ark { };
+
   octavePackages = recurseIntoAttrs octave.pkgs;
 
   # PHP interpreters, packages and extensions.
@@ -5298,8 +5305,6 @@ with pkgs;
   nwjs-sdk = nwjs.override {
     sdk = true;
   };
-
-  openai = with python3Packages; toPythonApplication openai;
 
   openai-whisper = with python3.pkgs; toPythonApplication openai-whisper;
 
@@ -6503,8 +6508,8 @@ with pkgs;
   zunclient = with python313Packages; toPythonApplication python-zunclient;
 
   inherit (callPackages ../by-name/li/libressl { })
-    libressl_4_1
     libressl_4_2
+    libressl_4_3
     ;
 
   openssl = openssl_3_6;
