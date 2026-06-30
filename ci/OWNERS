@@ -233,9 +233,7 @@ nixos/modules/installer/tools/nix-fallback-paths.nix  @Artturin @Ericson2314 @lo
 /doc/toolchains/llvm.chapter.md @NixOS/llvm
 
 # Audio
-/nixos/modules/services/audio/botamusique.nix @mweinelt
 /nixos/modules/services/audio/snapserver.nix @mweinelt
-/nixos/tests/botamusique.nix @mweinelt
 /nixos/tests/snapcast.nix @mweinelt
 
 # Browsers
@@ -322,6 +320,11 @@ pkgs/development/python-modules/buildcatrust/ @ajs124 @lukegb @mweinelt
 /nixos/tests/babeld.nix @mweinelt
 /nixos/tests/kea.nix @mweinelt
 /nixos/tests/knot.nix @mweinelt
+
+# Web servers
+/doc/packages/nginx.section.md @leona-ya @Ma27
+/pkgs/servers/http/nginx/ @helsinki-Jo @leona-ya @Ma27
+/nixos/modules/services/web-servers/nginx/ @leona-ya @Ma27
 
 # D
 /pkgs/build-support/dlang @jtbx @TomaSajt

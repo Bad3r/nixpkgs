@@ -429,7 +429,6 @@
   ./services/amqp/activemq/default.nix
   ./services/amqp/rabbitmq.nix
   ./services/audio/alsa.nix
-  ./services/audio/botamusique.nix
   ./services/audio/gmediarender.nix
   ./services/audio/gonic.nix
   ./services/audio/goxlr-utility.nix
@@ -1669,6 +1668,7 @@
   ./services/web-apps/froide-govplan.nix
   ./services/web-apps/galene.nix
   ./services/web-apps/gancio.nix
+  ./services/web-apps/geoserver.nix
   ./services/web-apps/gerrit.nix
   ./services/web-apps/glance.nix
   ./services/web-apps/glitchtip.nix
@@ -1813,6 +1813,7 @@
   ./services/web-apps/umami.nix
   ./services/web-apps/vikunja.nix
   ./services/web-apps/wakapi.nix
+  ./services/web-apps/wealthfolio.nix
   ./services/web-apps/weblate.nix
   ./services/web-apps/websurfx.nix
   ./services/web-apps/whitebophir.nix
