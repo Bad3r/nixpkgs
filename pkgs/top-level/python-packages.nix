@@ -85,6 +85,8 @@ self: super: with self; {
 
   adblock = callPackage ../development/python-modules/adblock { };
 
+  adbutils = callPackage ../development/python-modules/adbutils { };
+
   add-trailing-comma = callPackage ../development/python-modules/add-trailing-comma { };
 
   addict = callPackage ../development/python-modules/addict { };
@@ -10681,6 +10683,8 @@ self: super: with self; {
 
   munkres = callPackage ../development/python-modules/munkres { };
 
+  muon-optimizer = callPackage ../development/python-modules/muon-optimizer { };
+
   murmurhash = callPackage ../development/python-modules/murmurhash { };
 
   muscima = callPackage ../development/python-modules/muscima { };
@@ -20418,6 +20422,8 @@ self: super: with self; {
   tstr = callPackage ../development/python-modules/tstr { };
 
   tt-flash = callPackage ../development/python-modules/tt-flash { };
+
+  tt-perf-report = callPackage ../development/python-modules/tt-perf-report { };
 
   tt-tools-common = callPackage ../development/python-modules/tt-tools-common { };
 
