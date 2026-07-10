@@ -10,8 +10,8 @@
 }:
 
 rustPlatform.buildRustPackage (finalAttrs: {
-  pname = "cosmic-applibrary";
-  version = "1.1.0";
+  pname = "cosmic-app-library";
+  version = "1.2.0";
 
   # nixpkgs-update: no auto update
   src = fetchFromGitHub {

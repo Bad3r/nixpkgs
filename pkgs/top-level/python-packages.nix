@@ -2375,8 +2375,6 @@ self: super: with self; {
 
   biliass = callPackage ../development/python-modules/biliass { };
 
-  bilibili-api-python = callPackage ../development/python-modules/bilibili-api-python { };
-
   billiard = callPackage ../development/python-modules/billiard { };
 
   binance-connector = callPackage ../development/python-modules/binance-connector { };
@@ -3775,6 +3773,8 @@ self: super: with self; {
 
   cuda-bindings = callPackage ../development/python-modules/cuda-bindings { };
 
+  cuda-core = callPackage ../development/python-modules/cuda-core { };
+
   cuda-pathfinder = callPackage ../development/python-modules/cuda-pathfinder { };
 
   cuda-tile = callPackage ../development/python-modules/cuda-tile { };
@@ -3960,8 +3960,6 @@ self: super: with self; {
   dask-ml = callPackage ../development/python-modules/dask-ml { };
 
   dask-mpi = callPackage ../development/python-modules/dask-mpi { };
-
-  dask-yarn = callPackage ../development/python-modules/dask-yarn { };
 
   data-grand-lyon-ha = callPackage ../development/python-modules/data-grand-lyon-ha { };
 
