@@ -84,6 +84,17 @@ buildPythonPackage rec {
     # FutureWarning: In the future `np.bool` will be defined as the corresponding...
     "test_timedelta_cmp"
     "test_timestamp_cmp"
+    # pandas/numpy version skew (nixpkgs-unstable); no upstream stubs fix as of 2.3.3.260113.
+    # Stub tests assert warnings/types that changed in the current pandas/numpy.
+    "test_construction_sequence" # RuntimeError: Expected type NumpyExtensionArray
+    "test_pivot_table_aggfunc_numpy_ufunc" # DID NOT WARN FutureWarning
+    "test_pivot_table_aggfunc_list" # DID NOT WARN FutureWarning
+    "test_pivot_table_aggfunc_dict" # DID NOT WARN FutureWarning
+    "test_agg_complex" # DID NOT WARN numpy ComplexWarning
+    "test_timedelta_properties_methods" # DeprecationWarning: 'generic' numpy timedelta unit
+    "test_timedelta_range" # DeprecationWarning: 'generic' numpy timedelta unit
+    "test_sparse_dtype" # DeprecationWarning: 'generic' numpy timedelta unit
+    "test_isna" # DeprecationWarning: 'generic' numpy timedelta unit
   ]
   ++ lib.optionals stdenv.hostPlatform.isDarwin [
     "test_clipboard" # FileNotFoundError: [Errno 2] No such file or directory: 'pbcopy'
