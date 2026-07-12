@@ -268,6 +268,7 @@
   ./programs/mininet.nix
   ./programs/minipro.nix
   ./programs/miriway.nix
+  ./programs/moonlight-qt.nix
   ./programs/mosh.nix
   ./programs/mouse-actions.nix
   ./programs/msmtp.nix
@@ -593,6 +594,7 @@
   ./services/desktops/linyaps.nix
   ./services/desktops/malcontent.nix
   ./services/desktops/neard.nix
+  ./services/desktops/oo7.nix
   ./services/desktops/pipewire/pipewire.nix
   ./services/desktops/pipewire/wireplumber.nix
   ./services/desktops/playerctld.nix
@@ -801,7 +803,6 @@
   ./services/mail/sympa.nix
   ./services/mail/tlsrpt.nix
   ./services/mail/zeyple.nix
-  ./services/matrix/appservice-discord.nix
   ./services/matrix/appservice-irc.nix
   ./services/matrix/conduit.nix
   ./services/matrix/continuwuity.nix
@@ -982,6 +983,7 @@
   ./services/misc/spice-webdavd.nix
   ./services/misc/spoolman.nix
   ./services/misc/sssd.nix
+  ./services/misc/stash-clipboard.nix
   ./services/misc/subsonic.nix
   ./services/misc/sundtek.nix
   ./services/misc/svnserve.nix

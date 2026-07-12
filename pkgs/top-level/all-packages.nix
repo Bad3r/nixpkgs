@@ -1581,8 +1581,6 @@ with pkgs;
 
   pgf = pgf2;
 
-  tetex = callPackage ../tools/typesetting/tex/tetex { libpng = libpng12; };
-
   texFunctions = callPackage ../tools/typesetting/tex/nix pkgs;
 
   # TeX Live; see https://nixos.org/nixpkgs/manual/#sec-language-texlive
@@ -2604,10 +2602,12 @@ with pkgs;
   inherit (callPackages ../servers/nextcloud { })
     nextcloud32
     nextcloud33
+    nextcloud34
     ;
 
   nextcloud32Packages = callPackage ../servers/nextcloud/packages { ncVersion = "32"; };
   nextcloud33Packages = callPackage ../servers/nextcloud/packages { ncVersion = "33"; };
+  nextcloud34Packages = callPackage ../servers/nextcloud/packages { ncVersion = "34"; };
 
   nextcloud-notify_push = callPackage ../servers/nextcloud/notify_push.nix { };
 
@@ -4390,12 +4390,13 @@ with pkgs;
     jre = jre8;
   };
 
-  inherit (callPackage ../applications/editors/jupyter-kernels/xeus-cling { })
+  inherit (callPackage ../applications/editors/jupyter-kernels/xeus-cpp { })
     cpp11-kernel
     cpp14-kernel
     cpp17-kernel
-    cpp2a-kernel
-    xeus-cling
+    cpp20-kernel
+    cpp23-kernel
+    xeus-cpp
     ;
 
   dhall = haskell.lib.compose.justStaticExecutables haskellPackages.dhall;
@@ -6364,10 +6365,6 @@ with pkgs;
 
   ngtcp2 = callPackage ../development/libraries/ngtcp2 { };
   ngtcp2-gnutls = callPackage ../development/libraries/ngtcp2/gnutls.nix { };
-
-  non = callPackage ../applications/audio/non {
-    wafHook = (waf.override { extraTools = [ "gccdeps" ]; }).hook;
-  };
 
   nss_latest = callPackage ../development/libraries/nss/latest.nix { };
   nss_esr = callPackage ../development/libraries/nss/esr.nix { };
@@ -8442,9 +8439,6 @@ with pkgs;
   );
   android-studio-for-platform = androidStudioForPlatformPackages.stable;
 
-  apngasm = callPackage ../applications/graphics/apngasm { };
-  apngasm_2 = callPackage ../applications/graphics/apngasm/2.nix { };
-
   arelle = with python3Packages; toPythonApplication arelle;
 
   astroid = callPackage ../applications/networking/mailreaders/astroid {
@@ -8537,10 +8531,6 @@ with pkgs;
     playlist-manager = callPackage ../applications/audio/deadbeef/plugins/playlist-manager.nix { };
     vgmstream = callPackage ../applications/audio/deadbeef/plugins/vgmstream.nix { };
     waveform-seekbar = callPackage ../applications/audio/deadbeef/plugins/waveform-seekbar.nix { };
-  };
-
-  deadbeef-with-plugins = callPackage ../applications/audio/deadbeef/wrapper.nix {
-    plugins = [ ];
   };
 
   inherit (callPackage ../development/tools/devpod { }) devpod devpod-desktop;
@@ -9378,10 +9368,6 @@ with pkgs;
 
   rusty-psn-gui = rusty-psn.override { withGui = true; };
 
-  scantailor-advanced = callPackage ../applications/graphics/scantailor/advanced.nix { };
-
-  scantailor-universal = callPackage ../applications/graphics/scantailor/universal.nix { };
-
   sweethome3d = recurseIntoAttrs (
     (callPackage ../applications/misc/sweethome3d { })
     // (callPackage ../applications/misc/sweethome3d/editors.nix {
@@ -9568,8 +9554,6 @@ with pkgs;
   unigine-sanctuary = pkgsi686Linux.callPackage ../applications/graphics/unigine-sanctuary { };
 
   uuagc = haskell.lib.compose.justStaticExecutables haskellPackages.uuagc;
-
-  vdirsyncer = with python3Packages; toPythonApplication vdirsyncer;
 
   vim = vimUtils.makeCustomizable (
     callPackage ../applications/editors/vim {
@@ -10633,10 +10617,6 @@ with pkgs;
 
   faissWithCuda = faiss.override {
     cudaSupport = true;
-  };
-
-  megam = callPackage ../applications/science/misc/megam {
-    inherit (ocaml-ng.ocamlPackages_4_14) ocaml;
   };
 
   spyder = with python3.pkgs; toPythonApplication spyder;

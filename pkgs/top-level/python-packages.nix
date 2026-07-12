@@ -3058,6 +3058,8 @@ self: super: with self; {
 
   cheetah3 = callPackage ../development/python-modules/cheetah3 { };
 
+  chefiq-ble = callPackage ../development/python-modules/chefiq-ble { };
+
   cheroot = callPackage ../development/python-modules/cheroot { };
 
   cherrypy = callPackage ../development/python-modules/cherrypy { };
@@ -10500,6 +10502,8 @@ self: super: with self; {
 
   mistune = callPackage ../development/python-modules/mistune { };
 
+  mistune_2 = callPackage ../development/python-modules/mistune/2.nix { };
+
   mitmproxy = callPackage ../development/python-modules/mitmproxy { };
 
   mitmproxy-linux = callPackage ../development/python-modules/mitmproxy-linux { };
@@ -12172,6 +12176,10 @@ self: super: with self; {
   opencc = callPackage ../development/python-modules/opencc { };
 
   openccu-data = callPackage ../development/python-modules/openccu-data { };
+
+  openccu-loom-client = callPackage ../development/python-modules/openccu-loom-client { };
+
+  openccu-loom-types = callPackage ../development/python-modules/openccu-loom-types { };
 
   opencensus = callPackage ../development/python-modules/opencensus { };
 
@@ -16137,6 +16145,8 @@ self: super: with self; {
 
   pytest-metadata = callPackage ../development/python-modules/pytest-metadata { };
 
+  pytest-mh = callPackage ../development/python-modules/pytest-mh { };
+
   pytest-mock = callPackage ../development/python-modules/pytest-mock { };
 
   pytest-mockito = callPackage ../development/python-modules/pytest-mockito { };
@@ -19068,6 +19078,8 @@ self: super: with self; {
   sphinx-last-updated-by-git =
     callPackage ../development/python-modules/sphinx-last-updated-by-git
       { };
+
+  sphinx-llms-txt = callPackage ../development/python-modules/sphinx-llms-txt { };
 
   sphinx-lv2-theme = callPackage ../development/python-modules/sphinx-lv2-theme { };
 
