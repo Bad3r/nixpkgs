@@ -6,6 +6,17 @@
 }:
 let
   cfg = config.services.cloudflare-warp;
+
+  systemdLogLevels = [
+    "emerg"
+    "alert"
+    "crit"
+    "err"
+    "warning"
+    "notice"
+    "info"
+    "debug"
+  ];
 in
 {
   options.services.cloudflare-warp = {
@@ -21,17 +32,46 @@ in
       '';
     };
 
+    # Cloudflare WARP 2025.7.176.0 made MASQUE the default tunnel protocol for
+    # new Linux device profiles. Keep WireGuard's UDP 2408 ingress port in the
+    # default list so existing profiles continue to work.
     udpPort = lib.mkOption {
-      type = lib.types.port;
-      default = 2408;
+      type = lib.types.coercedTo lib.types.port lib.singleton (lib.types.listOf lib.types.port);
+      default = [
+        443
+        2408
+      ];
+      example = [
+        443
+        2408
+        500
+        1701
+        4500
+        4443
+        8443
+        8095
+      ];
       description = ''
-        The UDP port to open in the firewall. Warp uses port 2408 by default, but fallback ports can be used
-        if that conflicts with another service. See the [firewall documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/firewall#warp-udp-ports)
-        for the pre-configured available fallback ports.
+        UDP ports to open in the firewall for Cloudflare WARP ingress. MASQUE uses UDP 443 by default
+        and WireGuard uses UDP 2408. Fallback ports can be added when needed. See the
+        [firewall documentation](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/)
+        for the available fallback ports.
+      '';
+    };
+
+    logLevelMax = lib.mkOption {
+      type = lib.types.enum systemdLogLevels;
+      default = "warning";
+      description = ''
+        Maximum log level emitted by the cloudflare-warp systemd service.
       '';
     };
 
     openFirewall = lib.mkEnableOption "opening UDP ports in the firewall" // {
+      default = true;
+    };
+
+    taskbar.enable = lib.mkEnableOption "Cloudflare WARP taskbar service" // {
       default = true;
     };
   };
@@ -40,7 +80,7 @@ in
     environment.systemPackages = [ cfg.package ];
 
     networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedUDPPorts = [ cfg.udpPort ];
+      allowedUDPPorts = cfg.udpPort;
     };
 
     systemd.tmpfiles.rules = [
@@ -69,6 +109,7 @@ in
         {
           Type = "simple";
           ExecStart = "${cfg.package}/bin/warp-svc";
+          LogLevelMax = cfg.logLevelMax;
           ReadWritePaths = [
             "${cfg.rootDir}"
             "/etc/resolv.conf"
@@ -92,6 +133,28 @@ in
           User = "root";
           Group = "root";
         };
+
+    };
+
+    systemd.user.services.warp-taskbar = {
+      enable = cfg.taskbar.enable;
+      description = "Cloudflare Zero Trust Client Taskbar";
+      requires = [ "dbus.socket" ];
+      after = [
+        "dbus.socket"
+        "graphical-session.target"
+      ];
+      partOf = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
+
+      serviceConfig = {
+        Type = "dbus";
+        BusName = "com.cloudflare.WarpTaskbar";
+        ExecStart = "${cfg.package}/bin/warp-taskbar";
+        Restart = "always";
+        RestartSec = 5;
+        BindReadOnlyPaths = [ "${cfg.package}:/usr:" ];
+      };
     };
   };
 
