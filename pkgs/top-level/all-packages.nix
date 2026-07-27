@@ -7104,11 +7104,6 @@ with pkgs;
 
   ### DEVELOPMENT / R MODULES
 
-  R = callPackage ../applications/science/math/R {
-    # TODO: split docs into a separate output
-    withRecommendedPackages = false;
-  };
-
   rWrapper = callPackage ../development/r-modules/wrapper.nix {
     recommendedPackages = with rPackages; [
       boot
@@ -7417,10 +7412,6 @@ with pkgs;
   moodle = callPackage ../servers/web-apps/moodle { };
 
   moodle-utils = callPackage ../servers/web-apps/moodle/moodle-utils.nix { };
-
-  inherit (callPackage ../applications/networking/mullvad { })
-    mullvad
-    ;
 
   napalm =
     with python3Packages;
@@ -7981,7 +7972,6 @@ with pkgs;
 
   qemu_test = lowPrio (
     qemu.override {
-      hostCpuOnly = true;
       nixosTestRunner = true;
     }
   );
@@ -8436,6 +8426,9 @@ with pkgs;
   };
 
   bitwig-studio = bitwig-studio6;
+
+  brave = (callPackage ../applications/networking/browsers/brave { }).brave;
+  brave-origin = (callPackage ../applications/networking/browsers/brave { }).brave-origin;
 
   breezy = with python3Packages; toPythonApplication breezy;
 
@@ -9432,6 +9425,9 @@ with pkgs;
 
   thunderbird-esr-unwrapped = thunderbirdPackages.thunderbird-esr;
   thunderbird-esr = wrapThunderbird thunderbird-esr-unwrapped { };
+
+  thunderbird-153-unwrapped = thunderbirdPackages.thunderbird-153;
+  thunderbird-153 = wrapThunderbird thunderbirdPackages.thunderbird-153 { };
 
   thunderbird-140-unwrapped = thunderbirdPackages.thunderbird-140;
   thunderbird-140 = wrapThunderbird thunderbirdPackages.thunderbird-140 { };

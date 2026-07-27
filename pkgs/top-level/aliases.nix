@@ -278,6 +278,7 @@ mapAliases {
   adobe-reader = throw "'adobe-reader' has been removed, as it was broken, outdated and insecure"; # Added 2025-05-31
   aefs = throw "'aefs' has been removed, as it depends on unsupported fuse2 and unmaintained upstream"; # Added 2026-05-30
   afpfs-ng = throw "'afpfs-ng' has been removed as it was broken and unmaintained for 10 years"; # Added 2025-05-17
+  afterstep = throw "'afterstep' has been removed as it was unmaintained upstream and depends on the deprecated GTK2 engine."; # Added 2026-07-23
   afuse = throw "'afuse' has been removed as it is unmaintained upstream, and depends on fuse2, which is deprecated"; # Added 2026-05-05
   agrep = throw "'agrep' has been removed due to lack of upstream maintenance. Consider using 'tre' or 'ugrep' instead."; # Added 2025-12-28
   akkoma-emoji = throw "'akkoma-emoji' has been renamed to/replaced by 'blobs_gg'"; # Converted to throw 2025-10-27
@@ -289,6 +290,7 @@ mapAliases {
   AMB-plugins = amb-plugins; # Added 2026-02-08
   amdvlk = throw "'amdvlk' has been removed since it was deprecated by AMD. Its replacement, RADV, is enabled by default."; # Added 2025-09-20
   ams-lv2 = throw "'ams-lv2' has been removed due to being archived upstream."; # Added 2025-10-26
+  ananicy = throw "'ananicy' has been removed due to being archived upstream. Use ananicy-cpp instead."; # Added 2026-07-14
   android-udev-rules = throw "'android-udev-rules' has been removed due to being superseded by built-in systemd uaccess rules."; # Added 2025-10-21
   androidndkPkgs_21 = throw "androidndkPkgs_21 has been removed, as it is EOL"; # Added 2025-08-09
   androidndkPkgs_23 = throw "androidndkPkgs_23 has been removed, as it is EOL"; # Added 2025-08-09
@@ -659,6 +661,7 @@ mapAliases {
   deltatouch = throw "'deltatouch' has been removed as it depended on qt5 webengine which reached EOL"; # Added 2026-04-25
   desktop-postflop = throw "'desktop-postflop' has been removed as it has been unmaintained upstream since October 2023 and depended on webkitgtk 4.0"; # Added 2026-06-07
   devdocs-desktop = throw "'devdocs-desktop' has been removed as it is unmaintained upstream and vendors insecure dependencies"; # Added 2025-06-11
+  devmem2 = throw "'devmem2' has been removed due to being broken and lack of maintenance. Consider using the devmem command from 'busybox' or 'toybox'."; # Added 2026-07-24
   dfilemanager = throw "'dfilemanager' has been dropped as it was unmaintained"; # Added 2025-06-03
   discord-screenaudio = throw "discord-screenaudio has been removed because it was archived upstream. Use vesktop instead."; # added 2025-11-29
   disk-inventory-x = throw "disk-inventory-x has been removed as it only supported x86_64-darwin"; # Added 2026-07-12
@@ -1019,6 +1022,7 @@ mapAliases {
   gtkgnutella = gtk-gnutella; # Added 2026-05-21
   gtklp = throw "'gtklp' has been removed, as it depended on GTK 2. Consider using 'system-config-printer' instead."; # Added 2026-05-22
   gtkradiant = throw "'gtkradiant' has been removed, as it relies on gtk2"; # Added 2026-06-18
+  gtkspell2 = throw "'gtkspell2' has been removed as it depended on the deprecated GTK2 engine. Consider using 'gtkspell3' instead"; # Added 2026-07-23
   gtuber = throw "'gtuber' has been removed due to being discontinued by upstream."; # Added 2025-12-12
   gui-for-clash = throw "'gui-for-clash' has been removed, as it is unmaintained"; # Added 2026-05-28
   guile-disarchive = throw "'guile-disarchive' has been renamed to/replaced by 'disarchive'"; # Converted to throw 2025-10-27
@@ -1113,6 +1117,7 @@ mapAliases {
   jhentai = throw "'jhentai' has been removed, as it is unmaintained"; # Added 2026-01-25
   jikespg = throw "'jikespg' has been removed due to lack of maintenance upstream."; # Added 2025-06-10
   jing = jing-trang; # Added 2025-09-18
+  jitsi = throw "'jitsi' has been removed as it relies on gtk2 libraries"; # Added 2026-07-24
   jmtpfs = throw "'jmtpfs' has been removed, as it is unmaintained"; # Added 2026-06-06
   joplin = joplin-cli; # Added 2025-11-03
   jscoverage = throw "jscoverage has been removed, as it was broken"; # Added 2025-08-25
@@ -1502,7 +1507,7 @@ mapAliases {
   mailnagWithPlugins = throw "mailnagWithPlugins has been removed because mailnag has been marked as broken since 2022."; # Added 2025-10-12
   makeOverridable = warnAlias "'makeOverridable' has been removed from pkgs, use `lib.makeOverridable` instead" lib.makeOverridable; # Added 2025-10-30
   manaplus = throw "manaplus has been removed, as it was broken"; # Added 2025-08-25
-  mangowc = throw "'mangowc' has been renamed to 'mango'"; # Added 2026-06-23
+  mangowc = mango; # Added 2026-06-23
   manrope = throw "'manrope' has been removed because its source has been pulled"; # Added 2025-12-20
   mariadb-client = throw "mariadb-client has been renamed to mariadb.client"; # Converted to throw 2025-10-26
   marwaita-manjaro = throw "'marwaita-manjaro' has been renamed to/replaced by 'marwaita-teal'"; # Converted to throw 2025-10-27
@@ -1728,6 +1733,7 @@ mapAliases {
   oil = throw "'oil' has been renamed to/replaced by 'oils-for-unix'"; # Converted to throw 2025-10-27
   olaris-server = throw "'olaris-server' has been removed as it failed to build since 2024"; # Added 2026-01-15
   olive-editor = throw "'olive-editor' has been removed as it is unmaintained upstream and broken"; # Added 2026-05-22
+  omxplayer = throw "'omxplayer' has been removed because it depends on a severely outdated upstream, a severely outdated FFmpeg, and the new upstream was deprecated since 2020. Please use 'vlc' instead."; # Added 2026-07-24
   oneDNN = onednn; # Added 2026-02-08
   oneDNN_2 = onednn_2; # Added 2026-02-08
   onevpl-intel-gpu = throw "'onevpl-intel-gpu' has been renamed to/replaced by 'vpl-gpu-rt'"; # Converted to throw 2025-10-27
@@ -1964,6 +1970,7 @@ mapAliases {
   pythonFull = throw "'pythonFull' previously pointed to Python 2; use `python3` instead"; # Converted to throw 2025-10-27
   pythonPackages = throw "`pythonPackages` previously pointed to Python 2; use `python3Packages` instead"; # Converted to throw 2025-10-27
   pywal = pywal16; # Added 2026-02-01
+  pzip = throw "`pzip` has been removed because it was unmaintained upstream and insecure."; # Added 2026-07-23
   q2pro = throw "'q2pro' has been removed as upstream repository was deleted and no direct active forks were available."; # Added 2025-12-27
   qcachegrind = throw "'qcachegrind' has been removed, as it depends on KDE Gear 5, which has reached EOL"; # Added 2025-08-20
   qes = throw "'qes' has been removed, as it has been merged into shkd"; # Added 2025-12-21
@@ -2402,6 +2409,7 @@ mapAliases {
   wakatime = throw "'wakatime' has been renamed to/replaced by 'wakatime-cli'"; # Converted to throw 2025-10-27
   wapp = throw "'wapp' has been renamed to/replaced by 'tclPackages.wapp'"; # Converted to throw 2025-10-27
   warmux = throw "'warmux' has been removed as it is unmaintained and broken"; # Added 2025-11-03
+  warp-plus = throw "'warp-plus' has been removed as it is unmaintained and broken"; # Added 2026-07-05
   warsow = throw "'warsow' has been removed as it is unmaintained and is broken"; # Added 2025-10-09
   warsow-engine = throw "'warsow-engine' has been removed as it is unmaintained and is broken"; # Added 2025-10-09
   wasistlos = throw "'wasistlos' has been removed because it was unmaintained and archived upstream. Consider using 'karere' instead"; # Added 2026-04-13
@@ -2858,6 +2866,7 @@ mapAliases {
   zotero_7 = throw "'zotero_7' has been renamed to/replaced by 'zotero'"; # Added 2025-12-09
   zotify = throw "zotify has been removed due to lack of upstream maintenance"; # Added 2025-09-26
   zq = throw "zq has been replaced by zed"; # Converted to throw 2025-10-26
+  zscroll = throw "zscroll has been removed due to lack of maintenance."; # Added 2026-05-29
   zsh-git-prompt = throw "zsh-git-prompt was removed as it is unmaintained upstream"; # Added 2025-08-28
   zulu23 = throw "Zulu OpenJDK 23 was removed as it has reached its end of life"; # Added 2025-11-14
   zulu24 = throw "Zulu OpenJDK 24 was removed as it has reached its end of life"; # Added 2025-11-14

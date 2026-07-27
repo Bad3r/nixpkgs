@@ -3058,8 +3058,6 @@ self: super: with self; {
 
   checksumdir = callPackage ../development/python-modules/checksumdir { };
 
-  cheetah3 = callPackage ../development/python-modules/cheetah3 { };
-
   chefiq-ble = callPackage ../development/python-modules/chefiq-ble { };
 
   cheroot = callPackage ../development/python-modules/cheroot { };
@@ -3766,6 +3764,8 @@ self: super: with self; {
   csv2md = callPackage ../development/python-modules/csv2md { };
 
   csvw = callPackage ../development/python-modules/csvw { };
+
+  ct3 = callPackage ../development/python-modules/ct3 { };
 
   ctap-keyring-device = callPackage ../development/python-modules/ctap-keyring-device { };
 
@@ -10022,6 +10022,8 @@ self: super: with self; {
 
   mail-parser = callPackage ../development/python-modules/mail-parser { };
 
+  mailbits = callPackage ../development/python-modules/mailbits { };
+
   mailcap-fix = callPackage ../development/python-modules/mailcap-fix { };
 
   mailchecker = callPackage ../development/python-modules/mailchecker { };
@@ -12235,7 +12237,6 @@ self: super: with self; {
       enableLto = !stdenv.hostPlatform.isLinux; # https://github.com/NixOS/nixpkgs/issues/343123
       enableUnfree = false; # prevents cache
       enableIpp = true;
-      enableGtk2 = true;
       enableGtk3 = true;
       enableVtk = true;
       enableFfmpeg = true;
@@ -15401,6 +15402,8 @@ self: super: with self; {
 
   pyphotonfile = callPackage ../development/python-modules/pyphotonfile { };
 
+  pypi-simple = callPackage ../development/python-modules/pypi-simple { };
+
   pypika = callPackage ../development/python-modules/pypika { };
 
   pypillowfight = callPackage ../development/python-modules/pypillowfight { };
@@ -17173,6 +17176,8 @@ self: super: with self; {
   pyzbar = callPackage ../development/python-modules/pyzbar { };
 
   pyzerproc = callPackage ../development/python-modules/pyzerproc { };
+
+  pyzhuyin = callPackage ../development/python-modules/pyzhuyin { };
 
   pyzipper = callPackage ../development/python-modules/pyzipper { };
 
@@ -20117,8 +20122,6 @@ self: super: with self; {
 
   termplotlib = callPackage ../development/python-modules/termplotlib { };
 
-  termstyle = callPackage ../development/python-modules/termstyle { };
-
   tern = callPackage ../development/python-modules/tern { };
 
   tesla-fleet-api = callPackage ../development/python-modules/tesla-fleet-api { };
@@ -20214,8 +20217,6 @@ self: super: with self; {
       { };
 
   textualeffects = callPackage ../development/python-modules/textualeffects { };
-
-  textwrap3 = callPackage ../development/python-modules/textwrap3 { };
 
   textx = callPackage ../development/python-modules/textx { };
 
@@ -22530,8 +22531,6 @@ self: super: with self; {
   z3c-checkversions = callPackage ../development/python-modules/z3c-checkversions { };
 
   zabbix-utils = callPackage ../development/python-modules/zabbix-utils { };
-
-  zadnegoale = callPackage ../development/python-modules/zadnegoale { };
 
   zalgolib = callPackage ../development/python-modules/zalgolib { };
 

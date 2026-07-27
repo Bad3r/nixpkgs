@@ -153,6 +153,7 @@ in
     console-log = runTest ./nixos-test-driver/console-log.nix;
     containers = runTest ./nixos-test-driver/containers.nix;
     nspawn-daemon-reexec-dbus = runTest ./nspawn-daemon-reexec-dbus.nix;
+    multi-arch-test = runTest ./nixos-test-driver/multi-arch-test.nix;
     skip-typecheck = runTest ./nixos-test-driver/skip-typecheck.nix;
     console-timeout = runTest ./nixos-test-driver/console-timeout.nix;
     options-doc-regression = import ./nixos-test-driver/options-doc-regression.nix { inherit pkgs; };
@@ -1302,7 +1303,6 @@ in
   osrm-backend = runTest ./osrm-backend.nix;
   outline = runTest ./outline.nix;
   overlayfs = runTest ./overlayfs.nix;
-  overseerr = runTest ./overseerr.nix;
   owi = runTest ./owi.nix;
   owncast = runTest ./owncast.nix;
   oxidized = handleTest ./oxidized.nix { };
@@ -1448,6 +1448,7 @@ in
   pykms = runTest ./pykms.nix;
   qbittorrent = runTest ./qbittorrent.nix;
   qboot = runTestOn [ "x86_64-linux" "i686-linux" ] ./qboot.nix;
+  qemu-firmware = runTestOn [ "x86_64-linux" ] ./qemu-firmware.nix;
   qemu-vm-external-disk-image = runTest ./qemu-vm-external-disk-image.nix;
   qemu-vm-restrictnetwork = handleTest ./qemu-vm-restrictnetwork.nix { };
   qemu-vm-store = runTest ./qemu-vm-store.nix;
