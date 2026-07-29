@@ -4749,7 +4749,6 @@
   cbarrete = {
     github = "cbarrete";
     githubId = 62146989;
-    matrix = "@cedric:cbarrete.com";
     name = "Cédric Barreteau";
   };
   cbleslie = {
@@ -12466,6 +12465,12 @@
     github = "james-atkins";
     githubId = 9221409;
   };
+  jamesbrink = {
+    email = "dev.urandom.io@gmail.com";
+    name = "James Brink";
+    github = "jamesbrink";
+    githubId = 646361;
+  };
   jamespeapen = {
     name = "James Eapen";
     email = "james.eapen@vai.org";
@@ -14770,6 +14775,11 @@
     github = "kirillrdy";
     githubId = 12160;
     name = "Kirill Radzikhovskyy";
+  };
+  kiryuulight = {
+    github = "KiryuuLight";
+    githubId = 70501251;
+    name = "Luis Ortiz";
   };
   kiskae = {
     github = "Kiskae";
@@ -19507,8 +19517,9 @@
     keys = [ { fingerprint = "086E EF20 D54E D348 E5BA  6263 16E9 43E6 596F FB4E"; } ];
   };
   myul = {
-    github = "myul";
-    githubId = 27887735;
+    email = "hdx0729@gmail.com";
+    github = "mtul0729";
+    githubId = 52401682;
     name = "myul";
   };
   myypo = {
@@ -29897,6 +29908,12 @@
     github = "vitorpavani";
     githubId = 59029586;
     name = "Vitor Pavan";
+  };
+  vitrial = {
+    email = "111700bh@gmail.com";
+    github = "xZecora";
+    githubId = 63205921;
+    name = "Bryant Collins";
   };
   vizid = {
     email = "mail@vizqq.cc";

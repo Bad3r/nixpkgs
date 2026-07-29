@@ -3915,6 +3915,7 @@ with pkgs;
       llvmPackages_20 = llvmPackagesSet."20";
       llvmPackages_21 = llvmPackagesSet."21";
       llvmPackages_22 = llvmPackagesSet."22";
+      llvmPackages_23 = llvmPackagesSet."23";
 
       mkLLVMPackages = llvmPackagesSet.mkPackage;
     })
@@ -3923,6 +3924,7 @@ with pkgs;
     llvmPackages_20
     llvmPackages_21
     llvmPackages_22
+    llvmPackages_23
     mkLLVMPackages
     ;
 
@@ -10489,10 +10491,6 @@ with pkgs;
   simulide_1_0_0 = callPackage ../by-name/si/simulide/package.nix { versionNum = "1.0.0"; };
   simulide_1_1_0 = callPackage ../by-name/si/simulide/package.nix { versionNum = "1.1.0"; };
   simulide_1_2_0 = callPackage ../by-name/si/simulide/package.nix { versionNum = "1.2.0"; };
-
-  geda = callPackage ../applications/science/electronics/geda {
-    guile = guile_2_2;
-  };
 
   gerbv = callPackage ../applications/science/electronics/gerbv {
     cairo = cairo.override { x11Support = true; };

@@ -308,7 +308,6 @@
   ./programs/qgroundcontrol.nix
   ./programs/qt5ct.nix
   ./programs/quark-goldleaf.nix
-  ./programs/regreet.nix
   ./programs/rog-control-center.nix
   ./programs/rush.nix
   ./programs/rust-motd.nix
@@ -636,6 +635,7 @@
   ./services/display-managers/lemurs.nix
   ./services/display-managers/ly.nix
   ./services/display-managers/plasma-login-manager.nix
+  ./services/display-managers/regreet.nix
   ./services/display-managers/sddm.nix
   ./services/editors/emacs.nix
   ./services/editors/haste.nix
@@ -1025,7 +1025,6 @@
   ./services/monitoring/below.nix
   ./services/monitoring/beszel-agent.nix
   ./services/monitoring/beszel-hub.nix
-  ./services/monitoring/bosun.nix
   ./services/monitoring/cadvisor.nix
   ./services/monitoring/certspotter.nix
   ./services/monitoring/cockpit.nix
@@ -1330,6 +1329,7 @@
   ./services/networking/netbird/server.nix
   ./services/networking/netclient.nix
   ./services/networking/netfoil.nix
+  ./services/networking/netplan.nix
   ./services/networking/networkd-dispatcher.nix
   ./services/networking/networkmanager.nix
   ./services/networking/newt.nix
