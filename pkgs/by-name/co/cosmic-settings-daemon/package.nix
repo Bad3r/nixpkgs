@@ -4,7 +4,6 @@
   stdenv,
   rustPlatform,
   makeBinaryWrapper,
-  pop-gtk-theme,
   adw-gtk3,
   pkg-config,
   libpulseaudio,
@@ -20,19 +19,17 @@
 
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "cosmic-settings-daemon";
-  version = "1.4.0";
+  version = "1.5.0";
 
   # nixpkgs-update: no auto update
   src = fetchFromGitHub {
     owner = "pop-os";
     repo = "cosmic-settings-daemon";
     tag = "epoch-${finalAttrs.version}";
-    hash = "sha256-j+AT56HYnenu5WQrBi9gqyog7oxDDf8vbUsKeGCiARM=";
+    hash = "sha256-e53lyq9tmZnrhS6CYL+KTlCMnunKoN2GEvCHhHAX2hI=";
   };
 
   postPatch = ''
-    substituteInPlace src/battery.rs \
-      --replace-fail '/usr/share/sounds/Pop/' '${pop-gtk-theme}/share/sounds/Pop/'
     substituteInPlace src/theme.rs \
       --replace-fail '/usr/share/themes/adw-gtk3' '${adw-gtk3}/share/themes/adw-gtk3'
   '';
