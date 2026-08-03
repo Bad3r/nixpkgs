@@ -1034,7 +1034,6 @@ mapAliases {
   graphia = throw "'graphia' has been removed due to being unmaintained and broken"; # Added 2026-05-05
   graphite-gtk-theme = throw "'graphite-gtk-theme' has been removed because it depended on 'gtk-engine-murrine', which was removed because it was unmaintained upstream and depended on GTK 2."; # Added 2026-07-22
   graphite-kde-theme = throw "'graphite-kde-theme' has been removed, as it is only compatible with Plasma 5, which is EOL"; # Added 2025-08-20
-  greybird = throw "'greybird' has been removed because it depended on 'gtk-engine-murrine', which was removed because it was unmaintained upstream and depended on GTK 2."; # Added 2026-07-22
   gringo = throw "'gringo' has been renamed to/replaced by 'clingo'"; # Converted to throw 2025-10-27
   grip = throw "'grip' has been removed because it depended on the deprecated GTK2 engine."; # Added 2026-07-30
   grub2_full = throw "'grub2_full' has been renamed to/replaced by 'grub2'"; # Converted to throw 2025-10-27
@@ -1232,6 +1231,7 @@ mapAliases {
   layan-kde = throw "'layan-kde' has been removed, as it is only compatible with Plasma 5, which is EOL"; # Added 2025-08-20
   lazarus-qt = throw "'lazarus-qt' has been renamed to/replaced by 'lazarus-qt5'"; # Converted to throw 2025-10-27
   leaf = throw "'leaf' has been removed as it is unmaintained. Consider using 'fastfetch' instead"; # Added 2026-04-24
+  leafnode = throw "'leafnode' has been removed as it is unmaintained and depends on EOL library PCRE. Consider using leafnode1 instead"; # Added 2026-07-30
   ledger-agent = throw "ledger-agent has been removed because upstream dropped Ledger support"; # Added 2026-03-11
   ledger_agent = throw "ledger-agent has been removed because upstream dropped Ledger support"; # Added 2026-03-11
   lepton = throw "'lepton' has been removed as it is archived upstream and has known vulnerabilities (CVE-2022-4104). Consider using 'lepton-jpeg-util' instead"; # Added 2026-06-29
@@ -1497,6 +1497,7 @@ mapAliases {
   luminanceHDR = throw "'luminanceHDR' has been removed as it depended on EOL qt5 webengine and was unmaintained"; # Added 2026-04-17
   lunarvim = throw "'lunarvim' has been removed since it was abandoned upstream and relied on an older version of 'neovim' to work properly"; # Added 2026-02-05
   lunatic = throw "'lunatic' has been removed, as it is unmaintained"; # Added 2026-05-04
+  lxappearance-gtk2 = throw "'lxappearance-gtk2' was removed because it depended on the deprecated GTK2 engine. Consider using the GTK3-based 'lxappearance' instead."; # Added 2026-07-22
   lxd = throw "
     LXD has been removed from NixOS due to lack of Nixpkgs maintenance.
     Consider migrating or switching to Incus, or remove from your configuration.
@@ -1562,7 +1563,6 @@ mapAliases {
   massif-visualizer = throw "'massif-visualizer' has been removed due to outdated KF5 dependencies."; # Added 2026-05-01
   mastodon-bot = throw "'mastodon-bot' has been removed because it was archived by upstream in 2021."; # Added 2025-11-07
   matcha-gtk-theme = throw "'matcha-gtk-theme' has been removed because it depended on 'gtk-engine-murrine', which was removed because it was unmaintained upstream and depended on GTK 2."; # Added 2026-07-22
-  mate-themes = throw "'mate-themes' has been removed because it depended on 'gtk-engine-murrine', which was removed because it was unmaintained upstream and depended on GTK 2."; # Added 2026-07-22
   materia-theme = throw "'materia-theme' has been removed because it depended on 'gtk-engine-murrine', which was removed because it was unmaintained upstream and depended on GTK 2."; # Added 2026-07-22
   material-kwin-decoration = throw "'material-kwin-decoration' has been removed, as it is only compatible with Plasma 5, which is EOL"; # Added 2025-08-20
   matheria-theme-transparent = throw "'matheria-theme-transparent' has been removed because it depended on 'gtk-engine-murrine', which was removed because it was unmaintained upstream and depended on GTK 2."; # Added 2026-07-22
@@ -2043,7 +2043,6 @@ mapAliases {
   qMasterPassword-wayland = warnAlias "'qMasterPassword-wayland' has been renamed to/replaced by 'qmasterpassword-wayland'" qmasterpassword-wayland; # Added 2026-02-01
   qmenumodel = warnAlias "'qmenumodel' has been renamed to 'libsForQt5.qmenumodel'" libsForQt5.qmenumodel; # Added 2026-03-26
   qnial = throw "'qnial' has been removed due to failing to build and being unmaintained"; # Added 2025-06-26
-  qogir-theme = throw "'qogir-theme' has been removed because it depended on 'gtk-engine-murrine', which was removed because it was unmaintained upstream and depended on GTK 2."; # Added 2026-07-22
   qrscan = throw "qrscan has been removed, as it does not build with supported LLVM versions"; # Added 2025-08-19
   qscintilla = throw "'qscintilla' has been renamed to/replaced by 'libsForQt5.qscintilla'"; # Converted to throw 2025-10-27
   qscintilla-qt6 = throw "'qscintilla-qt6' has been renamed to/replaced by 'qt6Packages.qscintilla'"; # Converted to throw 2025-10-27
@@ -2168,6 +2167,7 @@ mapAliases {
   signal-desktop-bin = throw "'signal-desktop-bin' has been replaced by 'signal-desktop' which is built from source"; # Added 2026-03-02
   signal-desktop-source = throw "'signal-desktop-source' has been renamed to/replaced by 'signal-desktop'"; # Converted to throw 2025-10-27
   silver-searcher = throw "'silver-searcher' has been removed as it has seen no development since 2020 and is stuck on the obsolete pcre library. Consider using 'silver-searcher-ng', which is a fork with support for PCRE2.";
+  simple64-netplay-server = gopher64-netplay-server; # Added 2026-08-01
   simpleBluez = warnAlias "'simpleBluez' has been renamed to 'simplebluez'" simplebluez; # Added 2026-02-18
   simpleDBus = warnAlias "'simpleDBus' has been renamed to 'simpledbus'" simpledbus; # Added 2026-02-12
   simplesamlphp = throw "'simplesamlphp' was removed because it was unmaintained in nixpkgs"; # Added 2025-10-17
@@ -2280,6 +2280,7 @@ mapAliases {
   sumalibs = throw "'sumalibs' has been removed as it was archived upstream and broken with GCC 14"; # Added 2025-06-14
   sumatra = throw "'sumatra' has been removed as it was archived upstream and broken with GCC 14"; # Added 2025-06-14
   sumneko-lua-language-server = throw "'sumneko-lua-language-server' has been renamed to/replaced by 'lua-language-server'"; # Converted to throw 2025-10-27
+  supersonic-wayland = throw "'supersonic-wayland' has been removed as its functionality has been incorporated into 'supersonic'"; # Added 2026-07-25
   superTux = warnAlias "'superTux' has been renamed to 'supertux'" supertux; # Added 2026-02-12
   superTuxKart = warnAlias "'superTuxKart' has been renamed to 'supertuxkart'" supertuxkart; # Added 2026-02-12
   surge-XT = warnAlias "'surge-XT' has been renamed to 'surge-xt'" surge-xt; # Added 2026-02-12

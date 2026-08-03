@@ -1399,6 +1399,8 @@ self: super: with self; {
 
   asn1tools = callPackage ../development/python-modules/asn1tools { };
 
+  asndb = callPackage ../development/python-modules/asndb { };
+
   aspectlib = callPackage ../development/python-modules/aspectlib { };
 
   aspell-python-py3 = callPackage ../development/python-modules/aspell-python-py3 { };
@@ -1456,8 +1458,6 @@ self: super: with self; {
   async-modbus = callPackage ../development/python-modules/async-modbus { };
 
   async-stagger = callPackage ../development/python-modules/async-stagger { };
-
-  async-substrate-interface = callPackage ../development/python-modules/async-substrate-interface { };
 
   async-tiff = callPackage ../development/python-modules/async-tiff { };
 
@@ -2441,11 +2441,7 @@ self: super: with self; {
 
   bittensor = callPackage ../development/python-modules/bittensor { };
 
-  bittensor-cli = callPackage ../development/python-modules/bittensor-cli { };
-
-  bittensor-drand = callPackage ../development/python-modules/bittensor-drand { };
-
-  bittensor-wallet = callPackage ../development/python-modules/bittensor-wallet { };
+  bittensor-core = callPackage ../development/python-modules/bittensor-core { };
 
   bitvavo-aio = callPackage ../development/python-modules/bitvavo-aio { };
 
@@ -21682,6 +21678,13 @@ self: super: with self; {
 
   usort = callPackage ../development/python-modules/usort { };
 
+  ustreamer = toPythonModule (
+    pkgs.ustreamer.override {
+      python3Packages = self;
+      withPython = true;
+    }
+  );
+
   utils = callPackage ../development/python-modules/utils { };
 
   utitools = callPackage ../development/python-modules/utitools { };
@@ -21972,9 +21975,15 @@ self: super: with self; {
   warlock = callPackage ../development/python-modules/warlock { };
 
   warp-lang = callPackage ../development/python-modules/warp-lang {
-    stdenv = if stdenv.hostPlatform.isDarwin then pkgs.llvmPackages_19.stdenv else pkgs.stdenv;
-    llvmPackages = pkgs.llvmPackages_19;
+    # warp targets LLVM 21 in its build-from-source path (build_llvm.py clones llvmorg-21.x) and
+    # guards native/clang/clang.cpp for LLVM up to 22, so it builds against nixpkgs' from-source
+    # LLVM 21. One getHostCPUFeatures() call is missing its version guard upstream; the derivation
+    # patches that. See the postPatch in warp-lang/default.nix.
+    stdenv = if stdenv.hostPlatform.isDarwin then pkgs.llvmPackages_21.stdenv else pkgs.stdenv;
+    llvmPackages = pkgs.llvmPackages_21;
   };
+
+  warp-nn = callPackage ../development/python-modules/warp-nn { };
 
   warrant = callPackage ../development/python-modules/warrant { };
 

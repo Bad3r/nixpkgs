@@ -6190,6 +6190,12 @@
     githubId = 24708079;
     name = "Dan Eads";
   };
+  daneov = {
+    github = "daneov";
+    githubId = 7900887;
+    matrix = "@daneov:mozilla.org";
+    name = "daneov";
+  };
   danid3v = {
     email = "sch220233@spengergasse.at";
     github = "DaniD3v";
@@ -7418,6 +7424,12 @@
     github = "dpaetzel";
     githubId = 974130;
     name = "David Pätzel";
+  };
+  dpaulat = {
+    email = "dpaulat@gmail.com";
+    name = "Dan Paulat";
+    github = "dpaulat";
+    githubId = 2886605;
   };
   dpc = {
     email = "dpc@dpc.pw";
@@ -9999,6 +10011,13 @@
     github = "gdinh";
     githubId = 34658064;
     name = "Grace Dinh";
+  };
+  geekiot-hub = {
+    email = "geekiot@proton.me";
+    github = "geekiot-hub";
+    githubId = 227938479;
+    name = "Kirill Samoylenkov";
+    keys = [ { fingerprint = "955B 97C5 78A3 DF03 D818  25EB 8E40 5DD2 CF84 CCE0"; } ];
   };
   genga898 = {
     email = "genga898@gmail.com";
@@ -17986,6 +18005,12 @@
     githubId = 94081214;
     name = "Jose Colomer";
   };
+  mcmah309 = {
+    email = "dillonmcmahon79@gmail.com";
+    github = "mcmah309";
+    githubId = 56412856;
+    name = "Dillon H. McMahon";
+  };
   mcmtroffaes = {
     email = "matthias.troffaes@gmail.com";
     github = "mcmtroffaes";
@@ -18918,6 +18943,11 @@
     github = "mnacamura";
     githubId = 45770;
     name = "Mitsuhiro Nakamura";
+  };
+  mnixry = {
+    github = "mnixry";
+    githubId = 32300164;
+    name = "Mix";
   };
   MNThomson = {
     github = "MNThomson";
@@ -24000,6 +24030,12 @@
     githubId = 12279531;
     name = "Ricardo Guevara";
   };
+  rharish = {
+    email = "harish.rajagopals@gmail.com";
+    github = "rharish101";
+    githubId = 25344287;
+    name = "Harish Rajagopal";
+  };
   rhelmot = {
     name = "Audrey Dutcher";
     github = "rhelmot";
@@ -29023,6 +29059,12 @@
     github = "travisbhartwell";
     githubId = 10110;
     name = "Travis B. Hartwell";
+  };
+  travisty- = {
+    email = "travis@traviskinney.co";
+    github = "travisty-";
+    githubId = 10015877;
+    name = "Travis Kinney";
   };
   traxys = {
     email = "quentin+dev@familleboyer.net";

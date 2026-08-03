@@ -961,7 +961,7 @@ with pkgs;
 
   auditwheel = with python3Packages; toPythonApplication auditwheel;
 
-  btcli = with python3Packages; toPythonApplication bittensor-cli;
+  btcli = with python3Packages; toPythonApplication bittensor;
 
   btrsync = with python3Packages; toPythonApplication btrsync;
 
@@ -7378,17 +7378,23 @@ with pkgs;
       kanidm_1_10 = callPackage ../servers/kanidm/1_10.nix {
         kanidmWithSecretProvisioning = kanidmWithSecretProvisioning_1_10;
       };
+      kanidm_1_11 = callPackage ../servers/kanidm/1_11.nix {
+        kanidmWithSecretProvisioning = kanidmWithSecretProvisioning_1_11;
+      };
 
       kanidmWithSecretProvisioning_1_8 = kanidm_1_8.override { enableSecretProvisioning = true; };
       kanidmWithSecretProvisioning_1_9 = kanidm_1_9.override { enableSecretProvisioning = true; };
       kanidmWithSecretProvisioning_1_10 = kanidm_1_10.override { enableSecretProvisioning = true; };
+      kanidmWithSecretProvisioning_1_11 = kanidm_1_11.override { enableSecretProvisioning = true; };
     })
     kanidm_1_8
     kanidm_1_9
     kanidm_1_10
+    kanidm_1_11
     kanidmWithSecretProvisioning_1_8
     kanidmWithSecretProvisioning_1_9
     kanidmWithSecretProvisioning_1_10
+    kanidmWithSecretProvisioning_1_11
     ;
 
   lemmy-server = callPackage ../servers/web-apps/lemmy/server.nix { };
@@ -7460,7 +7466,21 @@ with pkgs;
     ];
   };
 
-  nginxModules = recurseIntoAttrs (callPackage ../servers/http/nginx/modules.nix { });
+  mkNginxPlugin = callPackage ../servers/http/nginx/modules/builder.nix { };
+  nginxModules = recurseIntoAttrs (
+    lib.makeExtensible (
+      self:
+      let
+        packages = lib.packagesFromDirectoryRecursive {
+          inherit callPackage;
+          directory = ../servers/http/nginx/modules;
+        };
+
+        aliases = import ../servers/http/nginx/modules/aliases.nix self;
+      in
+      packages // (lib.optionalAttrs config.allowAliases aliases)
+    )
+  );
 
   # We should move to dynamic modules and create a nginxFull package with all modules
   nginxShibboleth = nginxStable.override {
@@ -9192,14 +9212,6 @@ with pkgs;
 
   inherit (pidginPackages) pidgin;
 
-  # perhaps there are better apps for this task? It's how I had configured my previous system.
-  # And I don't want to rewrite all rules
-  profanity = callPackage ../applications/networking/instant-messengers/profanity (
-    {
-    }
-    // (config.profanity or { })
-  );
-
   puredata-with-plugins =
     plugins: callPackage ../by-name/pu/puredata/wrapper.nix { inherit plugins; };
 
@@ -9370,10 +9382,6 @@ with pkgs;
     bdbSupport = false;
     perlBindings = true;
     pythonBindings = true;
-  };
-
-  supersonic-wayland = supersonic.override {
-    waylandSupport = true;
   };
 
   synergyWithoutGUI = synergy.override { withGUI = false; };
@@ -10186,11 +10194,6 @@ with pkgs;
   lumina = recurseIntoAttrs (callPackage ../desktops/lumina { });
 
   ### DESKTOPS/LXDE
-
-  lxappearance-gtk2 = callPackage ../by-name/lx/lxappearance/package.nix {
-    gtk2 = gtk2-x11;
-    withGtk3 = false;
-  };
 
   lxqt = recurseIntoAttrs (
     import ../desktops/lxqt {

@@ -210,6 +210,7 @@
   ./programs/ente-auth.nix
   ./programs/environment.nix
   ./programs/envision.nix
+  ./programs/ergohaven-entropy.nix
   ./programs/evince.nix
   ./programs/extra-container.nix
   ./programs/fcast-receiver.nix
@@ -1673,6 +1674,7 @@
   ./services/web-apps/engelsystem.nix
   ./services/web-apps/ente.nix
   ./services/web-apps/fediwall.nix
+  ./services/web-apps/feishin.nix
   ./services/web-apps/fider.nix
   ./services/web-apps/filebrowser.nix
   ./services/web-apps/firefly-iii-data-importer.nix
