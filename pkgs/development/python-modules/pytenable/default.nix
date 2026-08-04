@@ -37,6 +37,13 @@ buildPythonPackage (finalAttrs: {
     hash = "sha256-KRZbrJgIxdNAnlmP7Ww/JasoDJqJZkBkd0qXm9gfXp4=";
   };
 
+  postPatch = ''
+    # Marks on fixtures never took effect and are a collection error since pytest 9;
+    # pyproject.toml already carries the equivalent global filterwarnings entry
+    substituteInPlace tests/sc/conftest.py \
+      --replace-fail "@pytest.mark.filterwarnings('ignore::DeprecationWarning')" ""
+  '';
+
   build-system = [ setuptools ];
 
   dependencies = [
@@ -63,10 +70,6 @@ buildPythonPackage (finalAttrs: {
     pytestCheckHook
     requests-pkcs12
     responses
-  ];
-
-  pytestFlags = [
-    "-Wignore::pytest.PytestRemovedIn9Warning"
   ];
 
   disabledTestPaths = [
