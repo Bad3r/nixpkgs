@@ -181,7 +181,7 @@ stdenv.mkDerivation (finalAttrs: {
     };
 
     updateScript = writeShellScript "update-quarto" ''
-      set -o errexit
+      set -o errexit -o pipefail
       export PATH="${
         lib.makeBinPath [
           curl
@@ -189,13 +189,19 @@ stdenv.mkDerivation (finalAttrs: {
           common-updater-scripts
         ]
       }"
-      NEW_VERSION=$(curl --silent https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest | jq '.tag_name | ltrimstr("v")' --raw-output)
+      NEW_VERSION=$(curl --fail --silent --show-error --location https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest | jq '.tag_name | ltrimstr("v")' --raw-output)
+      # a truncated response still leaves jq at exit 0, and an empty version
+      # would reach update-source-version
+      if [[ -z "$NEW_VERSION" || "$NEW_VERSION" = "null" ]]; then
+          echo "Could not read the latest release tag from the GitHub API." >&2
+          exit 1
+      fi
       if [[ "${finalAttrs.version}" = "$NEW_VERSION" ]]; then
           echo "The new version same as the old version."
           exit 0
       fi
       for platform in ${lib.escapeShellArgs finalAttrs.meta.platforms}; do
-        update-source-version "quarto" "$NEW_VERSION" --ignore-same-version --source-key="sources.$platform"
+        update-source-version "''${UPDATE_NIX_ATTR_PATH:-quarto}" "$NEW_VERSION" --ignore-same-version --source-key="sources.$platform"
       done
     '';
   };
