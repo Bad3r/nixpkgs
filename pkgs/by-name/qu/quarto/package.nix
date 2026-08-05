@@ -140,6 +140,9 @@ stdenv.mkDerivation (finalAttrs: {
     # looks; the roff source needs no conversion
     mkdir -p $out/share/man/man1
     mv $out/share/man/quarto-man.man $out/share/man/man1/quarto.1
+    # the qmd the page is generated from, which compressManPages would
+    # otherwise gzip in place for mandb to trip over
+    rm $out/share/man/quarto-man.qmd
 
     runHook postInstall
   '';
