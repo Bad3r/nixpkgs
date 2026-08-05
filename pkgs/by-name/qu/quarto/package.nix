@@ -13,12 +13,17 @@
   makeWrapper,
   runCommand,
   python3,
-  quarto,
   extraPythonPackages ? ps: [ ],
   sysctl,
   which,
   autoPatchelfHook,
   bashNonInteractive,
+  coreutils,
+  versionCheckHook,
+  writeShellScript,
+  curl,
+  jq,
+  common-updater-scripts,
 }:
 
 let
@@ -80,7 +85,12 @@ stdenv.mkDerivation (finalAttrs: {
       --set-default QUARTO_DART_SASS ${lib.getExe dart-sass} \
       --set-default QUARTO_TYPST ${lib.getExe typst} \
       --set-default QUARTO_DENO_DOM $out/bin/tools/${archDir}/deno_dom/${denoDomPlugin} \
-      --suffix PATH : ${lib.makeBinPath [ which ]} \
+      --suffix PATH : ${
+        lib.makeBinPath [
+          coreutils
+          which
+        ]
+      } \
       ${lib.optionalString (rWrapper != null) "--set-default QUARTO_R ${rWithPackages}/bin/R"} \
       ${
         lib.optionalString (python3 != null) "--set-default QUARTO_PYTHON ${pythonWithPackages}/bin/python3"
@@ -126,8 +136,16 @@ stdenv.mkDerivation (finalAttrs: {
     mv bin/* $out/bin
     mv share/* $out/share
 
+    # upstream ships the page as share/man/quarto-man.man, where man(1) never
+    # looks; the roff source needs no conversion
+    mkdir -p $out/share/man/man1
+    mv $out/share/man/quarto-man.man $out/share/man/man1/quarto.1
+
     runHook postInstall
   '';
+
+  doInstallCheck = true;
+  nativeInstallCheckInputs = [ versionCheckHook ];
 
   passthru = {
     sources = {
@@ -154,10 +172,29 @@ stdenv.mkDerivation (finalAttrs: {
           }
           ''
             export HOME="$(mktemp -d)"
-            ${quarto}/bin/quarto check
+            ${lib.getExe finalAttrs.finalPackage} check
             touch $out
           '';
     };
+
+    updateScript = writeShellScript "update-quarto" ''
+      set -o errexit
+      export PATH="${
+        lib.makeBinPath [
+          curl
+          jq
+          common-updater-scripts
+        ]
+      }"
+      NEW_VERSION=$(curl --silent https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest | jq '.tag_name | ltrimstr("v")' --raw-output)
+      if [[ "${finalAttrs.version}" = "$NEW_VERSION" ]]; then
+          echo "The new version same as the old version."
+          exit 0
+      fi
+      for platform in ${lib.escapeShellArgs finalAttrs.meta.platforms}; do
+        update-source-version "quarto" "$NEW_VERSION" --ignore-same-version --source-key="sources.$platform"
+      done
+    '';
   };
 
   meta = {
@@ -169,7 +206,7 @@ stdenv.mkDerivation (finalAttrs: {
     '';
     homepage = "https://quarto.org/";
     changelog = "https://github.com/quarto-dev/quarto-cli/releases/tag/v${finalAttrs.version}";
-    license = lib.licenses.gpl2Plus;
+    license = lib.licenses.mit;
     maintainers = with lib.maintainers; [
       minijackson
       mrtarantoga
