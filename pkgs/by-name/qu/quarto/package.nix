@@ -7,6 +7,7 @@
   deno,
   fetchurl,
   dart-sass,
+  installShellFiles,
   rWrapper,
   rPackages,
   extraRPackages ? [ ],
@@ -64,6 +65,7 @@ stdenv.mkDerivation (finalAttrs: {
   strictDeps = true;
 
   nativeBuildInputs = [
+    installShellFiles
     makeWrapper
   ]
   ++ lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
@@ -141,16 +143,13 @@ stdenv.mkDerivation (finalAttrs: {
     # pre-1.4 location, still probed by the VS Code extension
     ln -s ${archDir}/pandoc bin/tools/pandoc
 
+    # share/man also holds the qmd the page is generated from, which
+    # compressManPages would gzip in place for mandb to trip over
+    installManPage --name quarto.1 share/man/quarto-man.man
+    rm -r share/man
+
     mv bin/* $out/bin
     mv share/* $out/share
-
-    # upstream ships the page as share/man/quarto-man.man, where man(1) never
-    # looks; the roff source needs no conversion
-    mkdir -p $out/share/man/man1
-    mv $out/share/man/quarto-man.man $out/share/man/man1/quarto.1
-    # the qmd the page is generated from, which compressManPages would
-    # otherwise gzip in place for mandb to trip over
-    rm $out/share/man/quarto-man.qmd
 
     runHook postInstall
   '';
