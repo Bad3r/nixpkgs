@@ -5398,6 +5398,12 @@
     githubId = 718298;
     name = "Michael Livshin";
   };
+  cnst = {
+    name = "cnst";
+    email = "mail@cnst.dev";
+    github = "cnsta";
+    githubId = 61944575;
+  };
   CnTeng = {
     name = "CnTeng";
     email = "me@snakepi.xyz";
@@ -5952,7 +5958,7 @@
     name = "Serg Nesterov";
     keys = [ { fingerprint = "6E7D BA30 DB5D BA60 693C  3BE3 1512 F6EB 84AE CC8C"; } ];
   };
-  cvengler = {
+  cve = {
     name = "Clara Engler";
     github = "cvengler";
     githubId = 12272949;
@@ -16370,6 +16376,19 @@
     github = "i-am-logger";
     githubId = 1440852;
   };
+  logn = {
+    name = "Logan Devine";
+    github = "thetayloredman";
+    githubId = 26350849;
+
+    email = "nixpkgs@zirco.dev";
+    matrix = "@logn:zirco.dev";
+    keys = [
+      {
+        fingerprint = "67FA AA65 5DBD 691E 7957  E095 1594 E544 D8F8 F21E";
+      }
+    ];
+  };
   logo = {
     email = "logo4poop@protonmail.com";
     matrix = "@logo4poop:matrix.org";
@@ -16568,6 +16587,7 @@
     name = "Lewis";
   };
   lubsch = {
+    matrix = "@lubsch:matrix.org";
     github = "lubsch";
     githubId = 33580245;
     name = "Benjamin Lohmar";
@@ -20793,7 +20813,7 @@
     name = "nova madeline";
   };
   novaviper = {
-    email = "coder.nova99@mailbox.org";
+    email = "code4nova@aluwux.me";
     github = "novaviper";
     githubId = 7191115;
     name = "Nova Leary";
@@ -30675,6 +30695,12 @@
     github = "witchof0x20";
     githubId = 36118348;
     keys = [ { fingerprint = "69C9 876B 5797 1B2E 11C5  7C39 80A1 F76F C9F9 54AE"; } ];
+  };
+  WitteShadovv = {
+    name = "WitteShadovv";
+    email = "contact@witteshadovv.dev";
+    github = "WitteShadovv";
+    githubId = 26429638;
   };
   wiyba = {
     name = "Dmitry Shmakov";
