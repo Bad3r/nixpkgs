@@ -9275,6 +9275,12 @@
     github = "fkautz";
     githubId = 135706;
   };
+  fkomarek = {
+    name = "Filip Komárek";
+    github = "filip2cz";
+    githubId = 82812634;
+    email = "filip@fkomarek.eu";
+  };
   FKouhai = {
     name = "Fran Cirka";
     email = "frandres00@gmail.com";
@@ -12095,6 +12101,12 @@
     github = "IreneKnapp";
     githubId = 157678;
     keys = [ { fingerprint = "E864 BDFA AB55 36FD C905  5195 DBF2 52AF FB26 19FD"; } ];
+  };
+  irgendeinwer = {
+    name = "Irgendeinwer";
+    email = "irgendeinwer@proton.me";
+    github = "Irgendeinwer";
+    githubId = 175053643;
   };
   ironicbadger = {
     email = "alexktz@gmail.com";
@@ -27365,6 +27377,11 @@
     githubId = 19950702;
     email = "silence.m@hotmail.com";
   };
+  subham-roy = {
+    github = "SUBHAM-ROY";
+    githubId = 7468505;
+    name = "Subham Roy";
+  };
   SubhrajyotiSen = {
     email = "subhrajyoti12@gmail.com";
     github = "SubhrajyotiSen";
@@ -30450,6 +30467,12 @@
     email = "wsh@2x.cz";
     github = "wentasah";
     githubId = 140542;
+  };
+  weriomat = {
+    name = "Elias Engel";
+    email = "nixpkgs@weriomat.com";
+    github = "weriomat";
+    githubId = 59094810;
   };
   wesleyjrz = {
     email = "dev@wesleyjrz.com";
