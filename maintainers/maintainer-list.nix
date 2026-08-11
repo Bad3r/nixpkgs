@@ -2929,6 +2929,12 @@
     githubId = 22575913;
     name = "Anish Lakhwara";
   };
+  ayushthoren = {
+    email = "ayushthoren@gmail.com";
+    github = "ayushthoren";
+    githubId = 29691296;
+    name = "Ayush Thoren";
+  };
   azahi = {
     name = "Azat Bahawi";
     email = "azat@bahawi.net";
@@ -5731,6 +5737,11 @@
     githubId = 3077118;
     name = "David McFarland";
   };
+  corps-fini = {
+    github = "corps-fini";
+    githubId = 44802527;
+    name = "corps-fini";
+  };
   costrouc = {
     email = "chris.ostrouchov@gmail.com";
     github = "costrouc";
@@ -6318,6 +6329,13 @@
     email = "me@zqy.io";
     github = "darkyzhou";
     githubId = 7220778;
+  };
+  daroche = {
+    name = "daroche";
+    email = "him@daroche.me";
+    matrix = "@him:daroche.me";
+    github = "RealDaroche";
+    githubId = 94007359;
   };
   darshancode2005 = {
     name = "Darshan Thakare";
@@ -12001,6 +12019,13 @@
     githubId = 7685264;
     name = "Indexyz";
   };
+  indium114 = {
+    name = "indium114";
+    github = "indium114";
+    githubId = 156162907;
+    matrix = "@indium114:matrix.org";
+    keys = [ { fingerprint = "FEC7 A1E4 0F1A 528B 865C  A0B8 6249 5C16 5883 2CF0"; } ];
+  };
   ineol = {
     email = "leo.stefanesco@gmail.com";
     github = "ineol";
@@ -17054,6 +17079,11 @@
     githubId = 401263;
     keys = [ { fingerprint = "1147 43F1 E707 6F3E 6F4B  2C96 B9A8 B592 F126 F8E8"; } ];
   };
+  macaquinyho = {
+    github = "macaquinyho";
+    githubId = 14185777;
+    name = "Arnau Valls";
+  };
   macbucheron = {
     name = "Nathan Deprat";
     github = "Macbucheron1";
@@ -18261,6 +18291,11 @@
     name = "merrkry";
     github = "merrkry";
     githubId = 124278440;
+  };
+  mershl = {
+    name = "Mershl";
+    github = "mershl";
+    githubId = 520251;
   };
   mert-kurttutan = {
     email = "mert-kurttutan@gmail.com";
@@ -28734,6 +28769,13 @@
     githubId = 1334474;
     name = "Timothy Stott";
   };
+  tincotema = {
+    email = "tincotema@tincotema.org";
+    github = "tincotema";
+    githubId = 41209208;
+    name = "tincotema";
+    keys = [ { fingerprint = "F9D5 F663 E497 5CB1 66B5  FEA2 A961 39D7 C110 556C"; } ];
+  };
   tiptenbrink = {
     email = "tip@tenbrinkmeijs.com";
     github = "tiptenbrink";
@@ -29598,6 +29640,12 @@
     email = "username-generic@tuta.io";
     github = "username-generic";
     githubId = 202454830;
+  };
+  Username404-59 = {
+    name = "Charlie Quinet";
+    email = "charlie.quinet@gmail.com";
+    github = "Username404-59";
+    githubId = 53659497;
   };
   usertam = {
     name = "Samuel Tam";

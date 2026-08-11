@@ -143,6 +143,7 @@ mapAliases {
   blockchain = throw "'blockchain' has been removed because its source is unavailable"; # added 2026-07-20
   bloodhound-py = bloodhound; # added 2026-08-04
   boiboite-opener-framework = throw "'boiboite-opener-framework' has been removed as it was unmaintained upstream"; # Added 2026-03-23
+  brother-ql = brother-ql-next; # Added 2026-08-08
   bsblan = throw "'bsblan' has been renamed to/replaced by 'python-bsblan'"; # Converted to throw 2025-10-29
   bsddb3 = throw "'bsddb3' has been removed because it was deprecated in favor of 'berkeleydb'"; # added 2026-01-20
   bt_proximity = throw "'bt_proximity' has been renamed to/replaced by 'bt-proximity'"; # Converted to throw 2025-10-29
@@ -150,6 +151,7 @@ mapAliases {
   BTrees = throw "'BTrees' has been renamed to/replaced by 'btrees'"; # Converted to throw 2025-10-29
   btsmarthub_devicelist = throw "'btsmarthub_devicelist' has been renamed to/replaced by 'btsmarthub-devicelist'"; # Converted to throw 2025-10-29
   bugzilla = throw "'bugzilla' has been renamed to/replaced by 'python-bugzilla'"; # Converted to throw 2025-10-29
+  bumpfontversion = throw "'bumpfontversion' has been removed as its no longer used"; # added 2026-08-09
   bunch = throw "bunch has been removed as it is unmaintained since inception"; # added 2025-05-31
   bz2file = throw "'bz2file' has beem removed, as it was not longed maintained upstream since 2020"; # added 2025-08-26
   calysto-scheme = throw "'calysto-scheme' has been removed as it is no longer maintained upstream"; # Added 2026-01-31
@@ -181,6 +183,7 @@ mapAliases {
   debian = throw "'debian' has been renamed to/replaced by 'python-debian'"; # Converted to throw 2025-10-29
   dedupe-pylbfgs = pylbfgs; # added 2026-06-28
   deepsearch-glm = throw "'deepsearch-glm' has been removed due to lack of upstream maintenance"; # Added 2025-03-04
+  dictionaries = throw "'dictionaries' has been removed as it was archived upstream"; # Added 2026-07-20
   dictpath = throw "'dictpath' has been renamed to/replaced by 'pathable'"; # Converted to throw 2025-10-29
   diff_cover = throw "'diff_cover' has been renamed to/replaced by 'diff-cover'"; # Converted to throw 2025-10-29
   digital-ocean = throw "'digital-ocean' has been renamed to/replaced by 'python-digitalocean'"; # Converted to throw 2025-10-29
@@ -415,6 +418,7 @@ mapAliases {
   mutag = throw "mutag has been removed because it is unmaintained since 2018"; # added 2025-05-25
   mypermobil = throw "'mypermobil' was removed because Home Assistant dropped the integration"; # added 2026-08-05
   mysql-connector = mysql-connector-python; # added 2026-06-21
+  myst-docutils = warnAlias "'myst-docutils' has been removed as it was identical to 'myst-parser'" myst-parser;
   napari-npe2 = warnAlias "napari-npe2 has been renamed to 'npe2'" npe2; # added 2026-07-28
   net2grid = throw "'net2grid' has been renamed to/replaced by 'gridnet'"; # Converted to throw 2025-10-29
   ninja-python = throw "'ninja-python' has been renamed to/replaced by 'ninja'"; # Converted to throw 2025-10-29
@@ -577,6 +581,7 @@ mapAliases {
   python-subunit = throw "'python-subunit' has been renamed to/replaced by 'subunit'"; # Converted to throw 2025-10-29
   python-u2flib-server = throw "'python-u2flib-server' has been removed, since it was broken and archived upstream"; # added 2025-11-08
   python-unshare = throw "python-unshare was removed as unmaintained since 2016"; # added 2025-05-25
+  python-zbar = zbar; # Added 2026-08-08
   python_docs_theme = throw "'python_docs_theme' has been renamed to/replaced by 'python-docs-theme'"; # Converted to throw 2025-10-29
   python_fedora = throw "'python_fedora' has been renamed to/replaced by 'python-fedora'"; # Converted to throw 2025-10-29
   python_magic = throw "'python_magic' has been renamed to/replaced by 'python-magic'"; # Converted to throw 2025-10-29
