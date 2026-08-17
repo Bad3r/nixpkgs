@@ -159,6 +159,7 @@ mapAliases {
   casbin = pycasbin; # added 2025-06-12
   cchardet = throw "'cchardet' has been renamed to/replaced by 'faust-cchardet'"; # Converted to throw 2025-10-29
   chai = throw "'chai' has been removed as it is no longer maintained upstream and the repository was archived"; # Added 2026-06-08
+  changefinder = throw "'changefinder' has been removed because it was unmaintained upstream"; # Added 2026-08-07
   characteristic = throw "'characteristic' has been removed because it is no longer maintained upstream"; # Added 2026-01-14
   chart-studio = throw "'chart-studio' has been removed as it is no longer maintained upstream"; # Added 2026-03-12
   cheetah3 = ct3; # added 2026-07-24
@@ -279,7 +280,11 @@ mapAliases {
   fvs = throw "'fvs' has been removed due to being unused"; # Added 2026-05-23
   garminconnect-ha = throw "'garminconnect-ha' has been renamed to/replaced by 'garminconnect'"; # Converted to throw 2025-10-29
   GeoIP = throw "'GeoIP' has been renamed to/replaced by 'geoip'"; # Converted to throw 2025-10-29
+  gepetto-gui = throw "'gepetto-gui' has been removed, as authors and most users moved to viser"; # Added 2026-03-24
+  gepetto-viewer = throw "'gepetto-viewer' has been removed, as authors and most users moved to viser"; # Added 2026-03-24
+  gepetto-viewer-corba = throw "'gepetto-viewer-corba' has been removed, as authors and most users moved to viser"; # Added 2026-03-24
   ghidra-bridge = throw "'ghidra-bridge' has been removed as it was unmaintained upstream"; # Added 2026-04-05
+  gistyc = throw "'gistyc' has been removed because it was deleted upstream and unmaintained in nixpkgs"; # Added 2026-08-15
   github3_py = throw "'github3_py' has been renamed to/replaced by 'github3-py'"; # Converted to throw 2025-10-29
   GitPython = throw "'GitPython' has been renamed to/replaced by 'gitpython'"; # Converted to throw 2025-10-29
   gitterpy = throw "'gitterpy' was removed. The service was migrated to Matrix"; # Added 2026-06-04
@@ -550,6 +555,7 @@ mapAliases {
   PyRSS2Gen = throw "'PyRSS2Gen' has been renamed to/replaced by 'pyrss2gen'"; # Converted to throw 2025-10-29
   pyside6-fluent-widgets = throw "pyside6-fluent-widgets has been removed, since it is unmaintained"; # added 2025-08-20
   pysidesix-frameless-window = throw "pysidesix-frameless-window has been removed, since it is unmaintained"; # added 2025-08-20
+  pysigma-pipeline-crowdstrike = pysigma-backend-crowdstrike; # added 2026-08-17
   pysmart-smartx = throw "'pysmart-smartx' has been renamed to/replaced by 'pysmart'"; # Converted to throw 2025-10-29
   pysmartapp = throw "'pysmartapp' has been removed since it is deprecated and archived upstream."; # Added 2026-06-03
   pySmartDL = throw "'pySmartDL' has been renamed to/replaced by 'pysmartdl'"; # Converted to throw 2025-10-29

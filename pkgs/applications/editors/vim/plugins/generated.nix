@@ -7464,6 +7464,21 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
+  herdr-splits-nvim = buildVimPlugin {
+    pname = "herdr-splits.nvim";
+    version = "0.5.2";
+    src = fetchFromGitHub {
+      owner = "lmilojevicc";
+      repo = "herdr-splits.nvim";
+      tag = "v0.5.2";
+      hash = "sha256-2h9HGQcIwKIE5uKuRVwtIfKNn0urQttvg5b95kavzgo=";
+      fetchSubmodules = true;
+    };
+    meta.homepage = "https://github.com/lmilojevicc/herdr-splits.nvim/";
+    meta.license = getLicenseFromSpdxId "MIT";
+    meta.hydraPlatforms = [ ];
+  };
+
   hex-nvim = buildVimPlugin {
     pname = "hex.nvim";
     version = "0-unstable-2025-07-27";
@@ -16335,6 +16350,20 @@ final: prev: {
     };
     meta.homepage = "https://github.com/mopp/sky-color-clock.vim/";
     meta.license = unfree;
+    meta.hydraPlatforms = [ ];
+  };
+
+  slang-server-nvim = buildVimPlugin {
+    pname = "slang-server.nvim";
+    version = "0-unstable-2026-06-22";
+    src = fetchFromGitHub {
+      owner = "hudson-trading";
+      repo = "slang-server.nvim";
+      rev = "fedf769c407b4f36335f758d2c152ccae21a928b";
+      hash = "sha256-+Xb0tqhql3/yObLQ/yNtPfYTw9HEy2nWaQp+Or/YZ0Q=";
+    };
+    meta.homepage = "https://github.com/hudson-trading/slang-server.nvim/";
+    meta.license = getLicenseFromSpdxId "MIT";
     meta.hydraPlatforms = [ ];
   };
 
