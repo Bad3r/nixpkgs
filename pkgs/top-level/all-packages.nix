@@ -2341,9 +2341,7 @@ with pkgs;
     )
   );
 
-  netdata = callPackage ../tools/system/netdata {
-    protobuf = protobuf_21;
-  };
+  netdata = callPackage ../tools/system/netdata { };
   netdataCloud = netdata.override {
     withCloudUi = true;
   };
@@ -5257,8 +5255,6 @@ with pkgs;
     buildDocs = false;
   };
 
-  sbt = callPackage ../development/tools/build-managers/sbt { };
-  sbt-with-scala-native = callPackage ../development/tools/build-managers/sbt/scala-native.nix { };
   simpleBuildTool = sbt;
 
   shake =
@@ -8588,7 +8584,7 @@ with pkgs;
           buildMozillaMach
           ;
       };
-  firefox-esr-unwrapped = firefox-esr-140-unwrapped;
+  firefox-esr-unwrapped = firefox-esr-153-unwrapped;
 
   firefox = wrapFirefox firefox-unwrapped { };
   firefox-beta = wrapFirefox firefox-beta-unwrapped { };
@@ -8606,7 +8602,7 @@ with pkgs;
     wmClass = "firefox-esr";
     icon = "firefox-esr";
   };
-  firefox-esr = firefox-esr-140;
+  firefox-esr = firefox-esr-153;
 
   firefox-bin-unwrapped = callPackage ../applications/networking/browsers/firefox-bin {
     inherit (firefox-unwrapped.passthru) applicationName;
@@ -8933,8 +8929,6 @@ with pkgs;
 
   mediaelch-qt5 = callPackage ../by-name/me/mediaelch/package.nix { qtVersion = 5; };
   mediaelch-qt6 = mediaelch;
-
-  mendeley = callPackage ../applications/office/mendeley { };
 
   mercurialFull = mercurial.override { fullBuild = true; };
 
