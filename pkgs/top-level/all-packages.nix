@@ -5181,8 +5181,11 @@ with pkgs;
 
   inherit (callPackage ../misc/optee-os { })
     buildOptee
-    opteeQemuArm
+    opteeAllwinnerA64
     opteeQemuAarch64
+    opteeQemuArm
+    opteeRockchipRK3399
+    opteeRockchipRK3588
     ;
 
   patchelf = callPackage ../development/tools/misc/patchelf { };
@@ -7895,9 +7898,6 @@ with pkgs;
     qemu.override {
       smbdSupport = lib.meta.availableOn stdenv.hostPlatform samba;
       cephSupport = lib.meta.availableOn stdenv.hostPlatform ceph;
-      glusterfsSupport =
-        lib.meta.availableOn stdenv.hostPlatform glusterfs
-        && lib.meta.availableOn stdenv.hostPlatform libuuid;
     }
   );
 
