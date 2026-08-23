@@ -17039,8 +17039,6 @@ self: super: with self; {
 
   python-overseerr = callPackage ../development/python-modules/python-overseerr { };
 
-  python-owasp-zap-v2-4 = callPackage ../development/python-modules/python-owasp-zap-v2-4 { };
-
   python-oxmsg = callPackage ../development/python-modules/python-oxmsg { };
 
   python-packer = callPackage ../development/python-modules/python-packer { };
@@ -21785,7 +21783,7 @@ self: super: with self; {
     inherit (pkgs) libx11 libxext;
   };
 
-  uefi-firmware-parser = callPackage ../development/python-modules/uefi-firmware-parser { };
+  uefi-firmware = callPackage ../development/python-modules/uefi-firmware { };
 
   ufal-chu-liu-edmonds = callPackage ../development/python-modules/ufal-chu-liu-edmonds { };
 
@@ -22921,6 +22919,8 @@ self: super: with self; {
   zammad-py = callPackage ../development/python-modules/zammad-py { };
 
   zapf = callPackage ../development/python-modules/zapf { };
+
+  zaproxy = callPackage ../development/python-modules/zaproxy { };
 
   zarr = callPackage ../development/python-modules/zarr { };
 
