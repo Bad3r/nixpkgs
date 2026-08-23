@@ -352,6 +352,7 @@
   ./programs/udevil.nix
   ./programs/upki.nix
   ./programs/usbtop.nix
+  ./programs/vellum.nix
   ./programs/vim.nix
   ./programs/virt-manager.nix
   ./programs/vivid.nix
@@ -804,7 +805,6 @@
   ./services/mail/offlineimap.nix
   ./services/mail/opendkim.nix
   ./services/mail/opensmtpd.nix
-  ./services/mail/pfix-srsd.nix
   ./services/mail/postfix-tlspol.nix
   ./services/mail/postfix.nix
   ./services/mail/postgrey.nix

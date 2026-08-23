@@ -1168,6 +1168,7 @@ in
   nginx-etag = runTest ./nginx-etag.nix;
   nginx-etag-compression = runTest ./nginx-etag-compression.nix;
   nginx-globalredirect = runTest ./nginx-globalredirect.nix;
+  nginx-grpc-error-pages = runTest ./nginx-grpc-error-pages.nix;
   nginx-http3 = import ./nginx-http3.nix { inherit pkgs runTest; };
   nginx-lua = runTest ./nginx-lua.nix;
   nginx-mime = runTest ./nginx-mime.nix;
@@ -1849,6 +1850,9 @@ in
   userborn-mutable-etc = runTest ./userborn-mutable-etc.nix;
   userborn-mutable-users = runTest ./userborn-mutable-users.nix;
   userborn-static = runTest ./userborn-static.nix;
+  userborn-subids = runTest ./userborn-subids.nix;
+  userborn-subids-immutable-etc = runTest ./userborn-subids-immutable-etc.nix;
+  userborn-subids-mutable-etc = runTest ./userborn-subids-mutable-etc.nix;
   ustreamer = runTest ./ustreamer.nix;
   utils = pkgs.callPackage ./utils { inherit runTest; };
   utmp = runTest ./utmp.nix;

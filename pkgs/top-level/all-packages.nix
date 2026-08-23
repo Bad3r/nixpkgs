@@ -4322,9 +4322,10 @@ with pkgs;
 
   dhallPackages = recurseIntoAttrs (callPackage ./dhall-packages.nix { });
 
-  beam = callPackage ./beam-packages.nix { };
+  beam = callPackage ./beam-packages.nix { scopeName = "beam"; };
   beam_minimal = callPackage ./beam-packages.nix {
     beam = beam_minimal;
+    scopeName = "beam_minimal";
     systemdSupport = false;
     wxSupport = false;
   };
@@ -4793,9 +4794,9 @@ with pkgs;
     electron_42
     electron_43
     ;
-  electron = electron_41;
-  electron-bin = electron_41-bin;
-  electron-chromedriver = electron-chromedriver_41;
+  electron = electron_43;
+  electron-bin = electron_43-bin;
+  electron-chromedriver = electron-chromedriver_43;
 
   autoconf = callPackage ../development/tools/misc/autoconf { };
   autoconf269 = callPackage ../development/tools/misc/autoconf/2.69.nix { };
@@ -8858,49 +8859,30 @@ with pkgs;
 
   libreoffice-bin = callPackage ../applications/office/libreoffice/darwin { };
 
-  libreoffice = hiPrio libreoffice-still;
+  libreoffice = hiPrio libreoffice-stable;
   libreoffice-unwrapped = libreoffice.unwrapped;
 
-  libreoffice-qt = hiPrio libreoffice-qt-still;
+  libreoffice-qt = hiPrio libreoffice-qt-stable;
   libreoffice-qt-unwrapped = libreoffice-qt.unwrapped;
 
-  libreoffice-qt-fresh = lowPrio (
+  libreoffice-qt-stable = lowPrio (
     callPackage ../applications/office/libreoffice/wrapper.nix {
       unwrapped = kdePackages.callPackage ../applications/office/libreoffice {
         kdeIntegration = true;
-        variant = "fresh";
+        variant = "stable";
       };
     }
   );
-  libreoffice-qt-fresh-unwrapped = libreoffice-qt-fresh.unwrapped;
+  libreoffice-qt-stable-unwrapped = libreoffice-qt-stable.unwrapped;
 
-  libreoffice-qt-still = lowPrio (
-    callPackage ../applications/office/libreoffice/wrapper.nix {
-      unwrapped = kdePackages.callPackage ../applications/office/libreoffice {
-        kdeIntegration = true;
-        variant = "still";
-      };
-    }
-  );
-  libreoffice-qt-still-unwrapped = libreoffice-qt-still.unwrapped;
-
-  libreoffice-fresh = lowPrio (
+  libreoffice-stable = lowPrio (
     callPackage ../applications/office/libreoffice/wrapper.nix {
       unwrapped = callPackage ../applications/office/libreoffice {
-        variant = "fresh";
+        variant = "stable";
       };
     }
   );
-  libreoffice-fresh-unwrapped = libreoffice-fresh.unwrapped;
-
-  libreoffice-still = lowPrio (
-    callPackage ../applications/office/libreoffice/wrapper.nix {
-      unwrapped = callPackage ../applications/office/libreoffice {
-        variant = "still";
-      };
-    }
-  );
-  libreoffice-still-unwrapped = libreoffice-still.unwrapped;
+  libreoffice-stable-unwrapped = libreoffice-stable.unwrapped;
 
   libreoffice-collabora = callPackage ../applications/office/libreoffice {
     variant = "collabora";
@@ -10879,8 +10861,6 @@ with pkgs;
   netbsd = recurseIntoAttrs (callPackage ../os-specific/bsd/netbsd { });
 
   openbsd = recurseIntoAttrs (callPackage ../os-specific/bsd/openbsd { });
-
-  radicle-node-unstable = callPackage ../by-name/ra/radicle-node/unstable.nix { };
 
   olivetin-3k = callPackage ../by-name/ol/olivetin/3k.nix { };
 
