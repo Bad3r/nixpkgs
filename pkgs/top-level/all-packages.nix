@@ -469,8 +469,6 @@ with pkgs;
 
   fetchgitLocal = callPackage ../build-support/fetchgitlocal { };
 
-  fetchmtn = callPackage ../build-support/fetchmtn (config.fetchmtn or { });
-
   fetchMavenArtifact = callPackage ../build-support/fetchmavenartifact { };
 
   fetchpijul = callPackage ../build-support/fetchpijul { };
@@ -1980,7 +1978,7 @@ with pkgs;
 
   expect = tcl8Packages.expect_5;
 
-  Fabric = with python3Packages; toPythonApplication fabric;
+  fabric = with python3Packages; toPythonApplication fabric;
 
   flatpak-builder = callPackage ../development/tools/flatpak-builder {
     binutils = binutils-unwrapped;
@@ -2515,7 +2513,7 @@ with pkgs;
   ioskeley-mono = recurseIntoAttrs (callPackage ../data/fonts/ioskeley-mono { });
 
   # Not in aliases because it wouldn't get picked up by callPackage
-  netbox = netbox_4_5;
+  netbox = netbox_4_6;
 
   netboxPlugins = recurseIntoAttrs netbox.plugins;
 
@@ -2805,6 +2803,14 @@ with pkgs;
   reuse = with python3.pkgs; toPythonApplication reuse;
 
   rmate = rubyPackages.rmate;
+
+  rosecFull = pkgs.rosec.override {
+    provider = with pkgsCross.wasi32; [
+      rosec-bitwarden-pm
+      rosec-bitwarden-sm
+      rosec-gnome-keyring
+    ];
+  };
 
   rpatool = with python3Packages; toPythonApplication rpatool;
 
@@ -4632,7 +4638,6 @@ with pkgs;
   };
 
   tcl = tcl-8_6;
-  tcl-8_5 = callPackage ../development/interpreters/tcl/8.5.nix { };
   tcl-8_6 = callPackage ../development/interpreters/tcl/8.6.nix { };
   tcl-9_0 = callPackage ../development/interpreters/tcl/9.0.nix { };
 
@@ -4995,10 +5000,6 @@ with pkgs;
       "ncurses"
       "qt5"
     ];
-  };
-
-  coccinelle = callPackage ../development/tools/misc/coccinelle {
-    ocamlPackages = ocaml-ng.ocamlPackages_4_14;
   };
 
   credstash = with python3Packages; toPythonApplication credstash;
@@ -6430,6 +6431,7 @@ with pkgs;
 
   inherit
     ({
+      protobuf_36 = callPackage ../development/libraries/protobuf/36.nix { };
       protobuf_35 = callPackage ../development/libraries/protobuf/35.nix { };
       protobuf_34 = callPackage ../development/libraries/protobuf/34.nix { };
       protobuf_33 = callPackage ../development/libraries/protobuf/33.nix { };
@@ -6449,6 +6451,7 @@ with pkgs;
         abseil-cpp = abseil-cpp_202103;
       };
     })
+    protobuf_36
     protobuf_35
     protobuf_34
     protobuf_33
@@ -6700,7 +6703,6 @@ with pkgs;
 
   tk-9_0 = callPackage ../development/libraries/tk/9.0.nix { tcl = tcl-9_0; };
   tk-8_6 = callPackage ../development/libraries/tk/8.6.nix { };
-  tk-8_5 = callPackage ../development/libraries/tk/8.5.nix { tcl = tcl-8_5; };
 
   tpm2-tss = callPackage ../development/libraries/tpm2-tss {
     autoreconfHook = buildPackages.autoreconfHook269;
@@ -6709,18 +6711,6 @@ with pkgs;
   unixodbcDrivers = recurseIntoAttrs (callPackages ../development/libraries/unixODBCDrivers { });
 
   valeStyles = recurseIntoAttrs (callPackages ../by-name/va/vale/styles.nix { });
-
-  valhalla = callPackage ../development/libraries/valhalla {
-    boost = boost.override {
-      enablePython = true;
-      python = python3;
-    };
-    protobuf = protobuf_21.override {
-      abseil-cpp = abseil-cpp_202103.override {
-        cxxStandard = "17";
-      };
-    };
-  };
 
   vencord-web-extension = callPackage ../by-name/ve/vencord/package.nix { buildWebExtension = true; };
 
@@ -9823,9 +9813,6 @@ with pkgs;
   };
 
   freeciv_gtk = freeciv;
-
-  # used as base package for iortcw forks
-  iortcw_sp = callPackage ../by-name/io/iortcw/sp.nix { };
 
   katagoWithCuda = katago.override {
     backend = "cuda";

@@ -116,6 +116,8 @@ self: super: with self; {
 
   adlfs = callPackage ../development/python-modules/adlfs { };
 
+  adsbcot = callPackage ../development/python-modules/adsbcot { };
+
   advantage-air = callPackage ../development/python-modules/advantage-air { };
 
   aeidon = callPackage ../development/python-modules/aeidon { };
@@ -580,6 +582,8 @@ self: super: with self; {
 
   aiotedee = callPackage ../development/python-modules/aiotedee { };
 
+  aiothreads = callPackage ../development/python-modules/aiothreads { };
+
   aiotools = callPackage ../development/python-modules/aiotools { };
 
   aiotractive = callPackage ../development/python-modules/aiotractive { };
@@ -620,6 +624,8 @@ self: super: with self; {
 
   aiozoneinfo = callPackage ../development/python-modules/aiozoneinfo { };
 
+  aircot = callPackage ../development/python-modules/aircot { };
+
   airgradient = callPackage ../development/python-modules/airgradient { };
 
   airium = callPackage ../development/python-modules/airium { };
@@ -639,6 +645,8 @@ self: super: with self; {
   airtouch4pyapi = callPackage ../development/python-modules/airtouch4pyapi { };
 
   airtouch5py = callPackage ../development/python-modules/airtouch5py { };
+
+  aiscot = callPackage ../development/python-modules/aiscot { };
 
   aistore = callPackage ../development/python-modules/aistore { };
 
@@ -2224,6 +2232,8 @@ self: super: with self; {
   bayespy = callPackage ../development/python-modules/bayespy { };
 
   bbox = callPackage ../development/python-modules/bbox { };
+
+  bbpb = callPackage ../development/python-modules/bbpb { };
 
   bc-detect-secrets = callPackage ../development/python-modules/bc-detect-secrets { };
 
@@ -5735,6 +5745,8 @@ self: super: with self; {
 
   explorerscript = callPackage ../development/python-modules/explorerscript { };
 
+  expression = callPackage ../development/python-modules/expression { };
+
   exrex = callPackage ../development/python-modules/exrex { };
 
   extension-helpers = callPackage ../development/python-modules/extension-helpers { };
@@ -7823,6 +7835,7 @@ self: super: with self; {
     huaweicloudsdkaad
     huaweicloudsdkagentarts
     huaweicloudsdkagentidentity
+    huaweicloudsdkaidatalakejobserver
     huaweicloudsdkantiddos
     huaweicloudsdkaom
     huaweicloudsdkaos
@@ -8311,6 +8324,8 @@ self: super: with self; {
   inference-gym = callPackage ../development/python-modules/inference-gym { };
 
   infinity = callPackage ../development/python-modules/infinity { };
+
+  infisicalsdk = callPackage ../development/python-modules/infisicalsdk { };
 
   inflate64 = callPackage ../development/python-modules/inflate64 { };
 
@@ -13709,7 +13724,7 @@ self: super: with self; {
   };
 
   plover_5 = callPackage ../development/python-modules/plover/5.nix {
-    inherit (pkgs.qt6) qtbase wrapQtAppsHook;
+    inherit (pkgs.qt6) qtbase wrapQtAppsHook qtsvg;
   };
 
   pluggy = callPackage ../development/python-modules/pluggy { };
@@ -16355,6 +16370,8 @@ self: super: with self; {
 
   pytaglib = callPackage ../development/python-modules/pytaglib { };
 
+  pytak = callPackage ../development/python-modules/pytak { };
+
   pytango = callPackage ../development/python-modules/pytango { };
 
   pytankerkoenig = callPackage ../development/python-modules/pytankerkoenig { };
@@ -18944,6 +18961,8 @@ self: super: with self; {
   simanneal = callPackage ../development/python-modules/simanneal { };
 
   simber = callPackage ../development/python-modules/simber { };
+
+  simp-sexp = callPackage ../development/python-modules/simp-sexp { };
 
   simpful = callPackage ../development/python-modules/simpful { };
 

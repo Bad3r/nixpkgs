@@ -372,6 +372,7 @@
   ./programs/wayland/pinnacle.nix
   ./programs/wayland/river.nix
   ./programs/wayland/sway.nix
+  ./programs/wayland/umbriel.nix
   ./programs/wayland/uwsm.nix
   ./programs/wayland/waybar.nix
   ./programs/wayland/wayfire.nix
@@ -1320,6 +1321,7 @@
   ./services/networking/mmsd.nix
   ./services/networking/modemmanager.nix
   ./services/networking/monero.nix
+  ./services/networking/moonshine.nix
   ./services/networking/mosquitto.nix
   ./services/networking/mozillavpn.nix
   ./services/networking/mptcpd.nix
@@ -1575,6 +1577,7 @@
   ./services/security/physlock.nix
   ./services/security/pocket-id.nix
   ./services/security/reaction.nix
+  ./services/security/rosec.nix
   ./services/security/shibboleth-sp.nix
   ./services/security/sks.nix
   ./services/security/spire/agent.nix
@@ -1821,6 +1824,7 @@
   ./services/web-apps/romm.nix
   ./services/web-apps/rss-bridge.nix
   ./services/web-apps/rsshub.nix
+  ./services/web-apps/rundeck.nix
   ./services/web-apps/rustical.nix
   ./services/web-apps/rutorrent.nix
   ./services/web-apps/screego.nix
