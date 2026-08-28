@@ -172,6 +172,7 @@ mapAliases {
   CommonMark = throw "'CommonMark' has been renamed to/replaced by 'commonmark'"; # Converted to throw 2025-10-29
   ConfigArgParse = throw "'ConfigArgParse' has been renamed to/replaced by 'configargparse'"; # Converted to throw 2025-10-29
   configshell = throw "'configshell' has been renamed to/replaced by 'configshell-fb'"; # Converted to throw 2025-10-29
+  crontab = throw "'crontab' has been removed, migrate to either 'python-crontab' or 'parse-crontab'"; # Added 2026-08-25
   cx_Freeze = throw "'cx_Freeze' has been renamed to/replaced by 'cx-freeze'"; # Converted to throw 2025-10-29
   cx_oracle = throw "'cx_oracle' has been renamed to/replaced by 'cx-oracle'"; # Converted to throw 2025-10-29
   dalle-mini = throw "'dalle-mini' has been removed due to lack of upstream maintenance"; # added 2026-02-26
@@ -427,6 +428,20 @@ mapAliases {
   myst-docutils = warnAlias "'myst-docutils' has been removed as it was identical to 'myst-parser'" myst-parser;
   napari-npe2 = warnAlias "napari-npe2 has been renamed to 'npe2'" npe2; # added 2026-07-28
   net2grid = throw "'net2grid' has been renamed to/replaced by 'gridnet'"; # Converted to throw 2025-10-29
+  netbox-attachments = throw "'netbox-attachments' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-bgp = throw "'netbox-bgp' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-contextmenus = throw "'netbox-contextmenus' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-contract = throw "'netbox-contract' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-dns = throw "'netbox-dns' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-documents = throw "'netbox-documents' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-floorplan-plugin = throw "'netbox-floorplan-plugin' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-interface-synchronization = throw "'netbox-interface-syncronization' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-napalm-plugin = throw "'netbox-napalm-plugin' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-plugin-prometheus-sd = throw "'netbox-plugin-prometheus-sd' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-qrcode = throw "'netbox-qrcode' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-reorder-rack = throw "'netbox-reorder-rack' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-routing = throw "'netbox-routing' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
+  netbox-topology-views = throw "'netbox-topology-views' has been moved to the 'netboxPlugins' package set"; # Added 2026-06-13
   ninja-python = throw "'ninja-python' has been renamed to/replaced by 'ninja'"; # Converted to throw 2025-10-29
   nitpick = throw "'nitpick' has been removed because it was unmaintained upstream since 2017 and using python2"; # added 2025-08-25
   nixpkgs = throw "nixpkgs has been removed as its dependency pythonix was removed"; # added 2025-07-24
@@ -594,6 +609,7 @@ mapAliases {
   python-simple-hipchat = throw "'python-simple-hipchat' has been removed because it was broken and unmaintained"; # added 2025-08-26
   python-subunit = throw "'python-subunit' has been renamed to/replaced by 'subunit'"; # Converted to throw 2025-10-29
   python-u2flib-server = throw "'python-u2flib-server' has been removed, since it was broken and archived upstream"; # added 2025-11-08
+  python-unrar = unrar; # Added 2026-08-25
   python-unshare = throw "python-unshare was removed as unmaintained since 2016"; # added 2025-05-25
   python-zbar = zbar; # Added 2026-08-08
   python_docs_theme = throw "'python_docs_theme' has been renamed to/replaced by 'python-docs-theme'"; # Converted to throw 2025-10-29
