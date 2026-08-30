@@ -8094,8 +8094,6 @@ self: super: with self; {
 
   hypothesis-jsonschema = callPackage ../development/python-modules/hypothesis-jsonschema { };
 
-  hypothesis_6_136 = callPackage ../development/python-modules/hypothesis/hypothesis_6_136.nix { };
-
   hypothesmith = callPackage ../development/python-modules/hypothesmith { };
 
   hyppo = callPackage ../development/python-modules/hyppo { };
