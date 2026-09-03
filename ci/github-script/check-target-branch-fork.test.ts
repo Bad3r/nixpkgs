@@ -1,13 +1,13 @@
 // Guards the fork-local `nixpkgs-unstable` handling that upstream syncs keep
 // clobbering, because upstream only ever knows `master` as an unstable primary
-// branch. See the "Fork-local exception" in ci/supportedBranches.js.
-const assert = require('node:assert/strict')
-const test = require('node:test')
-const { classify } = require('../supportedBranches.js')
-const {
+// branch. See the "Fork-local exception" in ci/github-script/supportedBranches.js.
+import assert from 'node:assert/strict'
+import test from 'node:test'
+import {
   evaluateTargetBranchPolicy,
   getTargetBranchPolicy,
-} = require('./check-target-branch-policy.ts')
+} from './check-target-branch-policy.ts'
+import { classify } from './supportedBranches.js'
 
 const defaults = {
   base: 'nixpkgs-unstable',

@@ -290,10 +290,12 @@ in
   };
   bind = runTest ./bind.nix;
   bird2 = import ./bird.nix {
+    inherit (pkgs) lib;
     inherit runTest;
     package = pkgs.bird2;
   };
   bird3 = import ./bird.nix {
+    inherit (pkgs) lib;
     inherit runTest;
     package = pkgs.bird3;
   };
@@ -305,6 +307,7 @@ in
   blockbook-frontend = runTest ./blockbook-frontend.nix;
   blocky = runTest ./blocky.nix;
   bluesky-pds = runTest ./bluesky-pds.nix;
+  bookorbit = runTest ./web-apps/bookorbit.nix;
   bookstack = runTest ./bookstack.nix;
   boot = handleTestOn [ "x86_64-linux" "aarch64-linux" ] ./boot.nix { };
   boot-stage1 = runTest ./boot-stage1.nix;
@@ -324,6 +327,7 @@ in
   budgie = runTest ./budgie.nix;
   buildbot = runTest ./buildbot.nix;
   buildkite-agents = runTest ./buildkite-agents.nix;
+  bulwark = runTest ./bulwark.nix;
   c2fmzq = runTest ./c2fmzq.nix;
   caddy = runTest ./caddy.nix;
   cadvisor = runTestOn [ "x86_64-linux" ] ./cadvisor.nix;
@@ -787,6 +791,7 @@ in
     imports = [ ./hbase.nix ];
     _module.args.getPackage = pkgs: pkgs.hbase_2_5;
   };
+  hddtemp = runTest ./hddtemp.nix;
   headplane = runTest ./headplane.nix;
   headscale = runTest ./headscale.nix;
   healthchecks = runTest ./web-apps/healthchecks.nix;
@@ -897,6 +902,7 @@ in
   kanboard = runTest ./web-apps/kanboard.nix;
   kanidm = runTest ./kanidm.nix;
   kanidm-provisioning = runTest ./kanidm-provisioning.nix;
+  kapla = runTest ./kapla.nix;
   karakeep = runTest ./web-apps/karakeep.nix;
   karma = runTest ./karma.nix;
   kavita = runTest ./kavita.nix;
@@ -1086,11 +1092,18 @@ in
   mollysocket = runTest ./mollysocket.nix;
   monado = runTest ./monado.nix;
   monetdb = runTest ./monetdb.nix;
-  mongodb = runTest ./mongodb.nix;
+  mongodb = runTest (
+    { config, ... }:
+    {
+      imports = [ ./mongodb.nix ];
+      _module.args.testName = "mongodb";
+    }
+  );
   mongodb-ce = runTest (
     { config, ... }:
     {
       imports = [ ./mongodb.nix ];
+      _module.args.testName = "mongodb-ce";
       defaults.services.mongodb.package = config.node.pkgs.mongodb-ce;
     }
   );
@@ -1140,13 +1153,18 @@ in
   navidrome = runTest ./navidrome.nix;
   nbd = runTest ./nbd.nix;
   ncdns = runTest ./ncdns.nix;
-  ncps = runTest ./ncps.nix;
+  ncps = runTest {
+    imports = [ ./ncps.nix ];
+    _module.args.testName = "ncps";
+  };
   ncps-custom-sqlite-directory = runTest {
     imports = [ ./ncps.nix ];
+    _module.args.testName = "ncps-custom-sqlite-directory";
     defaults.services.ncps.cache.databaseURL = "sqlite:/path/to/ncps/db.sqlite";
   };
   ncps-custom-storage-local = runTest {
     imports = [ ./ncps.nix ];
+    _module.args.testName = "ncps-custom-storage-local";
     defaults.services.ncps.cache.storage.local = "/path/to/ncps";
   };
   ncps-ha-pg-redis = runTest ./ncps-ha-pg-redis.nix;
@@ -1160,10 +1178,7 @@ in
   nebula.reload = runTest ./nebula/reload.nix;
   neo4j = runTest ./neo4j.nix;
   netbird = runTest ./netbird.nix;
-  netbox-upgrade = runTest ./web-apps/netbox-upgrade.nix;
-  netbox_4_4 = handleTest ./web-apps/netbox/default.nix { netbox = pkgs.netbox_4_4; };
-  netbox_4_5 = handleTest ./web-apps/netbox/default.nix { netbox = pkgs.netbox_4_5; };
-  netbox_4_6 = handleTest ./web-apps/netbox/default.nix { netbox = pkgs.netbox_4_6; };
+  netbox = runTest ./web-apps/netbox/default.nix;
   netdata = runTest ./netdata.nix;
   netfoil = runTest ./netfoil.nix;
   netplan = runTest ./netplan.nix;
@@ -1449,21 +1464,25 @@ in
   pretix = runTest ./web-apps/pretix.nix;
   printing-service = runTest {
     imports = [ ./printing.nix ];
+    _module.args.testName = "printing-service";
     _module.args.socket = false;
     _module.args.listenTcp = true;
   };
   printing-service-notcp = runTest {
     imports = [ ./printing.nix ];
+    _module.args.testName = "printing-service-notcp";
     _module.args.socket = false;
     _module.args.listenTcp = false;
   };
   printing-socket = runTest {
     imports = [ ./printing.nix ];
+    _module.args.testName = "printing-socket";
     _module.args.socket = true;
     _module.args.listenTcp = true;
   };
   printing-socket-notcp = runTest {
     imports = [ ./printing.nix ];
+    _module.args.testName = "printing-socket-notcp";
     _module.args.socket = true;
     _module.args.listenTcp = false;
   };
@@ -1670,7 +1689,22 @@ in
   swapspace = handleTestOn [ "aarch64-linux" "x86_64-linux" ] ./swapspace.nix { };
   sway = runTest ./sway.nix;
   swayfx = runTest ./swayfx.nix;
-  switchTest = runTest ./switch-test.nix;
+  switchTest = runTest {
+    imports = [ ./switch-test.nix ];
+    _module.args.part = "services";
+  };
+  switchTest-basics = runTest {
+    imports = [ ./switch-test.nix ];
+    _module.args.part = "basics";
+  };
+  switchTest-units = runTest {
+    imports = [ ./switch-test.nix ];
+    _module.args.part = "units";
+  };
+  switchTest-user = runTest {
+    imports = [ ./switch-test.nix ];
+    _module.args.part = "user";
+  };
   sx = runTest ./sx.nix;
   sympa = runTest ./sympa.nix;
   syncthing = runTest ./syncthing/main.nix;
