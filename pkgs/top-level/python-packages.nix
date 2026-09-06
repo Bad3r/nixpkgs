@@ -7843,7 +7843,6 @@ self: super: with self; {
     huaweicloudsdkaad
     huaweicloudsdkagentarts
     huaweicloudsdkagentidentity
-    huaweicloudsdkaidatalakejobserver
     huaweicloudsdkantiddos
     huaweicloudsdkaom
     huaweicloudsdkaos
@@ -10532,20 +10531,7 @@ self: super: with self; {
 
   maya = callPackage ../development/python-modules/maya { };
 
-  mayavi = pkgs.libsForQt5.callPackage ../development/python-modules/mayavi {
-    inherit buildPythonPackage;
-    inherit (self)
-      pyface
-      pygments
-      numpy
-      packaging
-      vtk
-      traitsui
-      envisage
-      apptools
-      pyqt5
-      ;
-  };
+  mayavi = callPackage ../development/python-modules/mayavi { };
 
   mayim = callPackage ../development/python-modules/mayim { };
 
@@ -10628,8 +10614,6 @@ self: super: with self; {
   medcom-ble = callPackage ../development/python-modules/medcom-ble { };
 
   mediafile = callPackage ../development/python-modules/mediafile { };
-
-  mediafire-dl = callPackage ../development/python-modules/mediafire-dl { };
 
   mediapy = callPackage ../development/python-modules/mediapy { };
 
@@ -12476,8 +12460,6 @@ self: super: with self; {
   open-garage = callPackage ../development/python-modules/open-garage { };
 
   open-hypergraphs = callPackage ../development/python-modules/open-hypergraphs { };
-
-  open-interpreter = callPackage ../development/python-modules/open-interpreter { };
 
   open-meteo = callPackage ../development/python-modules/open-meteo { };
 
@@ -15640,6 +15622,8 @@ self: super: with self; {
   pyopengltk = callPackage ../development/python-modules/pyopengltk { };
 
   pyopenjtalk = callPackage ../development/python-modules/pyopenjtalk { };
+
+  pyopenjtalk-plus = callPackage ../development/python-modules/pyopenjtalk-plus { };
 
   pyopensprinkler = callPackage ../development/python-modules/pyopensprinkler { };
 
