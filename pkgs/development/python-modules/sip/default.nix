@@ -3,7 +3,6 @@
   buildPythonPackage,
   fetchpatch,
   fetchPypi,
-  fetchpatch,
   setuptools,
   setuptools-scm,
   packaging,
@@ -23,16 +22,6 @@ buildPythonPackage (finalAttrs: {
     inherit (finalAttrs) pname version;
     hash = "sha256-CnOcnNKSneTgiERW2Mrzz7IsEFNHV8d5e9jca9ntabw=";
   };
-
-  patches = [
-    # 6.16.1 rejects bindings that target ABI 12/13 without declaring
-    # %MinimumABIVersion, which breaks pyqt5. Fixed upstream after 6.16.1.
-    (fetchpatch {
-      name = "sip-allow-legacy-abi-without-minimum-abi-version.patch";
-      url = "https://github.com/Python-SIP/sip/commit/09598895c607f3e41f0249ade217ace0a4da6437.patch";
-      hash = "sha256-v0YeHyg0ymB0v32gpVRbMBIUk9U2etjs93VuOGPGg2M=";
-    })
-  ];
 
   build-system = [
     setuptools
