@@ -402,6 +402,8 @@ self: super: with self; {
 
   aiokem = callPackage ../development/python-modules/aiokem { };
 
+  aiolibrenms = callPackage ../development/python-modules/aiolibrenms { };
+
   aiolichess = callPackage ../development/python-modules/aiolichess { };
 
   aiolifx = callPackage ../development/python-modules/aiolifx { };
@@ -2359,6 +2361,8 @@ self: super: with self; {
 
   berkeleydb = callPackage ../development/python-modules/berkeleydb { };
 
+  besen = callPackage ../development/python-modules/besen { };
+
   bespon = callPackage ../development/python-modules/bespon { };
 
   betacode = callPackage ../development/python-modules/betacode { };
@@ -4309,8 +4313,6 @@ self: super: with self; {
   depyf = callPackage ../development/python-modules/depyf { };
 
   derivative = callPackage ../development/python-modules/derivative { };
-
-  derpconf = callPackage ../development/python-modules/derpconf { };
 
   desktop-entry-lib = callPackage ../development/python-modules/desktop-entry-lib { };
 
@@ -6327,6 +6329,8 @@ self: super: with self; {
 
   flexit-bacnet = callPackage ../development/python-modules/flexit-bacnet { };
 
+  flexit-modbus = callPackage ../development/python-modules/flexit-modbus { };
+
   flexmock = callPackage ../development/python-modules/flexmock { };
 
   flexparser = callPackage ../development/python-modules/flexparser { };
@@ -6344,6 +6348,8 @@ self: super: with self; {
   flit-scm = callPackage ../development/python-modules/flit-scm { };
 
   floret = callPackage ../development/python-modules/floret { };
+
+  flow-it-api = callPackage ../development/python-modules/flow-it-api { };
 
   flow-record = callPackage ../development/python-modules/flow-record { };
 
@@ -6495,6 +6501,8 @@ self: super: with self; {
   frilouz = callPackage ../development/python-modules/frilouz { };
 
   fritzconnection = callPackage ../development/python-modules/fritzconnection { };
+
+  fronius-modbus = callPackage ../development/python-modules/fronius-modbus { };
 
   frozendict = callPackage ../development/python-modules/frozendict { };
 
@@ -8539,6 +8547,8 @@ self: super: with self; {
   isal = callPackage ../development/python-modules/isal { };
 
   isbnlib = callPackage ../development/python-modules/isbnlib { };
+
+  iseo-argo-ble = callPackage ../development/python-modules/iseo-argo-ble { };
 
   islpy = callPackage ../development/python-modules/islpy { isl = pkgs.isl_0_27; };
 
@@ -11948,6 +11958,8 @@ self: super: with self; {
 
   newversion = callPackage ../development/python-modules/newversion { };
 
+  nexblue-api = callPackage ../development/python-modules/nexblue-api { };
+
   nexia = callPackage ../development/python-modules/nexia { };
 
   nextcloudmonitor = callPackage ../development/python-modules/nextcloudmonitor { };
@@ -14180,6 +14192,8 @@ self: super: with self; {
 
   py-cpuinfo = callPackage ../development/python-modules/py-cpuinfo { };
 
+  py-cpuinfo2 = callPackage ../development/python-modules/py-cpuinfo2 { };
+
   py-dactyl = callPackage ../development/python-modules/py-dactyl { };
 
   py-datastruct = callPackage ../development/python-modules/py-datastruct { };
@@ -16159,6 +16173,8 @@ self: super: with self; {
 
   pysilero-vad = callPackage ../development/python-modules/pysilero-vad { };
 
+  pysillaprism = callPackage ../development/python-modules/pysillaprism { };
+
   pysim = callPackage ../development/python-modules/pysim { };
 
   pysimplesoap = callPackage ../development/python-modules/pysimplesoap { };
@@ -16234,6 +16250,8 @@ self: super: with self; {
   pysolr = callPackage ../development/python-modules/pysolr { };
 
   pysoma = callPackage ../development/python-modules/pysoma { };
+
+  pysomfymylink = callPackage ../development/python-modules/pysomfymylink { };
 
   pysonos = callPackage ../development/python-modules/pysonos { };
 
@@ -16867,6 +16885,8 @@ self: super: with self; {
   python-hostlist = callPackage ../development/python-modules/python-hostlist { };
 
   python-hosts = callPackage ../development/python-modules/python-hosts { };
+
+  python-hotspring = callPackage ../development/python-modules/python-hotspring { };
 
   python-hpilo = callPackage ../development/python-modules/python-hpilo { };
 
@@ -18433,6 +18453,8 @@ self: super: with self; {
     inherit (pkgs) libsamplerate;
   };
 
+  samsung-exlink = callPackage ../development/python-modules/samsung-exlink { };
+
   samsungctl = callPackage ../development/python-modules/samsungctl { };
 
   samsungtvws = callPackage ../development/python-modules/samsungtvws { };
@@ -19293,6 +19315,8 @@ self: super: with self; {
   socksipy-branch = callPackage ../development/python-modules/socksipy-branch { };
 
   soco = callPackage ../development/python-modules/soco { };
+
+  sofar-modbus = callPackage ../development/python-modules/sofar-modbus { };
 
   softlayer = callPackage ../development/python-modules/softlayer { };
 
@@ -20214,6 +20238,8 @@ self: super: with self; {
 
   syrupy = callPackage ../development/python-modules/syrupy { };
 
+  syrupy_6 = callPackage ../development/python-modules/syrupy/6.nix { };
+
   syslog-rfc5424-formatter = callPackage ../development/python-modules/syslog-rfc5424-formatter { };
 
   sysrsync = callPackage ../development/python-modules/sysrsync { };
@@ -20261,8 +20287,6 @@ self: super: with self; {
   tadasets = callPackage ../development/python-modules/tadasets { };
 
   tag-expressions = callPackage ../development/python-modules/tag-expressions { };
-
-  tago = callPackage ../development/python-modules/tago { };
 
   tagoio-sdk = callPackage ../development/python-modules/tagoio-sdk { };
 
@@ -20493,6 +20517,8 @@ self: super: with self; {
   tesla-fleet-api = callPackage ../development/python-modules/tesla-fleet-api { };
 
   tesla-powerwall = callPackage ../development/python-modules/tesla-powerwall { };
+
+  tesla-protocol = callPackage ../development/python-modules/tesla-protocol { };
 
   tesla-wall-connector = callPackage ../development/python-modules/tesla-wall-connector { };
 
@@ -20807,6 +20833,8 @@ self: super: with self; {
   tomlkit = callPackage ../development/python-modules/tomlkit { };
 
   tomlrt = callPackage ../development/python-modules/tomlrt { };
+
+  tonewinner-rs232 = callPackage ../development/python-modules/tonewinner-rs232 { };
 
   toolz = callPackage ../development/python-modules/toolz { };
 
