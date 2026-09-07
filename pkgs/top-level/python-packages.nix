@@ -4320,8 +4320,6 @@ self: super: with self; {
 
   detect-secrets = callPackage ../development/python-modules/detect-secrets { };
 
-  detectron2 = callPackage ../development/python-modules/detectron2 { };
-
   developer-disk-image = callPackage ../development/python-modules/developer-disk-image { };
 
   devgoldyutils = callPackage ../development/python-modules/devgoldyutils { };
@@ -8694,6 +8692,10 @@ self: super: with self; {
 
   jax-cuda12-plugin = callPackage ../development/python-modules/jax-cuda12-plugin { };
 
+  jax-cuda13-pjrt = callPackage ../development/python-modules/jax-cuda13-pjrt { };
+
+  jax-cuda13-plugin = callPackage ../development/python-modules/jax-cuda13-plugin { };
+
   jax-jumpy = callPackage ../development/python-modules/jax-jumpy { };
 
   jax-tap = callPackage ../development/python-modules/jax-tap { };
@@ -12507,8 +12509,6 @@ self: super: with self; {
 
   openccu-loom-client = callPackage ../development/python-modules/openccu-loom-client { };
 
-  openccu-loom-types = callPackage ../development/python-modules/openccu-loom-types { };
-
   opencensus = callPackage ../development/python-modules/opencensus { };
 
   opencensus-context = callPackage ../development/python-modules/opencensus-context { };
@@ -15358,6 +15358,8 @@ self: super: with self; {
   pymailgunner = callPackage ../development/python-modules/pymailgunner { };
 
   pymanopt = callPackage ../development/python-modules/pymanopt { };
+
+  pymap3d = callPackage ../development/python-modules/pymap3d { };
 
   pymarshal = callPackage ../development/python-modules/pymarshal { };
 
@@ -19662,6 +19664,8 @@ self: super: with self; {
 
   splunk-sdk = callPackage ../development/python-modules/splunk-sdk { };
 
+  spmd-types = callPackage ../development/python-modules/spmd-types { };
+
   spotapi = callPackage ../development/python-modules/spotapi { };
 
   spotifyaio = callPackage ../development/python-modules/spotifyaio { };
@@ -20851,6 +20855,8 @@ self: super: with self; {
   torch-bin = callPackage ../development/python-modules/torch/bin { triton = self.triton-bin; };
 
   torch-c-dlpack-ext = callPackage ../development/python-modules/torch-c-dlpack-ext { };
+
+  torch-checkpointing = callPackage ../development/python-modules/torch-checkpointing { };
 
   torch-cluster = callPackage ../development/python-modules/torch-cluster { };
 

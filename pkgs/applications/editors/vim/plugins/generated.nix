@@ -19792,6 +19792,20 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
+  vim-be-better = buildVimPlugin {
+    pname = "vim-be-better";
+    version = "0-unstable-2025-06-21";
+    src = fetchFromGitHub {
+      owner = "szymonwilczek";
+      repo = "vim-be-better";
+      rev = "60e0214598d9d0bac8253e8b53a72eace4af92d3";
+      hash = "sha256-bbIhh5A1135UVMdQxUVMEHlqf1tCSbDP8QYQGg/OMa0=";
+    };
+    meta.homepage = "https://github.com/szymonwilczek/vim-be-better/";
+    meta.license = unfree;
+    meta.hydraPlatforms = [ ];
+  };
+
   vim-be-good = buildVimPlugin {
     pname = "vim-be-good";
     version = "0-unstable-2024-12-05";

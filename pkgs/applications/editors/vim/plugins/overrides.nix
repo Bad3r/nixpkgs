@@ -48,7 +48,7 @@
   stylish-haskell,
   tabnine,
   tmux,
-  typescript_5,
+  typescript_7,
   typescript-language-server,
   vim,
   which,
@@ -4719,7 +4719,7 @@ assertNoAdditions {
     postPatch = ''
       substituteInPlace lua/tsc/utils.lua --replace-fail \
       'bin_name = bin_name or "tsc"' \
-      'bin_name = bin_name or "${typescript_5}/bin/tsc"'
+      'bin_name = bin_name or "${typescript_7}/bin/tsc"'
     '';
 
     # Unit test

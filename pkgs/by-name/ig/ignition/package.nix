@@ -10,7 +10,7 @@
   meson,
   ninja,
   pkg-config,
-  typescript_5,
+  typescript_7,
   wrapGAppsHook4,
 
   gjs,
@@ -48,7 +48,7 @@ stdenv.mkDerivation (finalAttrs: {
     meson
     ninja
     pkg-config
-    typescript_5
+    typescript_7
     wrapGAppsHook4
   ];
 
