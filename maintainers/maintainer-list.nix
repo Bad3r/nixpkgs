@@ -4474,6 +4474,14 @@
     githubId = 510553;
     name = "Jos van Bakel";
   };
+  c2fc2f = {
+    name = "c2fc2f";
+    github = "c2fc2f";
+    githubId = 59392138;
+    email = "contact@c2fc2f.com";
+    matrix = "@c2fc2f:sagbot.com";
+    keys = [ { fingerprint = "6EF1 8507 76B5 ABCE 5BF0  C0F8 42E0 E1D1 0B61 1208"; } ];
+  };
   c31io = {
     email = "celiogrand@outlook.com";
     github = "c31io";
@@ -14658,6 +14666,12 @@
     githubId = 56224949;
     name = "Mia Kanashi";
   };
+  kangazero = {
+    name = "Samuel Wai Weng Yong";
+    email = "samuelyongw@gmail.com";
+    github = "KangaZero";
+    githubId = 107836643;
+  };
   kaptcha0 = {
     name = "J'C Kabunga";
     github = "kaptcha0";
@@ -19335,6 +19349,12 @@
     github = "mmlb";
     githubId = 708570;
     name = "Manuel Mendez";
+  };
+  mmulqueen = {
+    email = "michael@mulqueen.me.uk";
+    github = "mmulqueen";
+    githubId = 6616321;
+    name = "Michael Mulqueen";
   };
   mmusnjak = {
     email = "marko.musnjak@gmail.com";
@@ -24781,7 +24801,7 @@
     name = "Robert T. McGibbon";
   };
   rnhmjoj = {
-    email = "rnhmjoj@inventati.org";
+    email = "rnhmjoj@eurofusion.eu";
     matrix = "@rnhmjoj:eurofusion.eu";
     github = "rnhmjoj";
     githubId = 2817565;
