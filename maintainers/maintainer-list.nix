@@ -1250,6 +1250,11 @@
     githubId = 2545644;
     name = "Alessandro Di Federico";
   };
+  alejandroqh = {
+    github = "alejandroqh";
+    githubId = 40313108;
+    name = "Alejandro Quintanar";
+  };
   alejandrosame = {
     email = "alejandrosanchzmedina@gmail.com";
     matrix = "@alejandrosame:matrix.org";
@@ -8810,6 +8815,11 @@
     githubId = 965612;
     name = "York Wong";
   };
+  etiennelescot = {
+    github = "EtienneLescot";
+    githubId = 215859519;
+    name = "Etienne Lescot";
+  };
   Etjean = {
     email = "et.jean@outlook.fr";
     github = "Etjean";
@@ -14619,6 +14629,11 @@
     github = "KaiHa";
     githubId = 6544084;
     name = "Kai Harries";
+  };
+  kaistarkk = {
+    github = "KaiStarkk";
+    githubId = 1722064;
+    name = "KaiStarkk";
   };
   kalbasit = {
     email = "wael.nasreddine@gmail.com";
@@ -31409,6 +31424,11 @@
     github = "worldofpeace";
     githubId = 28888242;
     name = "WORLDofPEACE";
+  };
+  wormt = {
+    github = "wormt";
+    githubId = 209373679;
+    name = "wormt";
   };
   WoutSwinkels = {
     name = "Wout Swinkels";
