@@ -1053,6 +1053,8 @@ let
         junit_alcotest = callPackage ../development/ocaml-modules/junit/alcotest.nix { };
         junit_ounit = callPackage ../development/ocaml-modules/junit/ounit.nix { };
 
+        jws = callPackage ../development/ocaml-modules/jws { };
+
         jwto = callPackage ../development/ocaml-modules/jwto { };
 
         ### K ###
@@ -2203,6 +2205,8 @@ let
         tw = callPackage ../development/ocaml-modules/tw { };
 
         twt = callPackage ../development/ocaml-modules/twt { };
+
+        typegist = callPackage ../development/ocaml-modules/typegist { };
 
         type_eq = callPackage ../development/ocaml-modules/type_eq { };
 

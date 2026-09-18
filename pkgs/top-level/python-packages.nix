@@ -2622,6 +2622,8 @@ self: super: with self; {
 
   borb = callPackage ../development/python-modules/borb { };
 
+  borb_2 = callPackage ../development/python-modules/borb/2.nix { };
+
   bork = callPackage ../development/python-modules/bork { };
 
   bosch-alarm-mode2 = callPackage ../development/python-modules/bosch-alarm-mode2 { };
@@ -3725,6 +3727,8 @@ self: super: with self; {
 
   coveralls = callPackage ../development/python-modules/coveralls { };
 
+  cpace = callPackage ../development/python-modules/cpace { };
+
   cpe = callPackage ../development/python-modules/cpe { };
 
   cpe-search = callPackage ../development/python-modules/cpe-search { };
@@ -4261,8 +4265,6 @@ self: super: with self; {
   deezer-py = callPackage ../development/python-modules/deezer-py { };
 
   deezer-python = callPackage ../development/python-modules/deezer-python { };
-
-  deezer-python-async = callPackage ../development/python-modules/deezer-python-async { };
 
   defang = callPackage ../development/python-modules/defang { };
 
@@ -5259,6 +5261,8 @@ self: super: with self; {
   dsmr-parser = callPackage ../development/python-modules/dsmr-parser { };
 
   dsnap = callPackage ../development/python-modules/dsnap { };
+
+  dspy = callPackage ../development/python-modules/dspy { };
 
   dt8852 = callPackage ../development/python-modules/dt8852 { };
 
@@ -10240,6 +10244,8 @@ self: super: with self; {
 
   logic2-automation = callPackage ../development/python-modules/logic2-automation { };
 
+  logica = callPackage ../development/python-modules/logica { };
+
   logical-unification = callPackage ../development/python-modules/logical-unification { };
 
   logilab-common = callPackage ../development/python-modules/logilab/common.nix {
@@ -10265,6 +10271,8 @@ self: super: with self; {
   logzero = callPackage ../development/python-modules/logzero { };
 
   lojack-api = callPackage ../development/python-modules/lojack-api { };
+
+  loky = callPackage ../development/python-modules/loky { };
 
   lomond = callPackage ../development/python-modules/lomond { };
 
@@ -10924,6 +10932,8 @@ self: super: with self; {
 
   mizani = callPackage ../development/python-modules/mizani { };
 
+  mjviser = callPackage ../development/python-modules/mjviser { };
+
   mkdocs = callPackage ../development/python-modules/mkdocs { };
 
   mkdocs-autolinks-plugin = callPackage ../development/python-modules/mkdocs-autolinks-plugin { };
@@ -11322,6 +11332,8 @@ self: super: with self; {
   mujoco = callPackage ../development/python-modules/mujoco { inherit (pkgs) mujoco; };
 
   mujoco-mjx = callPackage ../development/python-modules/mujoco-mjx { mujoco-main = pkgs.mujoco; };
+
+  mujoco-warp = callPackage ../development/python-modules/mujoco-warp { };
 
   mujson = callPackage ../development/python-modules/mujson { };
 
@@ -11846,6 +11858,10 @@ self: super: with self; {
   nasdaq-data-link = callPackage ../development/python-modules/nasdaq-data-link { };
 
   natasha = callPackage ../development/python-modules/natasha { };
+
+  native-sparse-attention-pytorch =
+    callPackage ../development/python-modules/native-sparse-attention-pytorch
+      { };
 
   nats-py = callPackage ../development/python-modules/nats-py { };
 
@@ -12386,8 +12402,6 @@ self: super: with self; {
   oemthermostat = callPackage ../development/python-modules/oemthermostat { };
 
   offtrac = callPackage ../development/python-modules/offtrac { };
-
-  ofxclient = callPackage ../development/python-modules/ofxclient { };
 
   ofxhome = callPackage ../development/python-modules/ofxhome { };
 
@@ -13270,8 +13284,6 @@ self: super: with self; {
   pcapy-ng = callPackage ../development/python-modules/pcapy-ng {
     inherit (pkgs) libpcap; # Avoid confusion with python package of the same name
   };
-
-  pcbnewtransition = callPackage ../development/python-modules/pcbnewtransition { };
 
   pcffont = callPackage ../development/python-modules/pcffont { };
 
@@ -17734,8 +17746,6 @@ self: super: with self; {
 
   railroad-diagrams = callPackage ../development/python-modules/railroad-diagrams { };
 
-  rainbowstream = callPackage ../development/python-modules/rainbowstream { };
-
   raincloudy = callPackage ../development/python-modules/raincloudy { };
 
   ramlfications = callPackage ../development/python-modules/ramlfications { };
@@ -18341,6 +18351,8 @@ self: super: with self; {
   rrdtool = callPackage ../development/python-modules/rrdtool { };
 
   rsa = callPackage ../development/python-modules/rsa { };
+
+  rsl-rl-lib = callPackage ../development/python-modules/rsl-rl-lib { };
 
   rsskey = callPackage ../development/python-modules/rsskey { };
 
@@ -19078,6 +19090,8 @@ self: super: with self; {
 
   skein = callPackage ../development/python-modules/skein { };
 
+  skggm = callPackage ../development/python-modules/skggm { };
+
   skia-pathops = callPackage ../development/python-modules/skia-pathops { };
 
   skidl = callPackage ../development/python-modules/skidl { };
@@ -19444,6 +19458,8 @@ self: super: with self; {
   spdx-python-model = callPackage ../development/python-modules/spdx-python-model { };
 
   spdx-tools = callPackage ../development/python-modules/spdx-tools { };
+
+  spdx3-validate = callPackage ../development/python-modules/spdx3-validate { };
 
   speak2mary = callPackage ../development/python-modules/speak2mary { };
 
@@ -20958,6 +20974,8 @@ self: super: with self; {
 
   torchrl = callPackage ../development/python-modules/torchrl { };
 
+  torchrunx = callPackage ../development/python-modules/torchrunx { };
+
   torchsde = callPackage ../development/python-modules/torchsde { };
 
   torchsnapshot = callPackage ../development/python-modules/torchsnapshot { };
@@ -21279,8 +21297,6 @@ self: super: with self; {
   twitch-python = callPackage ../development/python-modules/twitch-python { };
 
   twitchapi = callPackage ../development/python-modules/twitchapi { };
-
-  twitter = callPackage ../development/python-modules/twitter { };
 
   twitterapi = callPackage ../development/python-modules/twitterapi { };
 

@@ -255,6 +255,12 @@
     github = "365tuwe";
     githubId = 10263091;
   };
+  _3j14 = {
+    name = "Jonas Drotleff";
+    github = "3j14";
+    githubId = 8471891;
+    matrix = "@sqrthalf:matrix.org";
+  };
   _3JlOy-PYCCKUi = {
     name = "3JlOy-PYCCKUi";
     email = "3jl0y_pycckui@riseup.net";
@@ -1874,6 +1880,11 @@
     github = "andrestylianos";
     githubId = 7112447;
     name = "Andre S. Ramos";
+  };
+  andreszb = {
+    github = "andreszb";
+    githubId = 3385877;
+    name = "Andrés Zambrano";
   };
   andrevmatos = {
     email = "andrevmatos@gmail.com";
@@ -7274,11 +7285,6 @@
     githubId = 2096594;
     email = "Dietrich@Daroch.me";
   };
-  different-error = {
-    name = "Sanfer D'souza";
-    github = "different-error";
-    githubId = 9338001;
-  };
   different-name = {
     name = "different-name";
     email = "hello@different-name.dev";
@@ -12448,6 +12454,11 @@
     github = "itsvic-dev";
     githubId = 17727163;
     keys = [ { fingerprint = "FBAA B86A 101B 4C5F D4F1  25D2 E93D DAC1 7E5D 6CA1"; } ];
+  };
+  itsyunaya = {
+    name = "Ashley Marino";
+    github = "itsyunaya";
+    githubId = 40719746;
   };
   ius = {
     email = "j.de.gram@gmail.com";
@@ -21279,6 +21290,12 @@
     github = "nova-r";
     githubId = 126072875;
     name = "nova madeline";
+  };
+  novalkun = {
+    email = "novalkun@gmail.com";
+    github = "novalkun";
+    githubId = 43009254;
+    name = "novalkun";
   };
   novaviper = {
     email = "code4nova@aluwux.me";
@@ -31753,6 +31770,12 @@
     github = "xokdvium";
     githubId = 145775305;
     name = "Sergei Zimmerman";
+  };
+  Xophmeister = {
+    name = "Christopher Harrison";
+    github = "Xophmeister";
+    githubId = 384987;
+    email = "nixpkgs@acc.xoph.co";
   };
   xosnrdev = {
     email = "hello@xosnrdev.tech";
