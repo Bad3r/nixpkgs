@@ -1263,6 +1263,7 @@ mapAliases {
   kdesvn = throw "'kdesvn' has been removed due to outdated KF5 dependencies."; # Added 2026-05-01
   keepkey-agent = throw "keepkey-agent has been removed because upstream dropped KeepKey support"; # Added 2026-03-11
   keepkey_agent = throw "keepkey-agent has been removed because upstream dropped KeepKey support"; # Added 2026-03-11
+  keeweb = throw "'keeweb' has been removed because it was using an EOL electron version"; # Added 2026-09-17
   keydb = throw "'keydb' has been removed as it was broken, vulnerable, and unmaintained upstream"; # Added 2025-11-08
   kgraphviewer = throw "'kgraphviewer' has been removed due to outdated KF5 dependencies."; # Added 2026-05-01
   kgx = throw "'kgx' has been renamed to/replaced by 'gnome-console'"; # Converted to throw 2025-10-27
@@ -2098,6 +2099,7 @@ mapAliases {
   pothos = throw "'pothos' has been removed as it relies on pcre, and is unmaintained upstream"; # Added 2026-06-17
   powerdns = throw "'powerdns' has been renamed to/replaced by 'pdns'"; # Converted to throw 2025-10-27
   powwow = throw "'powwow' has been removed, since it's unmaintained since 2021 and doesn't build with glibc 2.42"; # Added 2025-09-28
+  pplatex = throw "'pplatex' has been removed as it is unmaintained and depends on pcre, which is deprecated"; # Added 2026-09-17
   pqos-wrapper = throw "'pqos-wrapper' has been removed, since it's unmaintained since 2022 and archived upstream"; # Added 2026-05-13
   prboom-plus = throw "'prboom-plus' has been removed since it is unmaintained upstream."; # Added 2025-09-14
   preload = throw "'preload' has been removed due to lack of usage and being broken since its introduction into nixpkgs"; # Added 2025-11-29
@@ -2320,6 +2322,7 @@ mapAliases {
   signal-desktop-source = throw "'signal-desktop-source' has been renamed to/replaced by 'signal-desktop'"; # Converted to throw 2025-10-27
   silver-searcher = throw "'silver-searcher' has been removed as it has seen no development since 2020 and is stuck on the obsolete pcre library. Consider using 'silver-searcher-ng', which is a fork with support for PCRE2.";
   simple64-netplay-server = gopher64-netplay-server; # Added 2026-08-01
+  simple-mtpfs = throw "'simple-mtpfs has been removed because it is unmaintained upstream.'"; # Added 2026-07-30
   simpleBluez = warnAlias "'simpleBluez' has been renamed to 'simplebluez'" simplebluez; # Added 2026-02-18
   simpleDBus = warnAlias "'simpleDBus' has been renamed to 'simpledbus'" simpledbus; # Added 2026-02-12
   simplesamlphp = throw "'simplesamlphp' was removed because it was unmaintained in nixpkgs"; # Added 2025-10-17

@@ -8757,8 +8757,9 @@ with pkgs;
     k3s_1_34
     k3s_1_35
     k3s_1_36
+    k3s_1_37
     ;
-  k3s = k3s_1_35;
+  k3s = k3s_1_36;
 
   kotatogram-desktop =
     callPackage ../applications/networking/instant-messengers/telegram/kotatogram-desktop
@@ -10015,6 +10016,8 @@ with pkgs;
   ### SCIENCE/MATH
 
   blas-ilp64 = blas.override { isILP64 = true; };
+
+  globalarrays-ilp64 = globalarrays.override { blas = blas-ilp64; };
 
   lapack-ilp64 = lapack.override { isILP64 = true; };
 

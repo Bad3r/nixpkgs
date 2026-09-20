@@ -3985,6 +3985,8 @@ self: super: with self; {
 
   cytoolz = callPackage ../development/python-modules/cytoolz { };
 
+  cyvcf2 = callPackage ../development/python-modules/cyvcf2 { };
+
   cyvest = callPackage ../development/python-modules/cyvest { };
 
   dacite = callPackage ../development/python-modules/dacite { };
@@ -11209,6 +11211,8 @@ self: super: with self; {
 
   mortgage = callPackage ../development/python-modules/mortgage { };
 
+  mosek = callPackage ../development/python-modules/mosek { };
+
   motionblinds = callPackage ../development/python-modules/motionblinds { };
 
   motionblindsble = callPackage ../development/python-modules/motionblindsble { };
@@ -14507,6 +14511,8 @@ self: super: with self; {
 
   pybcj = callPackage ../development/python-modules/pybcj { };
 
+  pybedtools = callPackage ../development/python-modules/pybedtools { };
+
   pybids = callPackage ../development/python-modules/pybids { };
 
   pybigwig = callPackage ../development/python-modules/pybigwig { };
@@ -17771,6 +17777,8 @@ self: super: with self; {
   rapidocr = callPackage ../development/python-modules/rapidocr { };
 
   rapidocr-onnxruntime = callPackage ../development/python-modules/rapidocr-onnxruntime { };
+
+  rapidyaml = callPackage ../development/python-modules/rapidyaml { };
 
   rapt-ble = callPackage ../development/python-modules/rapt-ble { };
 
