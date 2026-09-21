@@ -7252,7 +7252,7 @@ self: super: with self; {
 
   granian = callPackage ../development/python-modules/granian { };
 
-  graph-tool = callPackage ../development/python-modules/graph-tool { inherit (pkgs) cgal graphviz; };
+  graph-tool = callPackage ../development/python-modules/graph-tool { inherit (pkgs) cgal; };
 
   graphemeu = callPackage ../development/python-modules/graphemeu { };
 
@@ -9593,6 +9593,13 @@ self: super: with self; {
       }
     )
   ) { };
+
+  libcec = toPythonModule (
+    pkgs.libcec.override {
+      python3 = python;
+      pythonSupport = true;
+    }
+  );
 
   libcloud = callPackage ../development/python-modules/libcloud { };
 
@@ -12249,6 +12256,8 @@ self: super: with self; {
   numato-gpio = callPackage ../development/python-modules/numato-gpio { };
 
   numba = callPackage ../development/python-modules/numba { inherit (pkgs.config) cudaSupport; };
+
+  numba-cuda = callPackage ../development/python-modules/numba-cuda { };
 
   numba-scipy = callPackage ../development/python-modules/numba-scipy { };
 
