@@ -1632,8 +1632,6 @@ with pkgs;
 
   lexicon = with python3Packages; toPythonApplication dns-lexicon;
 
-  lgogdownloader-gui = callPackage ../by-name/lg/lgogdownloader/package.nix { enableGui = true; };
-
   # Less secure variant of lowdown for use inside Nix builds.
   lowdown-unsandboxed = lowdown.override {
     enableDarwinSandbox = false;
@@ -1893,9 +1891,6 @@ with pkgs;
 
   cudaPackages = recurseIntoAttrs cudaPackages_12;
 
-  # TODO: move to alias
-  cudatoolkit = cudaPackages.cudatoolkit;
-
   dconf2nix = callPackage ../development/tools/haskell/dconf2nix { };
 
   inherit (callPackages ../applications/networking/p2p/deluge { })
@@ -1986,8 +1981,6 @@ with pkgs;
   flatpak-builder = callPackage ../development/tools/flatpak-builder {
     binutils = binutils-unwrapped;
   };
-
-  findutils = callPackage ../tools/misc/findutils { };
 
   bsd-fingerd = bsd-finger.override {
     buildProduct = "daemon";
@@ -2985,10 +2978,6 @@ with pkgs;
   # https://github.com/NixOS/nixpkgs/issues/211340
   # https://github.com/NixOS/nixpkgs/issues/227327
   wafHook = waf.hook;
-
-  wyrd = callPackage ../tools/misc/wyrd {
-    ocamlPackages = ocaml-ng.ocamlPackages_4_14;
-  };
 
   # A minimal xar is needed to break an infinite recursion between macfuse-stubs and xar.
   # It is also needed to reduce the amount of unnecessary stuff in the Darwin bootstrap.
@@ -5105,8 +5094,6 @@ with pkgs;
 
   libtool = libtool_2;
 
-  libtool_1_5 = callPackage ../development/tools/misc/libtool { };
-
   libtool_2 = callPackage ../development/tools/misc/libtool/libtool2.nix { };
 
   linuxkit = callPackage ../development/tools/misc/linuxkit {
@@ -5413,8 +5400,6 @@ with pkgs;
   niv = lib.getBin (haskell.lib.compose.justStaticExecutables haskellPackages.niv);
 
   ormolu = lib.getBin (haskell.lib.compose.justStaticExecutables haskellPackages.ormolu);
-
-  ceedling = callPackage ../development/tools/ceedling { };
 
   celt = callPackage ../development/libraries/celt { };
   celt_0_7 = callPackage ../development/libraries/celt/0.7.nix { };
@@ -8148,6 +8133,28 @@ with pkgs;
     '';
   };
 
+  notonoto-35 = notonoto.override {
+    width35 = true;
+  };
+
+  notonoto-console = notonoto.override {
+    console = true;
+  };
+
+  notonoto-hs = notonoto.override {
+    hideZenkakuSpace = true;
+  };
+
+  notonoto-hs-35 = notonoto.override {
+    width35 = true;
+    hideZenkakuSpace = true;
+  };
+
+  notonoto-hs-console = notonoto.override {
+    console = true;
+    hideZenkakuSpace = true;
+  };
+
   openmoji-color = callPackage ../data/fonts/openmoji { fontFormats = [ "glyf_colr_0" ]; };
 
   openmoji-black = callPackage ../data/fonts/openmoji { fontFormats = [ "glyf" ]; };
@@ -8750,10 +8757,6 @@ with pkgs;
       { };
 
   kubectl-convert = kubectl.convert;
-
-  kubectl-view-allocations =
-    callPackage ../applications/networking/cluster/kubectl-view-allocations
-      { };
 
   linkerd = callPackage ../applications/networking/cluster/linkerd { };
   linkerd_edge = callPackage ../applications/networking/cluster/linkerd/edge.nix { };
