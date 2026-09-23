@@ -1501,6 +1501,8 @@ self: super: with self; {
 
   asyncer = callPackage ../development/python-modules/asyncer { };
 
+  asynch = callPackage ../development/python-modules/asynch { };
+
   asyncinotify = callPackage ../development/python-modules/asyncinotify { };
 
   asyncio-dgram = callPackage ../development/python-modules/asyncio-dgram { };
@@ -18454,6 +18456,8 @@ self: super: with self; {
   s3-credentials = callPackage ../development/python-modules/s3-credentials { };
 
   s3fs = callPackage ../development/python-modules/s3fs { };
+
+  s3torchconnectorclient = callPackage ../development/python-modules/s3torchconnectorclient { };
 
   s3transfer = callPackage ../development/python-modules/s3transfer { };
 
