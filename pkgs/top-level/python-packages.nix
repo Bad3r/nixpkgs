@@ -2879,8 +2879,6 @@ self: super: with self; {
 
   cantools = callPackage ../development/python-modules/cantools { };
 
-  capa = callPackage ../development/python-modules/capa { };
-
   capstone = callPackage ../development/python-modules/capstone { inherit (pkgs) capstone; };
 
   capstone_4 = callPackage ../development/python-modules/capstone/4.nix {
@@ -6202,6 +6200,8 @@ self: super: with self; {
   flametree = callPackage ../development/python-modules/flametree { };
 
   flammkuchen = callPackage ../development/python-modules/flammkuchen { };
+
+  flare-capa = callPackage ../development/python-modules/flare-capa { };
 
   flasgger = callPackage ../development/python-modules/flasgger { };
 
@@ -12458,6 +12458,8 @@ self: super: with self; {
 
   oic = callPackage ../development/python-modules/oic { };
 
+  oinker = callPackage ../development/python-modules/oinker { };
+
   okonomiyaki = callPackage ../development/python-modules/okonomiyaki { };
 
   okta = callPackage ../development/python-modules/okta { };
@@ -13805,6 +13807,10 @@ self: super: with self; {
   plum-py = callPackage ../development/python-modules/plum-py { };
 
   plumbum = callPackage ../development/python-modules/plumbum { };
+
+  plumed = callPackage ../development/python-modules/plumed {
+    inherit (pkgs) plumed;
+  };
 
   pluralizer = callPackage ../development/python-modules/pluralizer { };
 
