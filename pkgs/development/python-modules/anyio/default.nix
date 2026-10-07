@@ -42,6 +42,9 @@ buildPythonPackage rec {
     hash = "sha256-MEU0c8/NI1vlyNtBsg/hGLv6DR619ZqoZzNY1eJLEWM=";
   };
 
+  # Python 3.12.15 ssl rejects server_hostname in server-side wrap_bio()
+  patches = lib.optionals (pythonOlder "3.13") [ ./test-tls-server-hostname.patch ];
+
   build-system = [ setuptools-scm ];
 
   dependencies = [
@@ -106,6 +109,10 @@ buildPythonPackage rec {
 
     # fails to monkeypatch __file__.__main__
     "test_entrypoint_main_module"
+  ]
+  ++ lib.optionals (pythonOlder "3.13") [
+    # Opens AF_INET6 sockets, which fail with EAFNOSUPPORT on builders booted with ipv6.disable=1
+    "TestFreePortFactory"
   ]
   ++ lib.optionals stdenv.hostPlatform.isDarwin [
     # PermissionError: [Errno 1] Operation not permitted: '/dev/console'
