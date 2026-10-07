@@ -138,7 +138,7 @@ export default async ({
       const unstablePrimaryResults = await Promise.all(
         unstablePrimaryCandidates.map((branch) => mergeBase(branch)),
       )
-      let candidates = []
+      let candidates: typeof unstablePrimaryResults = []
       for (const nextCandidate of unstablePrimaryResults) {
         if (candidates.length === 0) candidates.push(nextCandidate)
         else if (candidates[0].commits === nextCandidate.commits)
