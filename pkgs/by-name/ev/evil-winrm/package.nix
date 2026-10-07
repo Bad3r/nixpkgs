@@ -80,6 +80,7 @@ stdenv.mkDerivation (finalAttrs: {
     mainProgram = "evil-winrm";
     homepage = "https://github.com/Hackplayers/evil-winrm";
     changelog = "https://github.com/Hackplayers/evil-winrm/blob/v${finalAttrs.version}/CHANGELOG.md";
+    maintainers = with lib.maintainers; [ letgamer ];
     license = lib.licenses.lgpl3Plus;
     maintainers = with lib.maintainers; [ bad3r ];
   };

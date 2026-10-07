@@ -97,12 +97,11 @@ let
       + lib.optionalString stdenv.hostPlatform.isCygwin ''
         rm test/recipes/01-test_symbol_presence.t
       ''
-      # this test has inconsistent behavior in the freebsd sandbox
-      # (binds to only ipv6 and connects on only ipv4)
+      # this test has multiple issues in the freebsd sandbox:
+      # * binds to only ipv6 and connects on only ipv4
+      # * attempts name resolution which fails
       + lib.optionalString stdenv.hostPlatform.isFreeBSD ''
-        substituteInPlace test/recipes/82-test_ocsp_cert_chain.t \
-          --replace-fail '"-accept",' '"-4", "-accept",' \
-          --replace-fail '"-connect",' '"-4", "-connect",'
+        rm test/recipes/82-test_ocsp_cert_chain.t
       '';
 
       outputs = [
@@ -474,8 +473,8 @@ in
   };
 
   openssl_4_0 = common {
-    version = "4.0.2";
-    hash = "sha256-c2tGdTD5FnN7cDExDMsh2CGMYinmHo4WDNHTRYzVQ6g=";
+    version = "4.0.3";
+    hash = "sha256-MltcgGFnwTtAsf/q3+AkgZfADszEzxI+weKNLS/SFtk=";
 
     patches = [
       # Support for NIX_SSL_CERT_FILE, motivation:

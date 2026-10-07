@@ -73,12 +73,11 @@ stdenv.mkDerivation (finalAttrs: {
     buildPackages.tcl
   ];
 
-  buildInputs = [
-    bashNonInteractive
-  ]
-  ++ lib.optionals (lib.versionAtLeast version "9.0") [
-    zlib
-  ];
+  buildInputs =
+    lib.optional (lib.meta.availableOn stdenv.hostPlatform bashNonInteractive) bashNonInteractive
+    ++ lib.optionals (lib.versionAtLeast version "9.0") [
+      zlib
+    ];
 
   strictDeps = true;
 
@@ -197,7 +196,10 @@ stdenv.mkDerivation (finalAttrs: {
     license = lib.licenses.tcltk;
     platforms = lib.platforms.all;
     mainProgram = "tclsh";
-    maintainers = with lib.maintainers; [ agbrooks ];
+    maintainers = with lib.maintainers; [
+      agbrooks
+      fgaz
+    ];
   };
 
   passthru =
