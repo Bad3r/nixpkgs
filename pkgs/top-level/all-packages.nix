@@ -5358,6 +5358,7 @@ with pkgs;
     boost189
     boost190
     boost191
+    boost192
     ;
 
   boost = boost191;
@@ -7467,6 +7468,8 @@ with pkgs;
   virtualenv = with python3Packages; toPythonApplication virtualenv;
 
   virtualenv-clone = with python3Packages; toPythonApplication virtualenv-clone;
+
+  whisparr = whisparr_2;
 
   mkfontdir = mkfontscale;
   xcbproto = xcb-proto;
