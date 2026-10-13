@@ -461,12 +461,12 @@ final: prev: {
 
   SchemaStore-nvim = buildVimPlugin {
     pname = "SchemaStore.nvim";
-    version = "0-unstable-2026-09-16";
+    version = "0-unstable-2026-10-02";
     src = fetchFromGitHub {
       owner = "b0o";
       repo = "SchemaStore.nvim";
-      rev = "ab094b7f788231fe9b68deac78c3d512302c58a6";
-      hash = "sha256-AKGx8ubYHhDireMwOcimvr7zpM1sjytkaRHtguAfVLo=";
+      rev = "d93ef1e8365950420ea3e706e82caf65dc9ff968";
+      hash = "sha256-bBOkCL0QRqqEEKM4BwcSk2/3ecDLCN/I2chVP9QWz2s=";
     };
     meta.homepage = "https://github.com/b0o/SchemaStore.nvim/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -1065,12 +1065,12 @@ final: prev: {
 
   artio-nvim = buildVimPlugin {
     pname = "artio.nvim";
-    version = "0-unstable-2026-08-09";
+    version = "0-unstable-2026-09-17";
     src = fetchFromGitHub {
       owner = "comfysage";
       repo = "artio.nvim";
-      rev = "8fb9b8a96c37822ea57d399deb4c27053b13ff20";
-      hash = "sha256-Ze5Igyd8QgFH2IL5bucksKu2yDT+aomniMqB3yC1faI=";
+      rev = "ebf5ed35bf17babeee20b04129ce60a382214687";
+      hash = "sha256-ej+y/XUQYD4+W9e4bSTUVXWahJcJIltstamYUlQIAig=";
     };
     meta.homepage = "https://github.com/comfysage/artio.nvim/";
     meta.license = getLicenseFromSpdxId "EUPL-1.2";
@@ -1283,6 +1283,20 @@ final: prev: {
       hash = "sha256-6859GtjXxM7Pxp6U95Oz+/hg8FClulT2t2R2FY4yq7A=";
     };
     meta.homepage = "https://github.com/skywind3000/asynctasks.vim/";
+    meta.license = getLicenseFromSpdxId "MIT";
+    meta.hydraPlatforms = [ ];
+  };
+
+  atlas-nvim = buildVimPlugin {
+    pname = "atlas.nvim";
+    version = "0.7.13";
+    src = fetchFromGitHub {
+      owner = "emrearmagan";
+      repo = "atlas.nvim";
+      tag = "0.7.13";
+      hash = "sha256-oZY6EQmtfp6bH04CjAdoQwJOyD5ikTLFX2bl7hnCOcE=";
+    };
+    meta.homepage = "https://github.com/emrearmagan/atlas.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
     meta.hydraPlatforms = [ ];
   };
@@ -1625,12 +1639,12 @@ final: prev: {
 
   base16-nvim = buildVimPlugin {
     pname = "base16-nvim";
-    version = "0-unstable-2026-09-13";
+    version = "0-unstable-2026-10-04";
     src = fetchFromGitHub {
       owner = "RRethy";
       repo = "base16-nvim";
-      rev = "44fc7a0d7ad878f90b04ffe8fa58c99c19007509";
-      hash = "sha256-Wb0fSya++a64lPIVtcdQjX9wkLfCEtq5uq6KG8jHvPY=";
+      rev = "7183774e90841f4bd27a47cb6e75cf532fd1192d";
+      hash = "sha256-NudlbRyiQxr50dzAAOyG7yybpVvnzhrXZUMBuAG/dBY=";
     };
     meta.homepage = "https://github.com/RRethy/base16-nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -1653,12 +1667,12 @@ final: prev: {
 
   base46 = buildVimPlugin {
     pname = "base46";
-    version = "0-unstable-2026-08-05";
+    version = "0-unstable-2026-09-25";
     src = fetchFromGitHub {
       owner = "nvchad";
       repo = "base46";
-      rev = "267954c8663607823f03a3259bb8deb15688212f";
-      hash = "sha256-KAik05LSQkAgJjF/1fo1j9gwc5BvcFP4cUsQmgQYnMk=";
+      rev = "7df2bd89295db00b649cbc49bdf6fe5a1cc5df3b";
+      hash = "sha256-LIYAurLRSHnGtDUvxUvIE0PJ1cZ6L0M4nQ+a1H2SgJg=";
     };
     meta.homepage = "https://github.com/nvchad/base46/";
     meta.license = unfree;
@@ -1751,12 +1765,12 @@ final: prev: {
 
   black-metal-theme-neovim = buildVimPlugin {
     pname = "black-metal-theme-neovim";
-    version = "2.0";
+    version = "2.1.0";
     src = fetchFromGitHub {
       owner = "metalelf0";
       repo = "black-metal-theme-neovim";
-      tag = "2.0";
-      hash = "sha256-z+qJfvCIV5WEAvKIkttDKpfBDt1xDBkTYLk2EoZbnj8=";
+      tag = "v2.1.0";
+      hash = "sha256-rVZPpbakoC6AoSPi8adKoY5aYGO/syjpwGTrsXm3Yag=";
     };
     meta.homepage = "https://github.com/metalelf0/black-metal-theme-neovim/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -2323,6 +2337,20 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
+  carderne-pi-nvim = buildVimPlugin {
+    pname = "carderne-pi-nvim";
+    version = "0.2.5";
+    src = fetchFromGitHub {
+      owner = "carderne";
+      repo = "pi-nvim";
+      tag = "v0.2.5";
+      hash = "sha256-1ZpHYfpgdezwM5go5KAPhjPeKDIgKgmVSCVGgbPv63o=";
+    };
+    meta.homepage = "https://github.com/carderne/pi-nvim/";
+    meta.license = getLicenseFromSpdxId "MIT";
+    meta.hydraPlatforms = [ ];
+  };
+
   catppuccin-nvim = buildVimPlugin {
     pname = "catppuccin-nvim";
     version = "2.0.0";
@@ -2339,12 +2367,12 @@ final: prev: {
 
   catppuccin-vim = buildVimPlugin {
     pname = "catppuccin-vim";
-    version = "0-unstable-2026-08-31";
+    version = "0-unstable-2026-10-02";
     src = fetchFromGitHub {
       owner = "catppuccin";
       repo = "vim";
-      rev = "ee7d87e1c3f753069dae41df139f7d3fd914f7e9";
-      hash = "sha256-9tDBx9FpkvdX/Y5vB8OXAqukp6826k4W0LF9s66X6kg=";
+      rev = "5c988d5acb4759e020eef04b036f6eab8fbb3e3a";
+      hash = "sha256-mls7ZTMNZ3/nyN7wmFTSacrknmkUf78J712PxXx7sPk=";
     };
     meta.homepage = "https://github.com/catppuccin/vim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -3273,20 +3301,6 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
-  cmp-tabnine = buildVimPlugin {
-    pname = "cmp-tabnine";
-    version = "0-unstable-2024-09-12";
-    src = fetchFromGitHub {
-      owner = "tzachar";
-      repo = "cmp-tabnine";
-      rev = "c0167cdc86c15e782c5461ee62aebee89231c2ed";
-      hash = "sha256-g7H6dO+SfYSVjSs24+RcngtecuxsgntaAXb6aodFF3w=";
-    };
-    meta.homepage = "https://github.com/tzachar/cmp-tabnine/";
-    meta.license = getLicenseFromSpdxId "MIT";
-    meta.hydraPlatforms = [ ];
-  };
-
   cmp-tmux = buildVimPlugin {
     pname = "cmp-tmux";
     version = "0-unstable-2026-07-23";
@@ -3513,12 +3527,12 @@ final: prev: {
 
   coc-nvim = buildVimPlugin {
     pname = "coc.nvim";
-    version = "0.0.82-unstable-2026-09-16";
+    version = "0.0.82-unstable-2026-10-03";
     src = fetchFromGitHub {
       owner = "neoclide";
       repo = "coc.nvim";
-      rev = "c39eba4cf90254dd9e3ce54f617f07d1853d5da5";
-      hash = "sha256-FMP/UaBSAj29Cei7CDLamtjOAOAqcZLGBYjt/6uQHlI=";
+      rev = "8266f42a33f55da5688497d1ba28c39453ccc2a4";
+      hash = "sha256-/t9YUFEtlk9Fogf5Gu1PpcWZ7YlmcrFtZ9a6LWuofzM=";
     };
     meta.homepage = "https://github.com/neoclide/coc.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -3581,6 +3595,20 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
+  code-helper-nvim = buildVimPlugin {
+    pname = "code-helper-nvim";
+    version = "0-unstable-2026-10-04";
+    src = fetchFromGitHub {
+      owner = "sergioia-dev";
+      repo = "code-helper-nvim";
+      rev = "318856be95cafd863c7a1983a1b7381c6454b906";
+      hash = "sha256-OHrZiroVLJEmUKIzuw8l59Ql3Xmv8rImrqtGof9DiUM=";
+    };
+    meta.homepage = "https://github.com/sergioia-dev/code-helper-nvim/";
+    meta.license = getLicenseFromSpdxId "MIT";
+    meta.hydraPlatforms = [ ];
+  };
+
   codecompanion-history-nvim = buildVimPlugin {
     pname = "codecompanion-history.nvim";
     version = "0-unstable-2026-01-22";
@@ -3611,12 +3639,12 @@ final: prev: {
 
   codecompanion-nvim = buildVimPlugin {
     pname = "codecompanion.nvim";
-    version = "19.25.0";
+    version = "19.27.0";
     src = fetchFromGitHub {
       owner = "olimorris";
       repo = "codecompanion.nvim";
-      tag = "v19.25.0";
-      hash = "sha256-PTvllgZji45JdW1NW9YmRDJqiEvdmbpeB2QGvu10jbM=";
+      tag = "v19.27.0";
+      hash = "sha256-8iJyUnsgdJsLqrMKasoaDjSiAwgWAEujF6GMEF9Jq2k=";
     };
     meta.homepage = "https://github.com/olimorris/codecompanion.nvim/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -3959,20 +3987,6 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
-  completion-tabnine = buildVimPlugin {
-    pname = "completion-tabnine";
-    version = "0-unstable-2021-09-27";
-    src = fetchFromGitHub {
-      owner = "aca";
-      repo = "completion-tabnine";
-      rev = "5d2c49aee5b5443d58cceb0c8411429d5fae1b6f";
-      hash = "sha256-0/LsJnPOIjEH/hD1Mb2+OWHuVGW0uOA6imMDv2jgbbE=";
-    };
-    meta.homepage = "https://github.com/aca/completion-tabnine/";
-    meta.license = unfree;
-    meta.hydraPlatforms = [ ];
-  };
-
   concealedyank-vim = buildVimPlugin {
     pname = "concealedyank.vim";
     version = "0-unstable-2013-03-24";
@@ -4130,12 +4144,12 @@ final: prev: {
 
   copilot-lua = buildVimPlugin {
     pname = "copilot.lua";
-    version = "3.1.7";
+    version = "3.1.11";
     src = fetchFromGitHub {
       owner = "zbirenbaum";
       repo = "copilot.lua";
-      tag = "v3.1.7";
-      hash = "sha256-RYi+Ofn+kqXkw8z2f1avH62MMLqVyIIDJaYBCMt/fBw=";
+      tag = "v3.1.11";
+      hash = "sha256-EwiQt71RuOrF334rxMb0YoejfYALqrkH88kcJWYBX1U=";
     };
     meta.homepage = "https://github.com/zbirenbaum/copilot.lua/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -4228,12 +4242,12 @@ final: prev: {
 
   coq_nvim = buildVimPlugin {
     pname = "coq_nvim";
-    version = "0-unstable-2026-09-14";
+    version = "0-unstable-2026-09-22";
     src = fetchFromGitHub {
       owner = "ms-jpq";
       repo = "coq_nvim";
-      rev = "735596a7ec4f4984c90827f8e1100e320eb14cba";
-      hash = "sha256-igRYHOoBBz7R5aUuxPkaAfmTH6TYSXMNV2pBTcT5Pe0=";
+      rev = "0cdbf99893729c5ffa74064382efc53364d7045d";
+      hash = "sha256-cAIZQcBVqTyaPW2+hH8kZRyTu8M1RQzLjLnHI4moICg=";
     };
     meta.homepage = "https://github.com/ms-jpq/coq_nvim/";
     meta.license = getLicenseFromSpdxId "GPL-3.0-only";
@@ -4354,12 +4368,12 @@ final: prev: {
 
   csvview-nvim = buildVimPlugin {
     pname = "csvview.nvim";
-    version = "1.3.0-unstable-2026-08-31";
+    version = "1.3.0-unstable-2026-10-04";
     src = fetchFromGitHub {
       owner = "hat0uma";
       repo = "csvview.nvim";
-      rev = "2466bdda54047f525d4faca53040fe657c9c33db";
-      hash = "sha256-2Ew1TPEiTIoMpQwSQSTVLadLuvXMzn24XXiAxGRjL5c=";
+      rev = "f190de76d2eca0380ddcb2425cd582d740699b55";
+      hash = "sha256-ubNaYRqX2c7bT5hMHNYEJBkabD9bwIDfKNwgCyf9Bt0=";
     };
     meta.homepage = "https://github.com/hat0uma/csvview.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -4475,6 +4489,20 @@ final: prev: {
     };
     meta.homepage = "https://github.com/d2lang/d2-vim/";
     meta.license = getLicenseFromSpdxId "BSD-3-Clause";
+    meta.hydraPlatforms = [ ];
+  };
+
+  dadbod-grip-nvim = buildVimPlugin {
+    pname = "dadbod-grip.nvim";
+    version = "3.11.0";
+    src = fetchFromGitHub {
+      owner = "joryeugene";
+      repo = "dadbod-grip.nvim";
+      tag = "v3.11.0";
+      hash = "sha256-iy3J41D1X0u7pTqSSgvBL5ATQeilon2VRDHFxzFAEqs=";
+    };
+    meta.homepage = "https://github.com/joryeugene/dadbod-grip.nvim/";
+    meta.license = getLicenseFromSpdxId "MIT";
     meta.hydraPlatforms = [ ];
   };
 
@@ -4945,12 +4973,12 @@ final: prev: {
     pname = "deoplete-github";
     version = "0-unstable-2018-03-04";
     src = fetchFromGitHub {
-      owner = "SevereOverfl0w";
+      owner = "dkarvik";
       repo = "deoplete-github";
       rev = "8e30256e50b3914a7e57ea4d5976b6a499fb936f";
       hash = "sha256-9ZU9DgMkBPIu/vy01TZqLWdOvpnzmfUwa/oEErEtwYY=";
     };
-    meta.homepage = "https://github.com/SevereOverfl0w/deoplete-github/";
+    meta.homepage = "https://github.com/dkarvik/deoplete-github/";
     meta.license = unfree;
     meta.hydraPlatforms = [ ];
   };
@@ -5308,12 +5336,12 @@ final: prev: {
 
   diffview-plus-nvim = buildVimPlugin {
     pname = "diffview-plus.nvim";
-    version = "0.37";
+    version = "0.38";
     src = fetchFromGitHub {
       owner = "dlyongemallo";
       repo = "diffview-plus.nvim";
-      tag = "v0.37";
-      hash = "sha256-5ZYl7D/V5tFhlojwj6EvHXnQVvfdiLxzpAlNUejLJzI=";
+      tag = "v0.38";
+      hash = "sha256-g9pzU0BmW4TapywQj344PzvKWWSiybt1tUZL1oIoTLI=";
     };
     meta.homepage = "https://github.com/dlyongemallo/diffview-plus.nvim/";
     meta.license = unfree;
@@ -5331,6 +5359,20 @@ final: prev: {
     };
     meta.homepage = "https://github.com/elihunter173/dirbuf.nvim/";
     meta.license = getLicenseFromSpdxId "AGPL-3.0-only";
+    meta.hydraPlatforms = [ ];
+  };
+
+  direnv-nvim = buildVimPlugin {
+    pname = "direnv.nvim";
+    version = "0-unstable-2026-06-28";
+    src = fetchFromGitHub {
+      owner = "NotAShelf";
+      repo = "direnv.nvim";
+      rev = "9258f9f10c4c729d8296fce0e3ecb12543daad06";
+      hash = "sha256-b5PpmkYWaDGLNcu+36tRR5ycATHYBjs9WrV8/jfmooQ=";
+    };
+    meta.homepage = "https://github.com/NotAShelf/direnv.nvim/";
+    meta.license = getLicenseFromSpdxId "MPL-2.0";
     meta.hydraPlatforms = [ ];
   };
 
@@ -5378,12 +5420,12 @@ final: prev: {
 
   doom-one-nvim = buildVimPlugin {
     pname = "doom-one.nvim";
-    version = "0-unstable-2025-06-28";
+    version = "0-unstable-2026-09-28";
     src = fetchFromGitHub {
       owner = "NTBBloodbath";
       repo = "doom-one.nvim";
-      rev = "beae92173315c7282f6897e666cfd67fbf0f3ac9";
-      hash = "sha256-gsS/n0CQ41WTl0sQxEWoWe7+wzTUyVKlrgaTC+Q2Nuc=";
+      rev = "960d8bf49904001b7cf37fdc34ca18dffb21b024";
+      hash = "sha256-8rZ6zs1IooJwpS3wBNeBspHd7UQUgtWqZFASWVidO+o=";
     };
     meta.homepage = "https://github.com/NTBBloodbath/doom-one.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -5448,12 +5490,12 @@ final: prev: {
 
   dropbar-nvim = buildVimPlugin {
     pname = "dropbar.nvim";
-    version = "14.2.1-unstable-2026-05-31";
+    version = "14.2.1-unstable-2026-09-25";
     src = fetchFromGitHub {
       owner = "Bekaboo";
       repo = "dropbar.nvim";
-      rev = "808ba31cde89aec8833e9789f5e04557cd31c9e1";
-      hash = "sha256-S9TD5PkHKHoo2jfjOXkQoNtyr/PNtR/eljXB+8PtGU8=";
+      rev = "f7c6fa21e2a7c32576e7a1791774a3736987f467";
+      hash = "sha256-bxlbejtkSwKUQ0+H/+6k83hqUeBq29iHanpVxv7+cZk=";
     };
     meta.homepage = "https://github.com/Bekaboo/dropbar.nvim/";
     meta.license = getLicenseFromSpdxId "GPL-3.0-only";
@@ -6220,12 +6262,12 @@ final: prev: {
 
   flutter-tools-nvim = buildVimPlugin {
     pname = "flutter-tools.nvim";
-    version = "3.0.1";
+    version = "3.1.0";
     src = fetchFromGitHub {
       owner = "nvim-flutter";
       repo = "flutter-tools.nvim";
-      tag = "v3.0.1";
-      hash = "sha256-rdwusVC1/1FTY3dTLkjZ6d1pjubt+fBgRZexih7ClsM=";
+      tag = "v3.1.0";
+      hash = "sha256-eJPZSO7ioKULD66n5A7Yb6lpKQft+p3R4h4AriybA0s=";
     };
     meta.homepage = "https://github.com/nvim-flutter/flutter-tools.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -6473,12 +6515,12 @@ final: prev: {
 
   fzf-vim = buildVimPlugin {
     pname = "fzf.vim";
-    version = "0-unstable-2026-09-07";
+    version = "0-unstable-2026-09-30";
     src = fetchFromGitHub {
       owner = "junegunn";
       repo = "fzf.vim";
-      rev = "8a0068127ac9ee23d71dab2944ce995726bef462";
-      hash = "sha256-nv/C0UMpVLzu0mYODVnByMkWnNlILdoqkl4KkLGSfjk=";
+      rev = "023de3c0e158ff9c2b0992175af10be97c2f2158";
+      hash = "sha256-HP8uwFiAVvw0E+vIDnMdwZ+ovgRJPAnJarYqmDeYFS4=";
     };
     meta.homepage = "https://github.com/junegunn/fzf.vim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -6571,12 +6613,12 @@ final: prev: {
 
   gentoo-syntax = buildVimPlugin {
     pname = "gentoo-syntax";
-    version = "16";
+    version = "17";
     src = fetchFromGitHub {
       owner = "gentoo";
       repo = "gentoo-syntax";
-      tag = "v16";
-      hash = "sha256-DGsfm52XLPnkWX9yRUkge7sQtfPZ3nxxQPSDArfO1h4=";
+      tag = "v17";
+      hash = "sha256-zRutLD1orVraVfzacIThnIyrlS9hi823TeCKqCf4sCM=";
     };
     meta.homepage = "https://github.com/gentoo/gentoo-syntax/";
     meta.license = unfree;
@@ -6683,12 +6725,12 @@ final: prev: {
 
   git-dev-nvim = buildVimPlugin {
     pname = "git-dev.nvim";
-    version = "0.11.1";
+    version = "0.11.2";
     src = fetchFromGitHub {
       owner = "moyiz";
       repo = "git-dev.nvim";
-      tag = "v0.11.1";
-      hash = "sha256-pDz0IRlnnVHQ5G3Ga8I2wF8jDcF3hiyvMo5s5fwcV88=";
+      tag = "v0.11.2";
+      hash = "sha256-locfBfG9LYjxK1toQyqvuB/dP62jsRmz0S/qfVZbZNU=";
     };
     meta.homepage = "https://github.com/moyiz/git-dev.nvim/";
     meta.license = getLicenseFromSpdxId "BSD-3-Clause";
@@ -6781,11 +6823,11 @@ final: prev: {
 
   gitlab-vim = buildVimPlugin {
     pname = "gitlab.vim";
-    version = "1.1.0-unstable-2026-08-24";
+    version = "1.1.0-unstable-2026-09-21";
     src = fetchgit {
       url = "https://gitlab.com/gitlab-org/editor-extensions/gitlab.vim";
-      rev = "0cc64de832d79da7f2a53b111d7209a726fc33c8";
-      hash = "sha256-3YeU4TJ01pp70nm8Xl4xp07mADIZu1maNmbogbLl+Mw=";
+      rev = "185263ed2fc125b377f0825736b32702943bad43";
+      hash = "sha256-T4O2tCefTnA4gzIlIhK1RXAj/OFlYUWbdCJsVLdDODY=";
     };
     meta.homepage = "https://gitlab.com/gitlab-org/editor-extensions/gitlab.vim";
     meta.license = unfree;
@@ -7003,12 +7045,12 @@ final: prev: {
 
   gruber-darker-nvim = buildVimPlugin {
     pname = "gruber-darker.nvim";
-    version = "0-unstable-2026-09-05";
+    version = "0-unstable-2026-09-23";
     src = fetchFromGitHub {
       owner = "blazkowolf";
       repo = "gruber-darker.nvim";
-      rev = "50fa4e583099729fcaaadc73a5afb74f7a91a625";
-      hash = "sha256-TgLuVBTnZnX+siZoE3Vzt5qtxP5Ab3VZUbjOOEQa7E8=";
+      rev = "35cb97959ef01f7193c94c404c13ddb3d4346654";
+      hash = "sha256-mlezA4AMPv9fW0rHcGWBIYswPFNnob7NDX5TyC3fSCM=";
     };
     meta.homepage = "https://github.com/blazkowolf/gruber-darker.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -7017,12 +7059,12 @@ final: prev: {
 
   gruvbox = buildVimPlugin {
     pname = "gruvbox";
-    version = "3.0.1-rc.0-unstable-2026-06-08";
+    version = "3.0.1-rc.0-unstable-2026-09-18";
     src = fetchFromGitHub {
       owner = "morhetz";
       repo = "gruvbox";
-      rev = "5d15b2765f59754d7ac263c88a0f6e3e58124951";
-      hash = "sha256-cVUOwm7TudiLNQxnmOfjDMth61f5ndDqxYSl15fQzSE=";
+      rev = "ef8864bb42bf244f0295d1c5a403b27e3d139695";
+      hash = "sha256-zvc7lJBhM0fbXP+dOPRKqfz2UsucHujCHMElzeV8Ljs=";
     };
     meta.homepage = "https://github.com/morhetz/gruvbox/";
     meta.license = unfree;
@@ -7256,12 +7298,12 @@ final: prev: {
 
   hardtime-nvim = buildVimPlugin {
     pname = "hardtime.nvim";
-    version = "1.2.0-unstable-2026-09-13";
+    version = "1.3.0";
     src = fetchFromGitHub {
       owner = "m4xshen";
       repo = "hardtime.nvim";
-      rev = "5165840fe680eab46de1fc6dbff48f148fdcf018";
-      hash = "sha256-AhCFZQYtwPicHS/6PDeTkkdU2R9hAGgbyz1Sow3GNdQ=";
+      tag = "v1.3.0";
+      hash = "sha256-dAghosu35TKmEM1UictCCBlHxN/jo/RFUWMvQC+0UFU=";
     };
     meta.homepage = "https://github.com/m4xshen/hardtime.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -7535,16 +7577,16 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
-  himalaya-vim = buildVimPlugin {
-    pname = "himalaya-vim";
-    version = "0-unstable-2026-02-24";
+  himalaya-vim9 = buildVimPlugin {
+    pname = "himalaya-vim9";
+    version = "0-unstable-2026-09-28";
     src = fetchFromGitHub {
       owner = "pimalaya";
-      repo = "himalaya-vim";
-      rev = "978f2b463c4ece28f5e1457029d399638e439704";
-      hash = "sha256-mm7fU/xnKzUfIvJN7tQfIRswWood7HPAmuD9PZUEN6I=";
+      repo = "himalaya-vim9";
+      rev = "c85636dcebbb8060599ff1f94ba18c99f6a3a677";
+      hash = "sha256-DJ8rsMHBPG8gvq/88kEWm/iQ5khyenoh4MwGq48/s08=";
     };
-    meta.homepage = "https://github.com/pimalaya/himalaya-vim/";
+    meta.homepage = "https://github.com/pimalaya/himalaya-vim9/";
     meta.license = getLicenseFromSpdxId "MIT";
     meta.hydraPlatforms = [ ];
   };
@@ -8266,12 +8308,12 @@ final: prev: {
 
   jinja-vim = buildVimPlugin {
     pname = "jinja.vim";
-    version = "0-unstable-2025-08-19";
+    version = "0-unstable-2026-09-20";
     src = fetchFromGitHub {
       owner = "HiPhish";
       repo = "jinja.vim";
-      rev = "05373374a288b20845937cbc3a7abda23a2e65d2";
-      hash = "sha256-ubZo3TYi72WqcGoSoveYRYcwOYk4oNW28uAYw939u5M=";
+      rev = "236ac330ef26bd4bc20121f3a8cb90376c5a7631";
+      hash = "sha256-2ycCurboiCgN54TExh91kBEZtcMpSGwKY5QMslaByKs=";
     };
     meta.homepage = "https://github.com/HiPhish/jinja.vim/";
     meta.license = unfree;
@@ -8323,13 +8365,14 @@ final: prev: {
   jsonfly-nvim = buildVimPlugin {
     pname = "jsonfly.nvim";
     version = "0-unstable-2025-11-02";
-    src = fetchgit {
-      url = "https://git.myzel394.app/Myzel394/jsonfly.nvim";
+    src = fetchFromGitHub {
+      owner = "Myzel394";
+      repo = "jsonfly.nvim";
       rev = "3d58635cb195a5435743e7882c6ac7cff710204f";
-      hash = "sha256-bTh/6zmYQ+XqBsccKo8i149nU5bBfFv+8UKMayHIoo4=";
+      hash = "sha256-qTxLDQKqmsf/DrgzhfrmtY2LUVhPcGNFU/Iq4ew29lA=";
     };
-    meta.homepage = "https://git.myzel394.app/Myzel394/jsonfly.nvim";
-    meta.license = unfree;
+    meta.homepage = "https://github.com/Myzel394/jsonfly.nvim/";
+    meta.license = getLicenseFromSpdxId "GPL-3.0-only";
     meta.hydraPlatforms = [ ];
   };
 
@@ -8377,12 +8420,12 @@ final: prev: {
 
   jupynium-nvim = buildVimPlugin {
     pname = "jupynium.nvim";
-    version = "0.2.7";
+    version = "0.2.8";
     src = fetchFromGitHub {
       owner = "kiyoon";
       repo = "jupynium.nvim";
-      tag = "v0.2.7";
-      hash = "sha256-YLM1XaWeUx4twqaIDDxASP94CYIEf3iT78zmexzRZos=";
+      tag = "v0.2.8";
+      hash = "sha256-UyFhaaGy3MpVMgQ/JdXqg0pdSgHu9PBhWuOsslYoelo=";
     };
     meta.homepage = "https://github.com/kiyoon/jupynium.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -8489,12 +8532,12 @@ final: prev: {
 
   kitty-scrollback-nvim = buildVimPlugin {
     pname = "kitty-scrollback.nvim";
-    version = "9.2.1";
+    version = "9.3.1";
     src = fetchFromGitHub {
       owner = "mikesmithgh";
       repo = "kitty-scrollback.nvim";
-      tag = "v9.2.1";
-      hash = "sha256-8IkvoJ8nTlP5WCqMpJqUhBsz7OYB/Mlp1lH5TJRpvOE=";
+      tag = "v9.3.1";
+      hash = "sha256-d3QGc4243XrzRpVgj0D137+x/r8VzjYdDJrElp/yv4I=";
     };
     meta.homepage = "https://github.com/mikesmithgh/kitty-scrollback.nvim/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -8713,12 +8756,12 @@ final: prev: {
 
   lazygit-nvim = buildVimPlugin {
     pname = "lazygit.nvim";
-    version = "0-unstable-2025-12-19";
+    version = "0-unstable-2026-09-20";
     src = fetchFromGitHub {
       owner = "kdheepak";
       repo = "lazygit.nvim";
-      rev = "a04ad0dbc725134edbee3a5eea29290976695357";
-      hash = "sha256-V5vjfwuWtSzOicZD/cTwbPVQdKrr3/2ozsm4QyT36t0=";
+      rev = "9ffc6103926718f7070fb4017694543cd7dc9718";
+      hash = "sha256-wbNjuB1SZIcLlOBaOijKQVaet2XiAIpLOvvkLsCAaM0=";
     };
     meta.homepage = "https://github.com/kdheepak/lazygit.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -8727,12 +8770,12 @@ final: prev: {
 
   lazyjj-nvim = buildVimPlugin {
     pname = "lazyjj.nvim";
-    version = "0-unstable-2024-11-28";
+    version = "0-unstable-2026-10-03";
     src = fetchFromGitHub {
       owner = "swaits";
       repo = "lazyjj.nvim";
-      rev = "bba66a1351ff1f1bd078c8a1b00b8d12b3ed0017";
-      hash = "sha256-h97fVlawU0oLkDuuvmUbrTFzsc92DQELvynmIRjGjjk=";
+      rev = "b8737e54af3f26f85125edff7b9f044a501c543f";
+      hash = "sha256-CShV94XlqOjzV+h8PhXJeD0QZt9wYaAo6qSQEP8jlHA=";
     };
     meta.homepage = "https://github.com/swaits/lazyjj.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -8783,11 +8826,11 @@ final: prev: {
 
   leap-nvim = buildVimPlugin {
     pname = "leap.nvim";
-    version = "0-unstable-2026-08-31";
+    version = "0-unstable-2026-09-27";
     src = fetchgit {
       url = "https://codeberg.org/andyg/leap.nvim/";
-      rev = "38af0ab56c6eb8757ee6006dd13ab79c2bc11a49";
-      hash = "sha256-d2YnINKSEPpMkZ+gUgdK4agvGBIFVN3MtXTHKfPapew=";
+      rev = "277e04fad21e3af05a55cc414757b09a704f2a92";
+      hash = "sha256-Yd64QLzeKWcfJEWkvr9944aKPkgNmlsN/OpARVFRBes=";
     };
     meta.homepage = "https://codeberg.org/andyg/leap.nvim/";
     meta.license = unfree;
@@ -8992,12 +9035,12 @@ final: prev: {
 
   lightline-vim = buildVimPlugin {
     pname = "lightline.vim";
-    version = "0-unstable-2026-07-01";
+    version = "0-unstable-2026-10-04";
     src = fetchFromGitHub {
       owner = "itchyny";
       repo = "lightline.vim";
-      rev = "d042c506cb2e7a59112a72447e0b5fe8739d9d1d";
-      hash = "sha256-CVxtG8RLBgHOQUwIjaB9vmeOjGODZzNj/KCEOHTw7EI=";
+      rev = "671007c675eca49a2c5e449fc9da998137d4e500";
+      hash = "sha256-0LNJtZK5vPxNqg5SsQrNj5cXhZQsH6qp4vR+QOceNi0=";
     };
     meta.homepage = "https://github.com/itchyny/lightline.vim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -9244,12 +9287,12 @@ final: prev: {
 
   llm-nvim = buildVimPlugin {
     pname = "llm.nvim";
-    version = "0-unstable-2026-04-02";
+    version = "0-unstable-2026-09-23";
     src = fetchFromGitHub {
       owner = "huggingface";
       repo = "llm.nvim";
-      rev = "fdc0758187da61612f9d3365f7a1ac45de47471c";
-      hash = "sha256-vjSa/ae6p/xCFIgRXOwZFsyLu6Gap+/H0DIeIHMnyVs=";
+      rev = "fba54982924b701600f34dba0ce643de1514b698";
+      hash = "sha256-Pj64ZWjJnf1Y/ZfqrtowHRkJzSrjvSGIwt7Fpx4kWRE=";
     };
     meta.homepage = "https://github.com/huggingface/llm.nvim/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -10714,12 +10757,12 @@ final: prev: {
 
   modus-themes-nvim = buildVimPlugin {
     pname = "modus-themes.nvim";
-    version = "1.4.4";
+    version = "1.6.0";
     src = fetchFromGitHub {
       owner = "miikanissi";
       repo = "modus-themes.nvim";
-      tag = "v1.4.4";
-      hash = "sha256-j10BCRHN6cTDx1+zBxgo6drtA9XoZAqaZg+1uTDQH4M=";
+      tag = "v1.6.0";
+      hash = "sha256-/HWmToZL9HnAYCjVNfpIu5IX21O+nuCzweqbah8pA/A=";
     };
     meta.homepage = "https://github.com/miikanissi/modus-themes.nvim/";
     meta.license = getLicenseFromSpdxId "GPL-3.0-only";
@@ -11218,12 +11261,12 @@ final: prev: {
 
   neoconf-nvim = buildVimPlugin {
     pname = "neoconf.nvim";
-    version = "1.4.0-unstable-2026-09-17";
+    version = "1.4.0-unstable-2026-10-04";
     src = fetchFromGitHub {
       owner = "folke";
       repo = "neoconf.nvim";
-      rev = "54f249a7f1a87a51ff1f559e873daf05e20a454b";
-      hash = "sha256-tpjnVOIaULSgEzPypvKipNWlEbYvtMossbu/yhHgsWY=";
+      rev = "12ef0eb921cc1a4d7091a6ce67ad76269aa2fb4b";
+      hash = "sha256-hiGjaZ1IBJjiLg0tPXqN51H4DQVEPuN8lhnnTYchUug=";
     };
     meta.homepage = "https://github.com/folke/neoconf.nvim/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -11302,12 +11345,12 @@ final: prev: {
 
   neogit = buildVimPlugin {
     pname = "neogit";
-    version = "3.0.0-unstable-2026-08-22";
+    version = "3.0.0-unstable-2026-09-30";
     src = fetchFromGitHub {
       owner = "NeogitOrg";
       repo = "neogit";
-      rev = "5adc81b26232954cd7a90f158aa7844c18fc3165";
-      hash = "sha256-s0yrtTweFrrUsxVjLjr+1uNHTlhcxGI7JUvOkrpt13g=";
+      rev = "70708be9664b7fcdd010eb07bdc3ebc9311c2027";
+      hash = "sha256-GRsi6WHNa87RsOD/S+wCYFr4TOqNql/ivT5a/vyRqf8=";
     };
     meta.homepage = "https://github.com/NeogitOrg/neogit/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -11524,6 +11567,20 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
+  neotest-busted = buildVimPlugin {
+    pname = "neotest-busted";
+    version = "1.3.1";
+    src = fetchFromGitHub {
+      owner = "MisanthropicBit";
+      repo = "neotest-busted";
+      tag = "v1.3.1";
+      hash = "sha256-Xy8SB/6T1M1NVks2GD5IUrOGKrP4x8+Hcw4uMtjC81w=";
+    };
+    meta.homepage = "https://github.com/MisanthropicBit/neotest-busted/";
+    meta.license = getLicenseFromSpdxId "BSD-3-Clause";
+    meta.hydraPlatforms = [ ];
+  };
+
   neotest-ctest = buildVimPlugin {
     pname = "neotest-ctest";
     version = "0.3.0";
@@ -11653,12 +11710,12 @@ final: prev: {
 
   neotest-gtest = buildVimPlugin {
     pname = "neotest-gtest";
-    version = "0-unstable-2025-09-26";
+    version = "0-unstable-2026-09-28";
     src = fetchFromGitHub {
       owner = "alfaix";
       repo = "neotest-gtest";
-      rev = "b66f1d33cbf3b37b9803e6bc7ef47ac60eba86b1";
-      hash = "sha256-3za8pI1WmKprBhEVcf8P6rWtsc3pe55EqshN7xDIIQY=";
+      rev = "bdffb45731ed2a6f40ca94ed662cadb8add73b30";
+      hash = "sha256-qQfNur/XKGI6yTSMdqaGZrO6LqWD41TXL2E2Y9zH3tc=";
       fetchSubmodules = true;
     };
     meta.homepage = "https://github.com/alfaix/neotest-gtest/";
@@ -11682,12 +11739,12 @@ final: prev: {
 
   neotest-java = buildVimPlugin {
     pname = "neotest-java";
-    version = "0.38.4";
+    version = "0.39.1";
     src = fetchFromGitHub {
       owner = "rcasia";
       repo = "neotest-java";
-      tag = "v0.38.4";
-      hash = "sha256-yXS54cs+Q+zJ4rUMbhwgRTMLNZUptfVWusj2muumyIo=";
+      tag = "v0.39.1";
+      hash = "sha256-WyqvtLOtY+wWSSi+NHO1wbHqPoo4vmK8MeppTxgqKnI=";
     };
     meta.homepage = "https://github.com/rcasia/neotest-java/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -11864,12 +11921,12 @@ final: prev: {
 
   neotest-vitest = buildVimPlugin {
     pname = "neotest-vitest";
-    version = "0.2.0-unstable-2026-07-12";
+    version = "0.2.0-unstable-2026-10-01";
     src = fetchFromGitHub {
       owner = "marilari88";
       repo = "neotest-vitest";
-      rev = "c3c69715da4b158069fd4262083e7219a5c14cfb";
-      hash = "sha256-BPERc4+iWEu1UWDXv+MaSUXJR4KNFFAqrPXxyJCSe9I=";
+      rev = "b0c265743c877058068dbc40d104ea5d40e6b257";
+      hash = "sha256-3BeHnwu+bpESfiyE/wAcJdX0afDt+dA+wFqX+wEf9yQ=";
     };
     meta.homepage = "https://github.com/marilari88/neotest-vitest/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -12046,12 +12103,12 @@ final: prev: {
 
   nerdy-nvim = buildVimPlugin {
     pname = "nerdy.nvim";
-    version = "1.6-unstable-2026-08-04";
+    version = "1.7";
     src = fetchFromGitHub {
       owner = "2KAbhishek";
       repo = "nerdy.nvim";
-      rev = "5d2d37f828a6df2f85e6df6b0a2b375f45bd5125";
-      hash = "sha256-jYqCi92qLzIJcWj5FitZ3pk15r/2nkLiISaLTkj13Yw=";
+      tag = "1.7";
+      hash = "sha256-KzJvVXd5JY3DUulu4OaW1NcZNtKt8DFwlsLUBkU5+Sw=";
     };
     meta.homepage = "https://github.com/2KAbhishek/nerdy.nvim/";
     meta.license = getLicenseFromSpdxId "GPL-3.0-only";
@@ -12102,12 +12159,12 @@ final: prev: {
 
   nfnl = buildVimPlugin {
     pname = "nfnl";
-    version = "1.4.0-unstable-2026-08-14";
+    version = "1.4.0-unstable-2026-09-25";
     src = fetchFromGitHub {
       owner = "Olical";
       repo = "nfnl";
-      rev = "a4c47a1e7e52aaf234b358f73135acf783054e35";
-      hash = "sha256-AVxppifATGlZqtyOTuD6Ral4DcvVisbu1MAjdMlaExs=";
+      rev = "abf41f588ee6e3612816ec70402a4b182ddbbd51";
+      hash = "sha256-kx2Gto4x5fvEEhJ/oRcyJxDzePyAe4mH0zGXu0Qbd6M=";
     };
     meta.homepage = "https://github.com/Olical/nfnl/";
     meta.license = getLicenseFromSpdxId "Unlicense";
@@ -12283,12 +12340,12 @@ final: prev: {
 
   no-neck-pain-nvim = buildVimPlugin {
     pname = "no-neck-pain.nvim";
-    version = "2.5.3";
+    version = "3.0.4";
     src = fetchFromGitHub {
       owner = "shortcuts";
       repo = "no-neck-pain.nvim";
-      tag = "v2.5.3";
-      hash = "sha256-KNLeeaNxywouey0myeVhqRdMVxxouX/IRGOilYtWQAA=";
+      tag = "v3.0.4";
+      hash = "sha256-QR4gLwkv1/DLxhoOGiqXfAzeRrjNQDioUaKrGPy5ffY=";
     };
     meta.homepage = "https://github.com/shortcuts/no-neck-pain.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -12437,12 +12494,12 @@ final: prev: {
 
   numb-nvim = buildVimPlugin {
     pname = "numb.nvim";
-    version = "1.2.0";
+    version = "1.3.0";
     src = fetchFromGitHub {
       owner = "nacro90";
       repo = "numb.nvim";
-      tag = "v1.2.0";
-      hash = "sha256-MRpfVTwlWZl9eKMiLg7eSMeKyhnxSNI3ZJ/TOzW43B0=";
+      tag = "v1.3.0";
+      hash = "sha256-+3QZ4rjkDKdOGd1ck4U4oe4vHq2HTQyS7uuiqIlrrsA=";
     };
     meta.homepage = "https://github.com/nacro90/numb.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -12938,12 +12995,12 @@ final: prev: {
 
   nvim-early-retirement = buildVimPlugin {
     pname = "nvim-early-retirement";
-    version = "0-unstable-2026-08-03";
+    version = "0-unstable-2026-09-18";
     src = fetchFromGitHub {
       owner = "chrisgrieser";
       repo = "nvim-early-retirement";
-      rev = "8ddd369731c3a123a062ccc75c5c9ed54ffec9c1";
-      hash = "sha256-3GSe2H3wnnG+BD6fsLClMySUwxkMaG1lqX1mHbnmgwI=";
+      rev = "d73ddf7b8b776aa917947142873a05f733103757";
+      hash = "sha256-/hnj4eqh/U5ye7cjRgVOtquRVSEgYSNQtnB+0V9pOAQ=";
     };
     meta.homepage = "https://github.com/chrisgrieser/nvim-early-retirement/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -13327,12 +13384,12 @@ final: prev: {
 
   nvim-lsp-file-operations = buildVimPlugin {
     pname = "nvim-lsp-file-operations";
-    version = "1.0.0";
+    version = "1.3.0";
     src = fetchFromGitHub {
       owner = "antosha417";
       repo = "nvim-lsp-file-operations";
-      tag = "v1.0.0";
-      hash = "sha256-FObv42EGkIao2Rmq9CG+G4JsntO+00CFNaNIXc7IK7A=";
+      tag = "v1.3.0";
+      hash = "sha256-4OS3ujQasNvJwTlWABhiCS7Z4YcXWNNSKgR+FhL+nNA=";
     };
     meta.homepage = "https://github.com/antosha417/nvim-lsp-file-operations/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -13355,12 +13412,12 @@ final: prev: {
 
   nvim-lspconfig = buildVimPlugin {
     pname = "nvim-lspconfig";
-    version = "2.11.0";
+    version = "2.12.0";
     src = fetchFromGitHub {
       owner = "neovim";
       repo = "nvim-lspconfig";
-      tag = "v2.11.0";
-      hash = "sha256-d1vDEfiNSo9ccSPqTHEFqXVFCPhp/0ZozTzcyLiJrGg=";
+      tag = "v2.12.0";
+      hash = "sha256-FPk6fSdp13byZBp4pAPng1WefLEGoeauNcw62s/+i2Y=";
     };
     meta.homepage = "https://github.com/neovim/nvim-lspconfig/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -13971,12 +14028,12 @@ final: prev: {
 
   nvim-treesitter = buildVimPlugin {
     pname = "nvim-treesitter";
-    version = "0.10.0-unstable-2026-09-12";
+    version = "0.10.0-unstable-2026-10-03";
     src = fetchFromGitHub {
       owner = "nvim-treesitter";
       repo = "nvim-treesitter";
-      rev = "9a168f6357ed21c3a636e1727bc7d382abc451b8";
-      hash = "sha256-NXt2xP6m2TMG1GHggG9S8sGnd8tl1Utv9kjjqJVEH9U=";
+      rev = "e289100ff98969e118c702199d88b764ce9e7fdf";
+      hash = "sha256-SzY06VxjUr6uG6f1Brn4qsb3t7hZMd3JAzl0D15Xcxk=";
     };
     meta.homepage = "https://github.com/nvim-treesitter/nvim-treesitter/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -14139,12 +14196,12 @@ final: prev: {
 
   nvim-ts-autotag = buildVimPlugin {
     pname = "nvim-ts-autotag";
-    version = "0-unstable-2026-04-15";
+    version = "0-unstable-2026-10-03";
     src = fetchFromGitHub {
       owner = "windwp";
       repo = "nvim-ts-autotag";
-      rev = "88c1453db4ba7dd24131086fe51fdf74e587d275";
-      hash = "sha256-bvBf9wEDxdwlMGN29v4dEPexZGuxZZr7s+6xAOrDNKI=";
+      rev = "d7220b55e16ed3c04e88086256def5d282429493";
+      hash = "sha256-L0A0at16v8SrylDAaRzUyU/H2vgd7zrT2WP+Ofgiv7s=";
     };
     meta.homepage = "https://github.com/windwp/nvim-ts-autotag/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -14377,12 +14434,12 @@ final: prev: {
 
   obsidian-nvim = buildVimPlugin {
     pname = "obsidian.nvim";
-    version = "3.16.7";
+    version = "3.16.8";
     src = fetchFromGitHub {
       owner = "obsidian-nvim";
       repo = "obsidian.nvim";
-      tag = "v3.16.7";
-      hash = "sha256-aOq0cg86hHgK4M/D1YCCyPNVusmsifUtxfAT9avhu7w=";
+      tag = "v3.16.8";
+      hash = "sha256-VQBopv4Lwjie5KyGD/n16V5fKmfn/PPRNBhoQ9E8/vI=";
     };
     meta.homepage = "https://github.com/obsidian-nvim/obsidian.nvim/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -14769,12 +14826,12 @@ final: prev: {
 
   otter-nvim = buildVimPlugin {
     pname = "otter.nvim";
-    version = "2.14.6";
+    version = "2.14.7";
     src = fetchFromGitHub {
       owner = "jmbuhr";
       repo = "otter.nvim";
-      tag = "v2.14.6";
-      hash = "sha256-hfyZ9eG6dMbDzPtQ8wIrx4B3la2VQqnZuXS2eG9gaFU=";
+      tag = "v2.14.7";
+      hash = "sha256-IlchxTOuuIXAP9fwU8HzQrtjWaAm9Y4oQFGYunYpWgc=";
     };
     meta.homepage = "https://github.com/jmbuhr/otter.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -15387,12 +15444,12 @@ final: prev: {
 
   project-nvim = buildVimPlugin {
     pname = "project.nvim";
-    version = "6.3.0-1";
+    version = "6.4.1-1";
     src = fetchFromGitHub {
       owner = "DrKJeff16";
       repo = "project.nvim";
-      tag = "v6.3.0-1";
-      hash = "sha256-X8Jd6KtX/oM8Oe1KsRlixfGNAUwfkWfXQO/Xkg7EAqU=";
+      tag = "v6.4.1-1";
+      hash = "sha256-LUwPYPmgu4eM6ChyNcgQ9IztCF4Pu7tkDWRsj5WofnU=";
     };
     meta.homepage = "https://github.com/DrKJeff16/project.nvim/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -15443,12 +15500,12 @@ final: prev: {
 
   pum-vim = buildVimPlugin {
     pname = "pum.vim";
-    version = "2.0-unstable-2026-09-11";
+    version = "2.0-unstable-2026-10-01";
     src = fetchFromGitHub {
       owner = "Shougo";
       repo = "pum.vim";
-      rev = "5969d9d2f8b14ec19e6252f4c5a32335bec4101f";
-      hash = "sha256-MK1H4btHeTSu2z+/fZKYjszWGHgWBvcfhoXqP+60EEM=";
+      rev = "4ed3576e3399fa65611be00670a084702f110acb";
+      hash = "sha256-RIHbIpM6NqGzKpIkBmHvGDRCOnw/4jFYxduk/Mnxf74=";
     };
     meta.homepage = "https://github.com/Shougo/pum.vim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -15779,12 +15836,12 @@ final: prev: {
 
   refactoring-nvim = buildVimPlugin {
     pname = "refactoring.nvim";
-    version = "0-unstable-2026-07-04";
+    version = "0-unstable-2026-09-23";
     src = fetchFromGitHub {
       owner = "theprimeagen";
       repo = "refactoring.nvim";
-      rev = "64e10d782ae5b9653558482910213b8946651456";
-      hash = "sha256-lclcY2rNbpc8X0whwsVFwfC+eoPvSw3IFY2SQl0TZPE=";
+      rev = "684b3484796ea44595bebbfddee4fa4dbfc90939";
+      hash = "sha256-AYYzm0JwklBxZNO+pNdKOcPvWQa4y24SIlblzAlGs9E=";
     };
     meta.homepage = "https://github.com/theprimeagen/refactoring.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -15807,12 +15864,12 @@ final: prev: {
 
   remember-nvim = buildVimPlugin {
     pname = "remember.nvim";
-    version = "1.5.1";
+    version = "1.5.2";
     src = fetchFromGitHub {
       owner = "vladdoster";
       repo = "remember.nvim";
-      tag = "v1.5.1";
-      hash = "sha256-kJABTjY6p+wFlNZ9VLmK5LvusHcbD/0aaZP6yOpR1Zc=";
+      tag = "v1.5.2";
+      hash = "sha256-qZnSzOr6ImGZ6uiV4GQCQGUPsSxYHdjHlAlAjMz83sE=";
     };
     meta.homepage = "https://github.com/vladdoster/remember.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -16068,20 +16125,6 @@ final: prev: {
     };
     meta.homepage = "https://github.com/TheLazyCat00/runner-nvim/";
     meta.license = getLicenseFromSpdxId "GPL-3.0-only";
-    meta.hydraPlatforms = [ ];
-  };
-
-  rust-tools-nvim = buildVimPlugin {
-    pname = "rust-tools.nvim";
-    version = "0-unstable-2024-01-03";
-    src = fetchFromGitHub {
-      owner = "simrat39";
-      repo = "rust-tools.nvim";
-      rev = "676187908a1ce35ffcd727c654ed68d851299d3e";
-      hash = "sha256-kFane5ze7VDiOzF7jdmXkr50XQsNvdb+a9HQtybEVE0=";
-    };
-    meta.homepage = "https://github.com/simrat39/rust-tools.nvim/";
-    meta.license = getLicenseFromSpdxId "MIT";
     meta.hydraPlatforms = [ ];
   };
 
@@ -16564,12 +16607,12 @@ final: prev: {
 
   smear-cursor-nvim = buildVimPlugin {
     pname = "smear-cursor.nvim";
-    version = "0.6.0-unstable-2026-04-15";
+    version = "0.6.2";
     src = fetchFromGitHub {
       owner = "sphamba";
       repo = "smear-cursor.nvim";
-      rev = "9e9378d6ee34bb3782e0e8c63d9ec8ca618b479b";
-      hash = "sha256-hL0lXzkFxR7qiXzStrmY+gR+ql/A6PR8eCV310gEaGs=";
+      tag = "v0.6.2";
+      hash = "sha256-PI83Zvgx90Fvd52Ng1pmB1kL7SGIkq7R/T1awCUqKdY=";
     };
     meta.homepage = "https://github.com/sphamba/smear-cursor.nvim/";
     meta.license = getLicenseFromSpdxId "GPL-3.0-only";
@@ -16843,12 +16886,12 @@ final: prev: {
 
   splitjoin-vim = buildVimPlugin {
     pname = "splitjoin.vim";
-    version = "1.2.0-unstable-2026-05-24";
+    version = "1.2.0-unstable-2026-09-30";
     src = fetchFromGitHub {
       owner = "AndrewRadev";
       repo = "splitjoin.vim";
-      rev = "b26971a7fdc7ca645b766459e3ed7949300c404f";
-      hash = "sha256-IWBFDaltzAhM0QSTPTgb7wdrCM4CysQpaZ3kw0NkQAU=";
+      rev = "659635fd768d8061b0db89a1ecb4611718a41277";
+      hash = "sha256-oILmvdkdc8pF/kwTIdn1nlI9E5LSAcvyGCYS2v3vT7k=";
       fetchSubmodules = true;
     };
     meta.homepage = "https://github.com/AndrewRadev/splitjoin.vim/";
@@ -16858,12 +16901,12 @@ final: prev: {
 
   spring-boot-nvim = buildVimPlugin {
     pname = "spring-boot.nvim";
-    version = "0-unstable-2026-09-01";
+    version = "0-unstable-2026-09-24";
     src = fetchFromGitHub {
       owner = "JavaHello";
       repo = "spring-boot.nvim";
-      rev = "eea95b752bceb6ca410b3e2d87a1a02d08bd61a6";
-      hash = "sha256-GYer7azYjYWGMTzNDLxHshGYJCl+2zi2+78LjHsuaUc=";
+      rev = "9880be48170a21d97444b1eba75853fd3bad33c3";
+      hash = "sha256-+zgi9Jhh5f3kPr5VC2KZ3x7OEXdTao5gQM48y5NlGo4=";
     };
     meta.homepage = "https://github.com/JavaHello/spring-boot.nvim/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -17305,21 +17348,6 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
-  tabnine-vim = buildVimPlugin {
-    pname = "tabnine-vim";
-    version = "2.10.0-unstable-2023-01-01";
-    src = fetchFromGitHub {
-      owner = "codota";
-      repo = "tabnine-vim";
-      rev = "9944f213fe47a7d2ff269cda334ba28c14a4df79";
-      hash = "sha256-ZywyhMdYJl505J61aIBDoC17f7qRlvgcIAOqC7QZxug=";
-      fetchSubmodules = true;
-    };
-    meta.homepage = "https://github.com/codota/tabnine-vim/";
-    meta.license = getLicenseFromSpdxId "GPL-3.0-only";
-    meta.hydraPlatforms = [ ];
-  };
-
   taboo-vim = buildVimPlugin {
     pname = "taboo.vim";
     version = "0-unstable-2024-10-17";
@@ -17716,12 +17744,12 @@ final: prev: {
 
   telescope-hierarchy-nvim = buildVimPlugin {
     pname = "telescope-hierarchy.nvim";
-    version = "0-unstable-2025-12-19";
+    version = "0-unstable-2026-10-02";
     src = fetchFromGitHub {
       owner = "jmacadie";
       repo = "telescope-hierarchy.nvim";
-      rev = "85fb67112daf99f3918531558ee85a36c1891f91";
-      hash = "sha256-Ck7xM+m8sRkkviXdXpeDYrxr3MNpavkW4/UCih0Ohc8=";
+      rev = "c8a349d8c15f22edef29b061809341f5dea37de5";
+      hash = "sha256-5PTXZhLIjQEAM6/u1npVYIVnEQawmTuESR7rF66/uWk=";
     };
     meta.homepage = "https://github.com/jmacadie/telescope-hierarchy.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -18207,12 +18235,12 @@ final: prev: {
 
   tinted-nvim = buildVimPlugin {
     pname = "tinted-nvim";
-    version = "1.0.0-unstable-2026-09-13";
+    version = "1.0.0-unstable-2026-10-04";
     src = fetchFromGitHub {
       owner = "tinted-theming";
       repo = "tinted-nvim";
-      rev = "72c8e25efea5b7911863a0c4380bb1e014f3e41a";
-      hash = "sha256-Y7zUq8poJFwfkaUEYFXjDpVRbzRdlD8VUqC+ER9GPnI=";
+      rev = "36e3c153f3f1c97909a922a1af7c95876d1f42d8";
+      hash = "sha256-drMlxqKzbp/lhrqU4vywJkjSbK6EzHK+c3DLuKO51+k=";
     };
     meta.homepage = "https://github.com/tinted-theming/tinted-nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -18221,12 +18249,12 @@ final: prev: {
 
   tinted-vim = buildVimPlugin {
     pname = "tinted-vim";
-    version = "01-unstable-2026-09-13";
+    version = "01-unstable-2026-10-03";
     src = fetchFromGitHub {
       owner = "tinted-theming";
       repo = "tinted-vim";
-      rev = "4242c2e29728af4d00fea05b094992747ad99a17";
-      hash = "sha256-w1JZrHJeTuasHOVGIdhV4GIKP4GzVhATykYVFrmpHPc=";
+      rev = "20b38956ff17a7f72ee51b01fbc2638a376d063d";
+      hash = "sha256-0H8Fg+gAfpmPrZFadlOh/mh+yZkHz6zvt2v9nxVttC0=";
     };
     meta.homepage = "https://github.com/tinted-theming/tinted-vim/";
     meta.license = unfree;
@@ -18249,12 +18277,12 @@ final: prev: {
 
   tiny-code-action-nvim = buildVimPlugin {
     pname = "tiny-code-action.nvim";
-    version = "0-unstable-2026-04-25";
+    version = "0-unstable-2026-09-22";
     src = fetchFromGitHub {
       owner = "rachartier";
       repo = "tiny-code-action.nvim";
-      rev = "0d040ed81f7953118b81cd12681fcdfcac069803";
-      hash = "sha256-UF9zeO5Uujdt2MEwy2d2Lhk6JRnEN4vrEvYslv0/zaA=";
+      rev = "91a9c32228e9a7761d241023d9ebb9d11d8fb10d";
+      hash = "sha256-PLGomUsZt5KPabBtl1xof83sOxI7bv7DkHKjOnf8+/Q=";
     };
     meta.homepage = "https://github.com/rachartier/tiny-code-action.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -18347,12 +18375,12 @@ final: prev: {
 
   tmux-nvim = buildVimPlugin {
     pname = "tmux.nvim";
-    version = "0-unstable-2026-04-13";
+    version = "0-unstable-2026-09-29";
     src = fetchFromGitHub {
       owner = "aserowy";
       repo = "tmux.nvim";
-      rev = "32ceaf2793582955ef9576809730878c4d2d9426";
-      hash = "sha256-dKarwc0NByKV8/rMHnHqwiRTgeiXAPGsviFBP+bOaXI=";
+      rev = "8d79b15bc8f115c956f467788db58b827afd0764";
+      hash = "sha256-DVqCNcIxYt2rhdBAQHyzTEtJztT0EOWFQX+QiI4bk7I=";
     };
     meta.homepage = "https://github.com/aserowy/tmux.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -18399,6 +18427,20 @@ final: prev: {
     };
     meta.homepage = "https://github.com/freitass/todo.txt-vim/";
     meta.license = unfree;
+    meta.hydraPlatforms = [ ];
+  };
+
+  toggable-term-nvim = buildVimPlugin {
+    pname = "toggable-term-nvim";
+    version = "0-unstable-2026-10-04";
+    src = fetchFromGitHub {
+      owner = "sergioia-dev";
+      repo = "toggable-term-nvim";
+      rev = "c61ddbcad7484b1306d643bd2a41699fbf0239d6";
+      hash = "sha256-ellFepBoskQ6iIV5lU7OSSyD7StOHsUgQFRoG+wbNDE=";
+    };
+    meta.homepage = "https://github.com/sergioia-dev/toggable-term-nvim/";
+    meta.license = getLicenseFromSpdxId "MIT";
     meta.hydraPlatforms = [ ];
   };
 
@@ -18517,12 +18559,12 @@ final: prev: {
 
   treesj = buildVimPlugin {
     pname = "treesj";
-    version = "0-unstable-2026-05-28";
+    version = "0-unstable-2026-09-23";
     src = fetchFromGitHub {
       owner = "Wansmer";
       repo = "treesj";
-      rev = "79aedb401bbdc7e4202f7881eab5f6feb2105b0a";
-      hash = "sha256-MoR46Z3ghEfsVaB8D3tE154DRdg/2iT2l54PICgC/X4=";
+      rev = "9f349ba62c524f065d6f43254d731ddf8319b9bf";
+      hash = "sha256-8U+TKUyRBZ2o7Ue3ibUEkSSlNZEzaWH6o3LtKetDeIk=";
     };
     meta.homepage = "https://github.com/Wansmer/treesj/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -18881,6 +18923,20 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
+  undo-glow-nvim = buildVimPlugin {
+    pname = "undo-glow.nvim";
+    version = "1.13.0";
+    src = fetchFromGitHub {
+      owner = "y3owk1n";
+      repo = "undo-glow.nvim";
+      tag = "v1.13.0";
+      hash = "sha256-TpZlObtK+tasaGEDuQBcs7QdHzcM7LAnKD2oficFEF0=";
+    };
+    meta.homepage = "https://github.com/y3owk1n/undo-glow.nvim/";
+    meta.license = getLicenseFromSpdxId "MIT";
+    meta.hydraPlatforms = [ ];
+  };
+
   undotree = buildVimPlugin {
     pname = "undotree";
     version = "6.1-unstable-2026-03-08";
@@ -18953,12 +19009,12 @@ final: prev: {
 
   unison = buildVimPlugin {
     pname = "unison";
-    version = "1.4.0";
+    version = "1.5.0";
     src = fetchFromGitHub {
       owner = "unisonweb";
       repo = "unison";
-      tag = "release/1.4.0";
-      hash = "sha256-TDpyRO5PA9DuQ146kujXfqqDiacFOvJdFwHgU8fXcS4=";
+      tag = "release/1.5.0";
+      hash = "sha256-AcnPXBqSl3oU0GfXglYwATkvVPnym2Y00PyQDQZ/WNU=";
     };
     meta.homepage = "https://github.com/unisonweb/unison/";
     meta.license = unfree;
@@ -19121,12 +19177,12 @@ final: prev: {
 
   vifm-vim = buildVimPlugin {
     pname = "vifm.vim";
-    version = "0.14-unstable-2026-09-04";
+    version = "0.14-unstable-2026-10-01";
     src = fetchFromGitHub {
       owner = "vifm";
       repo = "vifm.vim";
-      rev = "4327c00ecc8c3dcefb5f898bbfaa2ca20bac9927";
-      hash = "sha256-Wb0I+tL/QX/xkbxCJh/sEuSbYnywhSSxGnvT6lz/IMs=";
+      rev = "a2a66fd3c43144dad1fb15e9e99a7fcdb77707a3";
+      hash = "sha256-cU8rCdEO5McQA0Bm81HL+uNBqeHw174zcKlJ8Ry2EkM=";
     };
     meta.homepage = "https://github.com/vifm/vifm.vim/";
     meta.license = unfree;
@@ -19149,12 +19205,12 @@ final: prev: {
 
   vim-DetectSpellLang = buildVimPlugin {
     pname = "vim-DetectSpellLang";
-    version = "2.2-unstable-2024-07-09";
+    version = "2.2-unstable-2026-10-05";
     src = fetchFromGitHub {
       owner = "konfekt";
       repo = "vim-DetectSpellLang";
-      rev = "ba8fa4202ccdcfc89362bca37a3dcec2a84395b7";
-      hash = "sha256-r26pxvcBFPP+mht1kegj9aVXLiQwWh4G66JaRLpOIiU=";
+      rev = "70e380024798190c5459b2e3aa23a830026ac168";
+      hash = "sha256-E9FwITIP/9i/aGMOu7t6fBMSeX+KB3imIn8W91JZ5L4=";
     };
     meta.homepage = "https://github.com/konfekt/vim-DetectSpellLang/";
     meta.license = unfree;
@@ -20365,6 +20421,20 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
+  vim-cooklang = buildVimPlugin {
+    pname = "vim-cooklang";
+    version = "0-unstable-2024-01-24";
+    src = fetchFromGitHub {
+      owner = "luizribeiro";
+      repo = "vim-cooklang";
+      rev = "ba334ed1668ddf82ad46beea5354aa6398093ec6";
+      hash = "sha256-vWlk7G1V4DLC0G0f3GLEG3JsvAwJ637CPocmMmFxQek=";
+    };
+    meta.homepage = "https://github.com/luizribeiro/vim-cooklang/";
+    meta.license = getLicenseFromSpdxId "MIT";
+    meta.hydraPlatforms = [ ];
+  };
+
   vim-cool = buildVimPlugin {
     pname = "vim-cool";
     version = "0-unstable-2025-02-19";
@@ -20843,12 +20913,12 @@ final: prev: {
 
   vim-emoji = buildVimPlugin {
     pname = "vim-emoji";
-    version = "0-unstable-2018-01-30";
+    version = "0-unstable-2026-09-26";
     src = fetchFromGitHub {
       owner = "junegunn";
       repo = "vim-emoji";
-      rev = "9ed6515401a6e20a9781ba508db7d67a5e4e231f";
-      hash = "sha256-3gdd2lFAMKJTqV9IV3CL7809RLkITa0Wi91dcMqvfC8=";
+      rev = "72c8bc4fe1a3a27e7a488a897b141599a6a7f385";
+      hash = "sha256-AMgSBJXk2PfRFoLH93Cpi73FzpMF7A7lTfDsQRToJtE=";
     };
     meta.homepage = "https://github.com/junegunn/vim-emoji/";
     meta.license = unfree;
@@ -21387,20 +21457,6 @@ final: prev: {
     meta.hydraPlatforms = [ ];
   };
 
-  vim-gml = buildVimPlugin {
-    pname = "vim-gml";
-    version = "0-unstable-2022-10-04";
-    src = fetchFromGitHub {
-      owner = "JafarDakhan";
-      repo = "vim-gml";
-      rev = "382f7aecf6da88c077f34df2f863e750b4d0fdd3";
-      hash = "sha256-xIchBiNEZbrz0LRIWorJEac8y4DBa4akuM4JPqM0Yp4=";
-    };
-    meta.homepage = "https://github.com/JafarDakhan/vim-gml/";
-    meta.license = getLicenseFromSpdxId "MIT";
-    meta.hydraPlatforms = [ ];
-  };
-
   vim-gnupg = buildVimPlugin {
     pname = "vim-gnupg";
     version = "2.7.1-unstable-2022-05-19";
@@ -21529,12 +21585,12 @@ final: prev: {
 
   vim-habamax = buildVimPlugin {
     pname = "vim-habamax";
-    version = "0-unstable-2026-09-12";
+    version = "0-unstable-2026-10-02";
     src = fetchFromGitHub {
       owner = "habamax";
       repo = "vim-habamax";
-      rev = "c538284552cf22abb733140c77cd0cc95cb80a05";
-      hash = "sha256-TjFLjy3TOZCkC4vWAtCCPJul+ZsTyaBh8NK/tpUUS9s=";
+      rev = "b5c4fbcc61aff50e132d0dfb83940a9f1a6f6303";
+      hash = "sha256-ZjkqzYqwwlVvhzyECc7XZD4q+TOfE5n4CiHwFr/Eulg=";
     };
     meta.homepage = "https://github.com/habamax/vim-habamax/";
     meta.license = unfree;
@@ -22469,12 +22525,12 @@ final: prev: {
 
   vim-lsp = buildVimPlugin {
     pname = "vim-lsp";
-    version = "0.1.4-unstable-2026-09-02";
+    version = "0.1.4-unstable-2026-10-04";
     src = fetchFromGitHub {
       owner = "prabirshrestha";
       repo = "vim-lsp";
-      rev = "bbffa60cb08a6a2d67e2086a89699ab00a084fe9";
-      hash = "sha256-eExLKs0FULF2z3Ox4AsnMxyaFTHy3CL+3tUJOm/v2RE=";
+      rev = "81481196aa69036d6cdf96cd9374d4827a708ba4";
+      hash = "sha256-vT82SU78WM95c9DfGQcQ4vhCdJl9yOCMoeLMYQprO/A=";
     };
     meta.homepage = "https://github.com/prabirshrestha/vim-lsp/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -22511,12 +22567,12 @@ final: prev: {
 
   vim-lsp-settings = buildVimPlugin {
     pname = "vim-lsp-settings";
-    version = "0.0.1-unstable-2026-09-05";
+    version = "0.0.1-unstable-2026-10-01";
     src = fetchFromGitHub {
       owner = "mattn";
       repo = "vim-lsp-settings";
-      rev = "c61a46e4cc31ec58159d3908e5b1f1003923990b";
-      hash = "sha256-7DW9ONktKXIxWM08Xok4RBhnEPnRrVCDKpkH9LKMX8k=";
+      rev = "adbd9698b7cd417d76038487fc9158208c1e8566";
+      hash = "sha256-X8Yo3XYFodgpp9R1KFzsyj292iIbY/QPwU4jn/LU7LM=";
     };
     meta.homepage = "https://github.com/mattn/vim-lsp-settings/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -23029,12 +23085,12 @@ final: prev: {
 
   vim-obsession = buildVimPlugin {
     pname = "vim-obsession";
-    version = "0-unstable-2026-09-03";
+    version = "0-unstable-2026-09-20";
     src = fetchFromGitHub {
       owner = "tpope";
       repo = "vim-obsession";
-      rev = "5d63e5b50ebf554d378528e357157c89e91313c9";
-      hash = "sha256-4QOMx8d2zXXyJcesZknCuNmFeOgeia5ehCF/q3Xt9AI=";
+      rev = "dad3b5a1f9b661e27cb77fc69308287349d3cf30";
+      hash = "sha256-uMkrkfcmxWiwtrmgrWsk+fDtfyMIHo280PoSbJaDQEg=";
     };
     meta.homepage = "https://github.com/tpope/vim-obsession/";
     meta.license = unfree;
@@ -23365,12 +23421,12 @@ final: prev: {
 
   vim-pets = buildVimPlugin {
     pname = "vim-pets";
-    version = "0-unstable-2026-08-01";
+    version = "0-unstable-2026-09-21";
     src = fetchFromGitHub {
       owner = "MeF0504";
       repo = "vim-pets";
-      rev = "461b3530341c00334b1bc75f64b35baff09910c4";
-      hash = "sha256-Zp/cpdwxWzbRVxrkkIdpB+tLgM2JJLA/mm+c1+oqM3M=";
+      rev = "270aaaae963390650658ac7cce7cfce32d09b6d2";
+      hash = "sha256-AE+j8gZx5P70qW26abyWvui5YhToTyc1iFHCz0L76eU=";
     };
     meta.homepage = "https://github.com/MeF0504/vim-pets/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -23407,12 +23463,12 @@ final: prev: {
 
   vim-plug = buildVimPlugin {
     pname = "vim-plug";
-    version = "0.14.0-unstable-2026-05-22";
+    version = "0.14.0-unstable-2026-10-05";
     src = fetchFromGitHub {
       owner = "junegunn";
       repo = "vim-plug";
-      rev = "88e31471818e9a29a8a20a0ee61360cfd7bdc1cd";
-      hash = "sha256-zdk3aAAH3N8oBxd1if8p42Cp9FIuRCdk5wgivX6IyVw=";
+      rev = "4da42e9a5c948fb82970d522bd14cbab3d122ff1";
+      hash = "sha256-7HFv5WPSaEGe//d0iddCO5SL4j5IlnY3UTKL7RoEtKY=";
     };
     meta.homepage = "https://github.com/junegunn/vim-plug/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -23995,12 +24051,12 @@ final: prev: {
 
   vim-sexp = buildVimPlugin {
     pname = "vim-sexp";
-    version = "0-unstable-2026-05-16";
+    version = "0-unstable-2026-10-01";
     src = fetchFromGitHub {
       owner = "guns";
       repo = "vim-sexp";
-      rev = "1bf50921308f0188d1c1ecf8a712cc72ab2775e5";
-      hash = "sha256-JbqCrNNCu+JiHMg74SwHGs0RimfKnC7J9rQGQpGMUHM=";
+      rev = "b2ff4532c5913f539fe96fd8425e0e150ab21997";
+      hash = "sha256-17jDobDR1ZVptPIgrCESeCEBrl9sqAD8gJ1QJqtLTig=";
     };
     meta.homepage = "https://github.com/guns/vim-sexp/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -24316,12 +24372,12 @@ final: prev: {
 
   vim-spirv = buildVimPlugin {
     pname = "vim-spirv";
-    version = "0.5.2-unstable-2026-08-27";
+    version = "0.5.2-unstable-2026-09-25";
     src = fetchFromGitHub {
       owner = "kbenzie";
       repo = "vim-spirv";
-      rev = "bf305f3e4f84f64021939b23b306ddafd239fb41";
-      hash = "sha256-yI5f3Vzv3oqZgiwzV4zAUMJBvT2Ht9hi6iWUSmB581Q=";
+      rev = "8543d5adb87eb173ec2dee6bb1ad6dbb011741c4";
+      hash = "sha256-AExOpjZ+aoGl8RxR+2mlPKjLJtpyKH8MrL1KIviMD1s=";
     };
     meta.homepage = "https://github.com/kbenzie/vim-spirv/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -25407,12 +25463,12 @@ final: prev: {
 
   vimade = buildVimPlugin {
     pname = "vimade";
-    version = "2.5.1-unstable-2026-07-16";
+    version = "2.5.1-unstable-2026-09-29";
     src = fetchFromGitHub {
       owner = "TaDaa";
       repo = "vimade";
-      rev = "3d3d2db7ecd43c0181b20fede11d26f090dbc0d9";
-      hash = "sha256-dR+h9pPglZmpOsrmOUJpwVDcx5m+RqeNMjsoWcGhMsQ=";
+      rev = "bc6e2d3031b81de39e7b48d20f62ea716a97446d";
+      hash = "sha256-l+mkcdIdcQOIy+licmNE4NdeTmwrfnnky7QFbn5nk+4=";
     };
     meta.homepage = "https://github.com/TaDaa/vimade/";
     meta.license = getLicenseFromSpdxId "Apache-2.0";
@@ -26192,12 +26248,12 @@ final: prev: {
 
   yanky-nvim = buildVimPlugin {
     pname = "yanky.nvim";
-    version = "2.0.0-unstable-2026-07-22";
+    version = "2.0.0-unstable-2026-09-21";
     src = fetchFromGitHub {
       owner = "gbprod";
       repo = "yanky.nvim";
-      rev = "dd6689fdda85f66cab7d9b1a1664625f3be0920d";
-      hash = "sha256-2uNKHtFfIokuZ8AcPP5LXuStxPzQGP2Jcq04DsYM9s4=";
+      rev = "4b4ddd196526fd3d6fd091d931810f9743e936d3";
+      hash = "sha256-UcW2WSMz21gfE6u0ZNYsFhHipbwxK5XxTjg+ZtginEE=";
     };
     meta.homepage = "https://github.com/gbprod/yanky.nvim/";
     meta.license = getLicenseFromSpdxId "WTFPL";
@@ -26206,12 +26262,12 @@ final: prev: {
 
   yats-vim = buildVimPlugin {
     pname = "yats.vim";
-    version = "0-unstable-2026-09-10";
+    version = "0-unstable-2026-09-29";
     src = fetchFromGitHub {
       owner = "HerringtonDarkholme";
       repo = "yats.vim";
-      rev = "ed51b581160bf7b04092a5448c8dc3c8b4c6849b";
-      hash = "sha256-pfMBi+FbLYj1YOJpitq/BGCCBXf/GJryXjxM4ZK/oZA=";
+      rev = "a7ad1651c02460d29e3e2648ce939e51bc8673b3";
+      hash = "sha256-j18YDHj/x/kpcH2vEU4loXGtbKTRU6KpC8/lvq1Cnw0=";
       fetchSubmodules = true;
     };
     meta.homepage = "https://github.com/HerringtonDarkholme/yats.vim/";
@@ -26221,12 +26277,12 @@ final: prev: {
 
   yazi-nvim = buildVimPlugin {
     pname = "yazi.nvim";
-    version = "14.0.0";
+    version = "14.0.2";
     src = fetchFromGitHub {
       owner = "mikavilpas";
       repo = "yazi.nvim";
-      tag = "v14.0.0";
-      hash = "sha256-aCFCtSu7qD0HhNLS9o/W7vsh3EimQy6QcMtdXLPa5Zc=";
+      tag = "v14.0.2";
+      hash = "sha256-f+ymPNSEBkloZzgnpn6Zq3jkmuhzH8jPrGZB8tfxs78=";
       fetchSubmodules = true;
     };
     meta.homepage = "https://github.com/mikavilpas/yazi.nvim/";
@@ -26292,12 +26348,12 @@ final: prev: {
 
   zellij-nav-nvim = buildVimPlugin {
     pname = "zellij-nav.nvim";
-    version = "0-unstable-2025-01-22";
+    version = "0-unstable-2026-10-03";
     src = fetchFromGitHub {
       owner = "swaits";
       repo = "zellij-nav.nvim";
-      rev = "91cc2a642d8927ebde50ced5bf71ba470a0fc116";
-      hash = "sha256-OoxvSmZV6MCYKrH2ijGqIYhdSZG5oaRj+NFJGt0viyk=";
+      rev = "1ecba144d67cc3d9b0ee4f7cdfd6f2ea78c1353b";
+      hash = "sha256-2EDiLtPEqD/g4hnfYDoMsRxtygCz8XfNAaOgWxa0NBU=";
     };
     meta.homepage = "https://github.com/swaits/zellij-nav.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -26334,12 +26390,12 @@ final: prev: {
 
   zen-nvim = buildVimPlugin {
     pname = "zen.nvim";
-    version = "0-unstable-2026-09-12";
+    version = "0-unstable-2026-09-24";
     src = fetchFromGitHub {
       owner = "sand4rt";
       repo = "zen.nvim";
-      rev = "5fd4b1cc12b91930d1a55d9b98ef01ed963a0b46";
-      hash = "sha256-xO+Xn3FR27Ib8aU7Of1LCpeEjOeg0PJVg29yTH2br3o=";
+      rev = "48b408bcd8229c340360afe1edf14ebeb324e005";
+      hash = "sha256-Zk8M4rXHfBbt4iSoDkdaIPo7K6xQ1fyclayPcHIOszU=";
     };
     meta.homepage = "https://github.com/sand4rt/zen.nvim/";
     meta.license = getLicenseFromSpdxId "MIT";
@@ -26403,12 +26459,12 @@ final: prev: {
 
   zk-nvim = buildVimPlugin {
     pname = "zk-nvim";
-    version = "0.5.2";
+    version = "0.5.3";
     src = fetchFromGitHub {
       owner = "zk-org";
       repo = "zk-nvim";
-      tag = "v0.5.2";
-      hash = "sha256-KZIQXjEvFsJCkGxGILcKzSYJpBL+wa39mI28tccPlDg=";
+      tag = "v0.5.3";
+      hash = "sha256-uCh2v4cZ2NuPkhHzsyhKfvBocUC779Gr9XZtVQQYFpo=";
     };
     meta.homepage = "https://github.com/zk-org/zk-nvim/";
     meta.license = getLicenseFromSpdxId "GPL-3.0-only";
@@ -26431,12 +26487,12 @@ final: prev: {
 
   zotcite = buildVimPlugin {
     pname = "zotcite";
-    version = "0.7-unstable-2026-09-15";
+    version = "0.7-unstable-2026-10-04";
     src = fetchFromGitHub {
       owner = "jalvesaq";
       repo = "zotcite";
-      rev = "669110c668cee18565069ed8980c14af7798df0b";
-      hash = "sha256-vOO70rXJMIOH8xdP0z4E5+JU+Nx+NBYdMlYaFkU4XOs=";
+      rev = "f57a5ebc67bd7768da1abd5ba270ec7426b32c6a";
+      hash = "sha256-pK+sVsJU0ogMTRQjsFsdcTaDtemA0PwQYiB8NH0v8Ck=";
     };
     meta.homepage = "https://github.com/jalvesaq/zotcite/";
     meta.license = getLicenseFromSpdxId "GPL-3.0-only";

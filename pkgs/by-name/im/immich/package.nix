@@ -33,6 +33,7 @@
   pango,
   perl,
   pixman,
+  runtimeShellPackage,
   vips,
   buildPackages,
 }:
@@ -109,13 +110,16 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "immich";
-  version = "3.2.2";
+  version = "3.2.4";
+
+  __structuredAttrs = true;
+  strictDeps = true;
 
   src = fetchFromGitHub {
     owner = "immich-app";
     repo = "immich";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-napG+EMZbbbeq7R8FtnuDsDwdpxItkwTVWztnw07DfA=";
+    hash = "sha256-/wWep6A/ryocuGMOElcD1lOEwT6tJDdwa5HAcCZUXSs=";
   };
 
   pnpmDeps = fetchPnpmDeps {
@@ -157,18 +161,19 @@ stdenv.mkDerivation (finalAttrs: {
     pixman
     # Required for sharp
     vips
+    # Required for some packages in node_modules
+    runtimeShellPackage
   ];
 
   env.SHARP_FORCE_GLOBAL_LIBVIPS = 1;
   env.ESBUILD_BINARY_PATH = lib.getExe esbuild';
   # fix for node-gyp, see https://github.com/nodejs/node-gyp/issues/1191#issuecomment-301243919
   env.npm_config_nodedir = nodejs;
+  # Prevent Python (via node-gyp) from writing bytecode to ensure build determinism
+  env.PYTHONDONTWRITEBYTECODE = "1";
 
   buildPhase = ''
     runHook preBuild
-
-    # If exiftool-vendored.pl isn't found, exiftool is searched for on the PATH
-    rm node_modules/.pnpm/node_modules/exiftool-vendored.pl
 
     pnpm --filter immich... --filter immich-web... --filter @immich/plugin-core... build
 
@@ -201,6 +206,11 @@ stdenv.mkDerivation (finalAttrs: {
     ln -s '${geodata}' "$packageOut/build/geodata"
 
     echo '${builtins.toJSON buildLock}' > "$packageOut/build/build-lock.json"
+
+    # make exiftool-vendored to use exiftool from the PATH
+    find "$packageOut/node_modules" -type l -name "exiftool-vendored.pl" -delete
+    find "$packageOut/node_modules" -type d -name "exiftool-vendored.pl@*" -exec rm -rf {} +
+    find "$packageOut/node_modules" -type f -path "*/node_modules/.bin/exiftool" -delete
 
     makeWrapper '${lib.getExe nodejs}' "$out/bin/immich-admin" \
       --add-flags "$packageOut/dist/main" \

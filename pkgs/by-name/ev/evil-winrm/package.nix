@@ -6,6 +6,8 @@
   versionCheckHook,
   bundlerEnv,
   bundlerUpdateScript,
+  nix-update-script,
+  _experimental-update-script-combinators,
   writeText,
   krb5,
   sslLegacyProvider ? false,
@@ -36,13 +38,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "evil-winrm";
-  version = "3.9";
+  version = "4.1";
 
   src = fetchFromGitHub {
     owner = "Hackplayers";
     repo = "evil-winrm";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-z6dFtyro4inG3uAJ1gkALmlkqKY6eGH7h/sGJknY7Uk=";
+    hash = "sha256-DOfK0n/qp+Fn3nhM7GWIa3XiIU3jLF1DSeyAfOkOEMk=";
   };
 
   nativeBuildInputs = [
@@ -64,7 +66,11 @@ stdenv.mkDerivation (finalAttrs: {
       --prefix LD_LIBRARY_PATH : ${krb5.lib}/lib
   '';
 
-  passthru.updateScript = bundlerUpdateScript "evil-winrm";
+  # nix-update runs first so the Bundler regeneration locks the gem set the new release declares.
+  passthru.updateScript = _experimental-update-script-combinators.sequence [
+    (nix-update-script { })
+    (bundlerUpdateScript "evil-winrm")
+  ];
 
   nativeInstallCheckInputs = [ versionCheckHook ];
   doInstallCheck = true;
@@ -74,6 +80,8 @@ stdenv.mkDerivation (finalAttrs: {
     mainProgram = "evil-winrm";
     homepage = "https://github.com/Hackplayers/evil-winrm";
     changelog = "https://github.com/Hackplayers/evil-winrm/blob/v${finalAttrs.version}/CHANGELOG.md";
+    maintainers = with lib.maintainers; [ letgamer ];
     license = lib.licenses.lgpl3Plus;
+    maintainers = with lib.maintainers; [ bad3r ];
   };
 })

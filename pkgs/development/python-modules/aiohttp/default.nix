@@ -145,6 +145,12 @@ buildPythonPackage (finalAttrs: {
     "test_parse_set_cookie_headers_uses_unquote_with_octal"
   ]
   ++ lib.optionals stdenv.hostPlatform.is32bit [ "test_cookiejar" ]
+  ++ lib.optionals (pythonOlder "3.13") [
+    # Need AF_INET6, which builders booted with ipv6.disable=1 lack
+    "test_test_server_hostnames"
+    "test_tcp_connector_happy_eyeballs"
+    "test_tcp_connector_interleave"
+  ]
   ++ lib.optionals stdenv.hostPlatform.isDarwin [
     "test_addresses" # https://github.com/aio-libs/aiohttp/issues/3572, remove >= v4.0.0
     "test_close"
