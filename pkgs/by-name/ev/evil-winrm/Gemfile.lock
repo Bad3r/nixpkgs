@@ -16,6 +16,7 @@ GEM
       rexml (~> 3.0)
     httpclient (2.9.0)
       mutex_m
+    io-console (0.9.4)
     little-plugger (1.1.4)
     logger (1.7.0)
     logging (2.4.0)
@@ -26,6 +27,10 @@ GEM
     nori (2.9.1)
       bigdecimal
       stringio
+    readline (0.0.4)
+      reline
+    reline (0.7.0)
+      io-console (~> 0.5)
     rexml (3.4.4)
     rubyntlm (0.6.5)
       base64
@@ -57,6 +62,7 @@ DEPENDENCIES
   csv
   fileutils
   logger
+  readline
   stringio
   syslog
   winrm
