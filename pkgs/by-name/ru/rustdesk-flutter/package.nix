@@ -208,6 +208,13 @@ flutter329.buildFlutterApplication rec {
     --prefix PATH : ${lib.makeBinPath [ xdg-user-dirs ]}
   '';
 
+  # librustdesk dlopen()s libxdo for X11 mouse and keyboard input. The service
+  # starts its server process through sudo, which drops LD_LIBRARY_PATH, so
+  # without the rpath remote clicks and key presses are silently ignored.
+  postFixup = ''
+    patchelf --add-rpath ${xdotool}/lib $out/app/rustdesk/lib/librustdesk.so
+  '';
+
   desktopItems = [
     (makeDesktopItem {
       name = "rustdesk";
