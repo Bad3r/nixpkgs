@@ -1,0 +1,60 @@
+hasher: hash transfers in-stream even when the source has the hashes
+
+wrapInHashingReader (Fs.Put, Object.Update) skipped hashing the stream
+when the source supplied every kept hash type (e.g. S3 with
+--hasher-hashes=md5) and cached the source's sums instead. The
+destination's Hash() then returned the source value, so the
+post-transfer check compared the source hash with itself and missed
+corruption in transit, which got cached under the source's hash.
+
+Always hash the stream; fall back to the source's sums only when the
+hashing reader cannot be created.
+
+diff --git a/backend/hasher/object.go b/backend/hasher/object.go
+index 4e33a53..ce6650c 100644
+--- a/backend/hasher/object.go
++++ b/backend/hasher/object.go
+@@ -131,33 +131,30 @@ func (o *Object) updateHashes(ctx context.Context) error {
+ 	return nil
+ }
+ 
+-// wrapInHashingReader wraps in with a hashing reader if needed and
++// wrapInHashingReader wraps in with a hashing reader if possible and
+ // returns the (possibly wrapped) reader. After the transfer completes
+ // successfully, call the returned storeHashes function to store the
+ // computed hashes.
+ func (f *Fs) wrapInHashingReader(ctx context.Context, in io.Reader, src fs.ObjectInfo) (wrapIn io.Reader, storeHashes func(o *Object)) {
+ 	var (
+ 		common hash.Set
+-		rehash bool
+ 		hashes hashMap
+ 	)
+ 	if fsrc := src.Fs(); fsrc != nil {
+ 		common = fsrc.Hashes().Overlap(f.keepHashes)
+-		// Rehash if source does not have all required hashes or hashing is slow
+-		rehash = fsrc.Features().SlowHash || common != f.keepHashes
+ 	}
+ 
++	// Hash the stream even when the source supplies every kept hash:
++	// copying the source's sums would make the post-transfer check
++	// compare the source hash with itself and miss corruption in transit.
+ 	wrapIn = in
++	r, err := f.newHashingReader(ctx, in, func(sums hashMap) {
++		hashes = sums
++	})
++	fs.Debugf(src, "Rehash in-fly (err: %v)", err)
++	rehash := err == nil
+ 	if rehash {
+-		r, err := f.newHashingReader(ctx, in, func(sums hashMap) {
+-			hashes = sums
+-		})
+-		fs.Debugf(src, "Rehash in-fly due to incomplete or slow source set %v (err: %v)", common, err)
+-		if err == nil {
+-			wrapIn = r
+-		} else {
+-			rehash = false
+-		}
++		wrapIn = r
+ 	}
+ 
+ 	storeHashes = func(o *Object) {

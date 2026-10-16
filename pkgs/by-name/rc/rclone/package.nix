@@ -32,6 +32,10 @@ buildGoModule (finalAttrs: {
 
   vendorHash = "sha256-BGTvk3Ofa2R+LSHmZj28ZJdbdOZTNZTiRlepm6GNdlA=";
 
+  patches = [
+    ./hasher-hash-transfers-in-stream.patch
+  ];
+
   subPackages = [ "." ];
 
   nativeBuildInputs = [
