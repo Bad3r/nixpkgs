@@ -121,6 +121,7 @@ flutter329.buildFlutterApplication rec {
     ffigen
     yq
     perl
+    addDriverRunpath
   ];
 
   buildInputs = [
@@ -208,11 +209,14 @@ flutter329.buildFlutterApplication rec {
     --prefix PATH : ${lib.makeBinPath [ xdg-user-dirs ]}
   '';
 
-  # librustdesk dlopen()s libxdo for X11 mouse and keyboard input. The service
+  # librustdesk dlopen()s libxdo for X11 mouse and keyboard input, and hwcodec's
+  # NVIDIA probe dlopen()s libcuda and libnvidia-encode from it. The service
   # starts its server process through sudo, which drops LD_LIBRARY_PATH, so
-  # without the rpath remote clicks and key presses are silently ignored.
+  # without the RUNPATH remote clicks and key presses are silently ignored and
+  # encoding never uses NVENC.
   postFixup = ''
     patchelf --add-rpath ${xdotool}/lib $out/app/rustdesk/lib/librustdesk.so
+    addDriverRunpath $out/app/rustdesk/lib/librustdesk.so
   '';
 
   desktopItems = [
