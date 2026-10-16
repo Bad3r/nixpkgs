@@ -34,6 +34,7 @@ buildGoModule (finalAttrs: {
 
   patches = [
     ./hasher-hash-transfers-in-stream.patch
+    ./hasher-fingerprint-current-file.patch
   ];
 
   subPackages = [ "." ];
