@@ -1,26 +1,27 @@
 {
   lib,
   stdenv,
-  buildGoModule,
+  buildGo127Module,
   fetchFromGitHub,
   nix-update-script,
-  libx11,
+  libpulseaudio,
   makeWrapper,
-  wl-clipboard,
+  xdg-utils,
+  zenity,
 }:
 
-buildGoModule (finalAttrs: {
+buildGo127Module (finalAttrs: {
   pname = "discordo";
-  version = "0-unstable-2026-08-18";
+  version = "0-unstable-2026-10-17";
 
   src = fetchFromGitHub {
     owner = "ayn2op";
     repo = "discordo";
-    rev = "26dc8cf7481db8fbf3da0e62fceea4aa36aaf1bf";
-    hash = "sha256-XIInSkAgSuKSpDsCyDwQD0KDtOnDZEWbbKVf10s+x7Q=";
+    rev = "805621bc2e83b4aad48a56ff0e295154813ce285";
+    hash = "sha256-gre/tkSfXRZnNGFCR4zJX8jSkAcceblQmhgujPy3roU=";
   };
 
-  vendorHash = "sha256-z9Hv3PqaR2XtDtsCqNR/zlZ5P2Olss83JeeC1UrTPBE=";
+  vendorHash = "sha256-HBBJswzvKeYUE2mq5BwRWFMCBqxpzAnWsjUvoRgQ5t8=";
 
   env.CGO_ENABLED = 1;
 
@@ -28,21 +29,17 @@ buildGoModule (finalAttrs: {
     "-s"
   ];
 
-  # Clipboard support on X11
-  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [
-    libx11
-  ];
-
-  # Clipboard support on Wayland
   nativeBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [
     makeWrapper
   ];
 
   postInstall = lib.optionalString stdenv.hostPlatform.isLinux ''
     wrapProgram $out/bin/discordo \
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ libpulseaudio ]} \
       --prefix PATH : ${
         lib.makeBinPath [
-          wl-clipboard
+          xdg-utils
+          zenity
         ]
       }
   '';
