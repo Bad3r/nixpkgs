@@ -29,22 +29,15 @@
 
 buildPythonPackage (finalAttrs: {
   pname = "pytenable";
-  version = "26.8.1";
+  version = "26.10.1";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "tenable";
     repo = "pyTenable";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-KRZbrJgIxdNAnlmP7Ww/JasoDJqJZkBkd0qXm9gfXp4=";
+    hash = "sha256-tomPmKljJiZ1Zop4HOXS1zCYBApGlNI6U4rdk6L/Plg=";
   };
-
-  postPatch = ''
-    # Marks on fixtures never took effect and are a collection error since pytest 9;
-    # pyproject.toml already carries the equivalent global filterwarnings entry
-    substituteInPlace tests/sc/conftest.py \
-      --replace-fail "@pytest.mark.filterwarnings('ignore::DeprecationWarning')" ""
-  '';
 
   build-system = [ setuptools ];
 
