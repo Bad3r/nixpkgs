@@ -25,6 +25,7 @@
   wrapGAppsHook4,
   xvfb-run,
   versionCheckHook,
+  withGui ? true,
 }:
 
 let
@@ -41,42 +42,51 @@ let
 
     cargoHash = "sha256-nTqzQrEWqN89XjQ4bgdCfWAXdyfB7UTQ3tAuL7LtNhA=";
 
-    nativeBuildInputs = [
-      gobject-introspection
-      pkg-config
-      wrapGAppsHook4
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [
-      lld # ld crashes
-    ];
+    cargoBuildFlags = if withGui then null else [ "--package=czkawka_cli" ];
+    cargoTestFlags = if withGui then null else [ "--package=czkawka_cli" ];
 
-    buildInputs = [
-      atk
-      cairo
-      fontconfig
-      gdk-pixbuf
-      glib
-      gtk4
-      pango
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isLinux [
-      libglvnd
-      libxkbcommon
-      wayland
-    ];
+    nativeBuildInputs =
+      lib.optionals withGui [
+        gobject-introspection
+        pkg-config
+        wrapGAppsHook4
+      ]
+      ++ lib.optionals stdenv.hostPlatform.isDarwin [
+        lld # ld crashes
+      ];
 
-    nativeCheckInputs = [ xvfb-run ];
+    buildInputs =
+      lib.optionals withGui [
+        atk
+        cairo
+        fontconfig
+        gdk-pixbuf
+        glib
+        gtk4
+        pango
+      ]
+      ++ lib.optionals (withGui && stdenv.hostPlatform.isLinux) [
+        libglvnd
+        libxkbcommon
+        wayland
+      ];
+
+    nativeCheckInputs = lib.optionals withGui [ xvfb-run ];
 
     doCheck = stdenv.hostPlatform.isLinux && (stdenv.hostPlatform == stdenv.buildPlatform);
 
-    checkPhase = ''
-      runHook preCheck
-      xvfb-run cargo test
-      runHook postCheck
-    '';
+    checkPhase =
+      if withGui then
+        ''
+          runHook preCheck
+          xvfb-run cargo test
+          runHook postCheck
+        ''
+      else
+        null;
 
     # Desktop items, icons and metainfo are not installed automatically
-    postInstall = ''
+    postInstall = lib.optionalString withGui ''
       # Czkawka
       install -Dm444 -t $out/share/applications data/com.github.qarmin.czkawka.desktop
       install -Dm444 -t $out/share/icons/hicolor/scalable/apps data/icons/com.github.qarmin.czkawka.svg
@@ -90,23 +100,24 @@ let
     '';
     dontWrapGApps = true;
 
-    postFixup = ''
-      wrapGApp $out/bin/czkawka_gui
-    ''
-    + lib.optionalString stdenv.hostPlatform.isLinux ''
-      patchelf --add-rpath "${
-        lib.makeLibraryPath [
-          fontconfig
-          libglvnd
-          libx11
-          libxcursor
-          libxi
-          libxrandr
-          libxkbcommon
-          wayland
-        ]
-      }" $out/bin/krokiet
-    '';
+    postFixup =
+      lib.optionalString withGui ''
+        wrapGApp $out/bin/czkawka_gui
+      ''
+      + lib.optionalString (withGui && stdenv.hostPlatform.isLinux) ''
+        patchelf --add-rpath "${
+          lib.makeLibraryPath [
+            fontconfig
+            libglvnd
+            libx11
+            libxcursor
+            libxi
+            libxrandr
+            libxkbcommon
+            wayland
+          ]
+        }" $out/bin/krokiet
+      '';
 
     nativeInstallCheckInputs = [
       versionCheckHook
@@ -129,7 +140,7 @@ let
       description = "Simple, fast and easy to use app to remove unnecessary files from your computer";
       changelog = "https://github.com/qarmin/czkawka/raw/${self.version}/Changelog.md";
       license = lib.licenses.mit;
-      mainProgram = "czkawka_gui";
+      mainProgram = if withGui then "czkawka_gui" else "czkawka_cli";
       maintainers = with lib.maintainers; [
         yanganto
         _0x4A6F
