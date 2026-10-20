@@ -1,6 +1,7 @@
 {
   lib,
   fetchFromGitHub,
+  fetchpatch,
   stdenv,
   # for passthru.plugins
   pkgs,
@@ -27,6 +28,15 @@ let
       hash = "sha256-dnVbtAp7TorPQx4qdK43L2pXMcnWvOYjhRC3MJBrAmM=";
       fetchSubmodules = true;
     };
+
+    patches = [
+      # https://github.com/rizinorg/cutter/pull/3670
+      (fetchpatch {
+        name = "cutter-qt-6.12-uic.patch";
+        url = "https://github.com/rizinorg/cutter/commit/bfb65782c0b3e4df4e2f0e4f5284c51848bb8358.patch";
+        hash = "sha256-qhkGX+yr2Tn9twfwk6XWiiPlFpwdjMy7YNofywL9gvY=";
+      })
+    ];
 
     nativeBuildInputs = [
       cmake
