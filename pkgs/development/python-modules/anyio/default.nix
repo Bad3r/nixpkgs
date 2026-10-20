@@ -3,6 +3,7 @@
   lib,
   buildPythonPackage,
   fetchFromGitHub,
+  fetchpatch,
   pythonOlder,
 
   # build-system
@@ -32,25 +33,27 @@
 
 buildPythonPackage rec {
   pname = "anyio";
-  version = "4.14.2";
+  version = "4.15.1";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "agronholm";
     repo = "anyio";
     tag = version;
-    hash = "sha256-MEU0c8/NI1vlyNtBsg/hGLv6DR619ZqoZzNY1eJLEWM=";
+    hash = "sha256-cuTOVLyqLfp4LMuBd1BnFgey2gu3wehDk7VAb7yoqng=";
   };
 
-  # Python 3.12.15 ssl rejects server_hostname in server-side wrap_bio()
-  patches = lib.optionals (pythonOlder "3.13") [ ./test-tls-server-hostname.patch ];
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/agronholm/anyio/commit/818e4ac441fa27e9fac893496fc5a4fbe0a58689.patch";
+      hash = "sha256-BKREdk6kUQHxX8ab1dijdvNwBHNcCHK25cqal7lDbqA=";
+    })
+  ];
 
   build-system = [ setuptools-scm ];
 
   dependencies = [
     idna
-  ]
-  ++ lib.optionals (pythonOlder "3.13") [
     typing-extensions
   ];
 
@@ -109,6 +112,9 @@ buildPythonPackage rec {
 
     # fails to monkeypatch __file__.__main__
     "test_entrypoint_main_module"
+
+    # pip install requires network access
+    "test_sourceless_install"
   ]
   ++ lib.optionals (pythonOlder "3.13") [
     # Opens AF_INET6 sockets, which fail with EAFNOSUPPORT on builders booted with ipv6.disable=1
