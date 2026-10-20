@@ -1,5 +1,6 @@
 {
   fetchFromGitHub,
+  fetchpatch,
   lib,
   meson,
   ninja,
@@ -32,6 +33,15 @@ stdenv.mkDerivation (finalAttrs: {
     })
   ];
   sourceRoot = "main/src";
+
+  patches = [
+    (fetchpatch {
+      name = "iaito-qt-6.12-uic.patch";
+      url = "https://github.com/radareorg/iaito/commit/d85739b5aa81796f374e6527d3ae06ecf81efe9b.patch";
+      relative = "src";
+      hash = "sha256-lazfkm+PplGuDMfF8+Knbaa3NHGBAvMNdH3c6nvgceA=";
+    })
+  ];
 
   postUnpack = ''
     chmod -R u+w translations
