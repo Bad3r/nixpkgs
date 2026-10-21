@@ -1,0 +1,91 @@
+diff --git a/docs/config.md b/docs/config.md
+index 357d6b9..e2b4835 100644
+--- a/docs/config.md
++++ b/docs/config.md
+@@ -138,6 +138,12 @@ Requires a terminal that reports focus.
+ 
+ Default: `true`
+ 
++## notifications.command
++
++Command to run each time a notification is shown, such as one that plays a sound. Empty runs nothing.
++
++Default: `""`
++
+ # typing_indicator
+ 
+ ## typing_indicator.send
+diff --git a/internal/config/config.go b/internal/config/config.go
+index a601713..ccac88e 100644
+--- a/internal/config/config.go
++++ b/internal/config/config.go
+@@ -75,6 +75,8 @@ type (
+ 		// Whether to also notify about messages in the open channel while the terminal window is unfocused.
+ 		// Requires a terminal that reports focus.
+ 		WhenUnfocused bool `toml:"when_unfocused"`
++		// Command to run each time a notification is shown, such as one that plays a sound. Empty runs nothing.
++		Command string `toml:"command"`
+ 	}
+ 
+ 	TypingIndicator struct {
+diff --git a/internal/config/editor.go b/internal/config/editor.go
+index c48fad6..b8841ea 100644
+--- a/internal/config/editor.go
++++ b/internal/config/editor.go
+@@ -17,3 +17,12 @@ func (cfg *Config) EditorCommand(path string) (*exec.Cmd, error) {
+ 	}
+ 	return exec.Command(args[0], append(args[1:], path)...), nil
+ }
++
++// NotificationCommand returns the notifications.command to run, or nil when it is empty.
++func (cfg *Config) NotificationCommand() (*exec.Cmd, error) {
++	args, err := shellwords.Parse(cfg.Notifications.Command)
++	if err != nil || len(args) == 0 {
++		return nil, err
++	}
++	return exec.Command(args[0], args[1:]...), nil
++}
+diff --git a/internal/ui/chat/state.go b/internal/ui/chat/state.go
+index f27771d..daa89d4 100644
+--- a/internal/ui/chat/state.go
++++ b/internal/ui/chat/state.go
+@@ -7,6 +7,7 @@ import (
+ 	"github.com/ayn2op/arikawa/v3/gateway"
+ 	"github.com/ayn2op/arikawa/v3/utils/httputil/httpdriver"
+ 	"github.com/ayn2op/arikawa/v3/utils/ws"
++	"github.com/ayn2op/discordo/internal/config"
+ 	"github.com/ayn2op/discordo/internal/ui"
+ 	"github.com/ayn2op/ningen/v3/states/read"
+ 	"github.com/ayn2op/tview"
+@@ -80,10 +81,31 @@ func (m Model) notify(message gateway.MessageCreateEvent) tview.Cmd {
+ 			title += " (#" + channel.Name + ", " + guild.Name + ")"
+ 		}
+ 
++		runNotificationCommand(m.cfg)
+ 		return tview.Notify(title, content)()
+ 	}
+ }
+ 
++func runNotificationCommand(cfg *config.Config) {
++	cmd, err := cfg.NotificationCommand()
++	if err != nil {
++		slog.Error("failed to parse notification command", "err", err)
++		return
++	}
++	if cmd == nil {
++		return
++	}
++	if err := cmd.Start(); err != nil {
++		slog.Error("failed to start notification command", "err", err)
++		return
++	}
++	go func() {
++		if err := cmd.Wait(); err != nil {
++			slog.Error("notification command failed", "err", err)
++		}
++	}()
++}
++
+ func (m Model) refreshMemberNames(event *gateway.GuildMembersChunkEvent) tview.Cmd {
+ 	m.messagesList.InvalidateRendered()
+ 	return m.composer.CacheMemberSearch(event)

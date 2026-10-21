@@ -21,6 +21,9 @@ buildGo127Module (finalAttrs: {
     hash = "sha256-gre/tkSfXRZnNGFCR4zJX8jSkAcceblQmhgujPy3roU=";
   };
 
+  # https://github.com/ayn2op/discordo/pull/823 removed notifications.sound; this runs a command instead.
+  patches = [ ./notifications-command.patch ];
+
   vendorHash = "sha256-HBBJswzvKeYUE2mq5BwRWFMCBqxpzAnWsjUvoRgQ5t8=";
 
   env.CGO_ENABLED = 1;
