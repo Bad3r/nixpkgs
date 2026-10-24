@@ -118,6 +118,37 @@ let
           Packages containing out-of-tree vhost-user drivers.
         '';
       };
+
+      firmwarePackages = mkOption {
+        type = types.attrsOf types.package;
+        default = { };
+        example = lib.literalExpression "{ ovmf-full = pkgs.OVMFFull.fd; }";
+        description = ''
+          Additional packages providing QEMU firmware descriptors, keyed by
+          a name made of letters, digits, `-` and `_`. Each value must be
+          the package output that contains {file}`share/qemu/firmware`,
+          such as `pkgs.OVMFFull.fd` rather than `pkgs.OVMFFull`.
+
+          Each package is linked to the stable path
+          {file}`/run/libvirt/nix-ovmf/<name>`, and its descriptors are
+          installed for the system daemon as `70-<name>-<file>` with their
+          image paths rewritten to that location.
+
+          libvirt selects the first descriptor in file name order that
+          satisfies a domain's firmware requests, so these descriptors sort
+          after the ones bundled with QEMU. A domain gets them when it
+          requests a feature that the bundled firmware for its architecture
+          lacks, such as `enrolled-keys`, or when it sets a `<loader>` path
+          inside {file}`/run/libvirt/nix-ovmf/<name>/`. Among the
+          descriptors of one package, the package's own order applies. For
+          `pkgs.OVMFFull.fd`, the descriptor with Microsoft keys enrolled
+          sorts first. A domain that only requests `secure-boot` on an
+          architecture whose bundled firmware lacks Secure Boot, or that
+          sets its `<loader>` to this package's firmware without an NVRAM
+          template, therefore gets the variables with Microsoft keys
+          enrolled.
+        '';
+      };
     };
   };
 
@@ -211,7 +242,22 @@ let
       cp ${cfg.qemu.package}/share/qemu/firmware/*.json $out
       substituteInPlace $out/*.json \
         --replace-fail "${cfg.qemu.package}/share/qemu/" "/run/${dirName}/nix-ovmf/"
-    '';
+    ''
+    + concatStrings (
+      mapAttrsToList (name: pkg: ''
+        descriptors=(${pkg}/share/qemu/firmware/*.json)
+        if [ ''${#descriptors[@]} -eq 0 ]; then
+          echo "virtualisation.libvirtd.qemu.firmwarePackages.${name}: ${pkg} contains no QEMU firmware descriptors in share/qemu/firmware; use the package output that does, such as the fd output of OVMF packages" >&2
+          exit 1
+        fi
+        for f in "''${descriptors[@]}"; do
+          dst=$out/70-${name}-$(basename "$f")
+          install -m644 "$f" "$dst"
+          substituteInPlace "$dst" \
+            --replace-fail "${pkg}/" "/run/${dirName}/nix-ovmf/${name}/"
+        done
+      '') cfg.qemu.firmwarePackages
+    );
   };
 
 in
@@ -415,7 +461,11 @@ in
         assertion = ((lib.filterAttrs (n: v: v != null) cfg.qemu.ovmf) == { });
         message = "The 'virtualisation.libvirtd.qemu.ovmf' submodule has been removed. All OVMF images distributed with QEMU are now available by default.";
       }
-    ];
+    ]
+    ++ mapAttrsToList (name: _: {
+      assertion = builtins.match "[A-Za-z0-9_-]+" name != null;
+      message = "virtualisation.libvirtd.qemu.firmwarePackages: name '${name}' must consist only of letters, digits, '-' and '_'.";
+    }) cfg.qemu.firmwarePackages;
 
     environment = {
       # this file is expected in /etc/qemu and not sysconfdir (/var/lib)
@@ -631,7 +681,10 @@ in
       [
         "L+ /var/lib/qemu/vhost-user - - - - ${vhostUserCollection}/share/qemu/vhost-user"
         "L+ /var/lib/qemu/firmware - - - - ${qemuOvmfMetadata}"
-      ];
+      ]
+      ++ mapAttrsToList (
+        name: pkg: "L+ /run/${dirName}/nix-ovmf/${name} - - - - ${pkg}"
+      ) cfg.qemu.firmwarePackages;
 
     security.polkit = {
       enable = true;
