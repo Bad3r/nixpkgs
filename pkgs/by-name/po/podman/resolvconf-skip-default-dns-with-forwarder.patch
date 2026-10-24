@@ -1,0 +1,48 @@
+Skip the public fallback nameservers when explicit nameservers are given.
+
+On a host whose /etc/resolv.conf lists only loopback resolvers, resolvconf.New
+appends 8.8.8.8 and 8.8.4.4 even when the caller passes explicit nameservers
+with KeepHostServers, which is how libpod, the rootless netns, and buildah's
+`podman build` pass the pasta and slirp4netns DNS forwarder. Containers then query Google DNS next to the
+forwarder that reaches the host's own resolver.
+
+Upstream issue: https://github.com/podman-container-tools/container-libs/issues/43
+
+--- a/vendor/go.podman.io/common/libnetwork/resolvconf/resolvconf.go
++++ b/vendor/go.podman.io/common/libnetwork/resolvconf/resolvconf.go
+@@ -43,10 +43,11 @@
+ // filterResolvDNS cleans up the config in resolvConf.  It has two main jobs:
+ //  1. If a netns is enabled, it looks for localhost (127.*|::1) entries in the provided
+ //     resolv.conf, removing local nameserver entries, and, if the resulting
+-//     cleaned config has no defined nameservers left, adds default DNS entries
++//     cleaned config has no defined nameservers left and addDefaults is set,
++//     adds default DNS entries
+ //  2. Given the caller provides the enable/disable state of IPv6, the filter
+ //     code will remove all IPv6 nameservers if it is not enabled for containers
+-func filterResolvDNS(resolvConf []byte, ipv6Enabled bool, netnsEnabled bool) []byte {
++func filterResolvDNS(resolvConf []byte, ipv6Enabled bool, netnsEnabled bool, addDefaults bool) []byte {
+ 	// If we're using the host netns, we have nothing to do besides hash the file.
+ 	if !netnsEnabled {
+ 		return resolvConf
+@@ -62,7 +63,7 @@
+ 	}
+ 	// if the resulting resolvConf has no more nameservers defined, add appropriate
+ 	// default DNS servers for IPv4 and (optionally) IPv6
+-	if len(getNameservers(cleanedResolvConf)) == 0 {
++	if addDefaults && len(getNameservers(cleanedResolvConf)) == 0 {
+ 		logrus.Infof("No non-localhost DNS nameservers are left in resolv.conf. Using default external servers: %v", defaultIPv4Dns)
+ 		dns := defaultIPv4Dns
+ 		if ipv6Enabled {
+--- a/vendor/go.podman.io/common/libnetwork/resolvconf/resolv.go
++++ b/vendor/go.podman.io/common/libnetwork/resolvconf/resolv.go
+@@ -142,7 +142,9 @@
+ 		return fmt.Errorf("failed to get the default /etc/resolv.conf content: %w", err)
+ 	}
+ 
+-	content = filterResolvDNS(content, params.IPv6Enabled, !hostNS)
++	// An explicit nameserver, such as the pasta or slirp4netns DNS forwarder,
++	// makes the public fallback servers unnecessary.
++	content = filterResolvDNS(content, params.IPv6Enabled, !hostNS, len(params.Nameservers) == 0)
+ 
+ 	nameservers := params.Nameservers
+ 	if len(nameservers) == 0 || params.KeepHostServers {
