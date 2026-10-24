@@ -5,7 +5,7 @@
 
   nodes = {
     virthost =
-      { pkgs, ... }:
+      { lib, pkgs, ... }:
       {
         virtualisation = {
           cores = 2;
@@ -17,6 +17,9 @@
           ''}";
           libvirtd.nss.enable = true;
           libvirtd.dbus.enable = true;
+          libvirtd.qemu.firmwarePackages = lib.mkIf pkgs.stdenv.hostPlatform.isx86_64 {
+            ovmf-full = pkgs.OVMFFull.fd;
+          };
         };
         boot.supportedFilesystems = [ "zfs" ];
         networking.hostId = "deadbeef"; # needed for zfs
@@ -34,6 +37,34 @@
     let
       nixosInstallISO = (import ../release.nix { }).iso_minimal.${pkgs.stdenv.hostPlatform.system};
       virshShutdownCmd = if pkgs.stdenv.hostPlatform.isx86_64 then "shutdown" else "destroy";
+      efiDomain =
+        name: firmware:
+        pkgs.writeText "${name}.xml" ''
+          <domain type="qemu">
+            <name>${name}</name>
+            <memory unit="MiB">256</memory>
+            <os firmware="efi">
+              <type arch="x86_64" machine="q35">hvm</type>
+              ${firmware}
+            </os>
+            <features>
+              <acpi/>
+              <smm state="on"/>
+            </features>
+          </domain>
+        '';
+      plainEfiDomain = efiDomain "plain-efi" "";
+      secureBootEfiDomain = efiDomain "secure-boot-efi" ''
+        <firmware>
+          <feature enabled="yes" name="secure-boot"/>
+        </firmware>
+      '';
+      enrolledEfiDomain = efiDomain "enrolled-efi" ''
+        <firmware>
+          <feature enabled="yes" name="secure-boot"/>
+          <feature enabled="yes" name="enrolled-keys"/>
+        </firmware>
+      '';
     in
     ''
       start_all()
@@ -89,5 +120,50 @@
 
         # Now the service should be active
         virthost.succeed("systemctl is-active libvirt-dbus.service")
+    ''
+    + pkgs.lib.optionalString pkgs.stdenv.hostPlatform.isx86_64 ''
+
+      with subtest("check firmware selection with firmwarePackages"):
+        import xml.etree.ElementTree as ET
+
+        def define_and_get_firmware(name, xml):
+          virthost.succeed(f"virsh define {xml}")
+          os_ = ET.fromstring(virthost.succeed(f"virsh dumpxml {name}")).find("os")
+          assert os_ is not None
+          return os_.findtext("loader", ""), os_.find("nvram")
+
+        def start_and_destroy(name):
+          virthost.succeed(f"virsh start {name}")
+          virthost.succeed(f"virsh domstate {name} | grep running")
+          virthost.succeed(f"virsh destroy {name}")
+
+        # tmpfiles owns the link, so a switch restores it even if it was
+        # replaced by a directory.
+        virthost.succeed("rm /run/libvirt/nix-ovmf/ovmf-full && mkdir /run/libvirt/nix-ovmf/ovmf-full")
+        virthost.succeed("systemctl restart systemd-tmpfiles-resetup.service libvirtd-config.service")
+        link = virthost.succeed("readlink /run/libvirt/nix-ovmf/ovmf-full").strip()
+        assert link == "${pkgs.OVMFFull.fd}", link
+
+        # Only the OVMFFull descriptors provide enrolled-keys.
+        loader, nvram = define_and_get_firmware("enrolled-efi", "${enrolledEfiDomain}")
+        assert loader.startswith("/run/libvirt/nix-ovmf/ovmf-full/"), loader
+        assert nvram is not None
+        template = nvram.get("template", "")
+        assert template.startswith("/run/libvirt/nix-ovmf/ovmf-full/"), template
+        assert template.endswith("/OVMF_VARS.ms.fd"), template
+        start_and_destroy("enrolled-efi")
+
+        # The firmware bundled with QEMU already provides secure-boot.
+        loader, _ = define_and_get_firmware("secure-boot-efi", "${secureBootEfiDomain}")
+        assert loader.startswith("/run/libvirt/nix-ovmf/"), loader
+        assert not loader.startswith("/run/libvirt/nix-ovmf/ovmf-full/"), loader
+        start_and_destroy("secure-boot-efi")
+
+        # Plain EFI domains keep getting the firmware bundled with QEMU
+        # instead of firmware with Microsoft keys enrolled.
+        loader, _ = define_and_get_firmware("plain-efi", "${plainEfiDomain}")
+        assert loader.startswith("/run/libvirt/nix-ovmf/"), loader
+        assert not loader.startswith("/run/libvirt/nix-ovmf/ovmf-full/"), loader
+        start_and_destroy("plain-efi")
     '';
 }
