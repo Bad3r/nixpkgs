@@ -36,7 +36,7 @@
 let
   flutterRustBridge = rustPlatform.buildRustPackage rec {
     pname = "flutter_rust_bridge_codegen";
-    version = "1.80.1"; # https://github.com/rustdesk/rustdesk/blob/1.4.4/.github/workflows/bridge.yml#L10
+    version = "1.80.1"; # https://github.com/rustdesk/rustdesk/blob/1.5.0/.github/workflows/bridge.yml#L10
 
     src = fetchFromGitHub {
       owner = "fzyzcjy";
@@ -263,6 +263,7 @@ flutter329.buildFlutterApplication rec {
     maintainers = with lib.maintainers; [
       das_j
       helsinki-Jo
+      knightfemale
     ];
     mainProgram = "rustdesk";
     platforms = lib.platforms.linux; # should work on darwin as well but I have no machine to test with

@@ -209,8 +209,8 @@
   ./programs/direnv.nix
   ./programs/dmrconfig.nix
   ./programs/droidcam.nix
-  ./programs/dsearch.nix
   ./programs/dublin-traceroute.nix
+  ./programs/dux-search.nix
   ./programs/ente-auth.nix
   ./programs/environment.nix
   ./programs/envision.nix
@@ -363,7 +363,7 @@
   ./programs/vivid.nix
   ./programs/vscode.nix
   ./programs/wavemon.nix
-  ./programs/wayland/dms-shell.nix
+  ./programs/wayland/dux-shell.nix
   ./programs/wayland/dwl.nix
   ./programs/wayland/gtklock.nix
   ./programs/wayland/hyprland.nix
@@ -538,6 +538,8 @@
   ./services/continuous-integration/gitlab-runner/runner.nix
   ./services/continuous-integration/gocd-agent/default.nix
   ./services/continuous-integration/gocd-server/default.nix
+  ./services/continuous-integration/gradient/default.nix
+  ./services/continuous-integration/gradient/worker.nix
   ./services/continuous-integration/hercules-ci-agent/default.nix
   ./services/continuous-integration/hydra/builder.nix
   ./services/continuous-integration/hydra/default.nix
@@ -650,7 +652,7 @@
   ./services/display-managers/airlock.nix
   ./services/display-managers/cosmic-greeter.nix
   ./services/display-managers/default.nix
-  ./services/display-managers/dms-greeter.nix
+  ./services/display-managers/dux-greeter.nix
   ./services/display-managers/gdm.nix
   ./services/display-managers/generic.nix
   ./services/display-managers/greetd.nix
@@ -1295,7 +1297,6 @@
   ./services/networking/iperf3.nix
   ./services/networking/ircd-hybrid/default.nix
   ./services/networking/iscsi/initiator.nix
-  ./services/networking/iscsi/root-initiator.nix
   ./services/networking/iscsi/target.nix
   ./services/networking/ivpn.nix
   ./services/networking/iwd.nix
@@ -1617,6 +1618,7 @@
   ./services/security/vault-agent.nix
   ./services/security/vault.nix
   ./services/security/vaultwarden/default.nix
+  ./services/security/vouch-proxy.nix
   ./services/security/warpgate.nix
   ./services/security/yubikey-agent.nix
   ./services/system/automatic-timezoned.nix
@@ -1680,6 +1682,7 @@
   ./services/web-apps/alps.nix
   ./services/web-apps/anuko-time-tracker.nix
   ./services/web-apps/artalk.nix
+  ./services/web-apps/atlantis.nix
   ./services/web-apps/audiobookshelf.nix
   ./services/web-apps/baikal.nix
   ./services/web-apps/bentopdf.nix
@@ -1690,7 +1693,6 @@
   ./services/web-apps/bulwark.nix
   ./services/web-apps/c2fmzq-server.nix
   ./services/web-apps/calibre-web.nix
-  ./services/web-apps/castopod.nix
   ./services/web-apps/changedetection-io.nix
   ./services/web-apps/chhoto-url.nix
   ./services/web-apps/cloudlog.nix
@@ -1883,6 +1885,7 @@
   ./services/web-apps/umami.nix
   ./services/web-apps/vikunja.nix
   ./services/web-apps/wakapi.nix
+  ./services/web-apps/wanderer.nix
   ./services/web-apps/wealthfolio.nix
   ./services/web-apps/weblate.nix
   ./services/web-apps/websurfx.nix
@@ -1929,7 +1932,6 @@
   ./services/web-servers/trafficserver/default.nix
   ./services/web-servers/ttyd.nix
   ./services/web-servers/tusd.nix
-  ./services/web-servers/unit/default.nix
   ./services/web-servers/uwsgi.nix
   ./services/web-servers/varnish/default.nix
   ./services/web-servers/vinyl-cache/default.nix
