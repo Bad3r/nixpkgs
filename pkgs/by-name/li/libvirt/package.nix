@@ -262,40 +262,34 @@ stdenv.mkDerivation rec {
   ++ lib.optionals enableXen [ xen ]
   ++ lib.optionals enableZfs [ zfs ];
 
-  preConfigure =
-    let
-      overrides = {
-        QEMU_BRIDGE_HELPER = "/run/wrappers/bin/qemu-bridge-helper";
-        QEMU_PR_HELPER = "/run/libvirt/nix-helpers/qemu-pr-helper";
-      };
+  preConfigure = ''
+    PATH="${binPath}:$PATH"
+    # the path to qemu-kvm will be stored in VM's .xml and .save files
+    # do not use "''${qemu_kvm}/bin/qemu-kvm" to avoid bound VMs to particular qemu derivations
+    substituteInPlace src/lxc/lxc_conf.c \
+      --replace 'lxc_path,' '"/run/libvirt/nix-emulators/libvirt_lxc",'
 
-      patchBuilder = var: value: ''
-        sed -i meson.build -e "s|conf.set_quoted('${var}',.*|conf.set_quoted('${var}','${value}')|"
-      '';
-    in
-    ''
-      PATH="${binPath}:$PATH"
-      # the path to qemu-kvm will be stored in VM's .xml and .save files
-      # do not use "''${qemu_kvm}/bin/qemu-kvm" to avoid bound VMs to particular qemu derivations
-      substituteInPlace src/lxc/lxc_conf.c \
-        --replace 'lxc_path,' '"/run/libvirt/nix-emulators/libvirt_lxc",'
+    substituteInPlace src/qemu/qemu_conf.c \
+      --replace-fail '#define QEMU_BRIDGE_HELPER "qemu-bridge-helper"' \
+        '#define QEMU_BRIDGE_HELPER "/run/wrappers/bin/qemu-bridge-helper"' \
+      --replace-fail '#define QEMU_PR_HELPER "qemu-pr-helper"' \
+        '#define QEMU_PR_HELPER "/run/libvirt/nix-helpers/qemu-pr-helper"'
 
-      substituteInPlace build-aux/meson.build \
-        --replace "gsed" "sed" \
-        --replace "gmake" "make" \
-        --replace "ggrep" "grep"
+    substituteInPlace build-aux/meson.build \
+      --replace "gsed" "sed" \
+      --replace "gmake" "make" \
+      --replace "ggrep" "grep"
 
-      substituteInPlace src/util/virpolkit.h \
-        --replace '"/usr/bin/pkttyagent"' '"${if isLinux then polkit.bin else "/usr"}/bin/pkttyagent"'
+    substituteInPlace src/util/virpolkit.h \
+      --replace '"/usr/bin/pkttyagent"' '"${if isLinux then polkit.bin else "/usr"}/bin/pkttyagent"'
 
-      substituteInPlace src/util/virpci.c \
-         --replace '/lib/modules' '${
-           if isLinux then "/run/booted-system/kernel-modules" else ""
-         }/lib/modules'
+    substituteInPlace src/util/virpci.c \
+       --replace '/lib/modules' '${
+         if isLinux then "/run/booted-system/kernel-modules" else ""
+       }/lib/modules'
 
-      patchShebangs .
-    ''
-    + (lib.concatStringsSep "\n" (lib.mapAttrsToList patchBuilder overrides));
+    patchShebangs .
+  '';
 
   mesonAutoFeatures = "disabled";
 
