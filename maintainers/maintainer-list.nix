@@ -584,6 +584,13 @@
     githubId = 2321000;
     name = "Abdurrahman Hussain";
   };
+  abus-sh = {
+    email = "git@abus.sh";
+    github = "abus-sh";
+    githubId = 58699376;
+    name = "Abus";
+    keys = [ { fingerprint = "E067 7933 2AD2 D3D2 2498  9136 5CA4 ADDB 1AE3 1E49"; } ];
+  };
   abustany = {
     email = "adrien@bustany.org";
     github = "abustany";
@@ -19521,6 +19528,12 @@
     githubId = 149558;
     name = "Merlin Gaillard";
   };
+  mirdukkkkk = {
+    email = "karmulav@gmail.com";
+    github = "mirdukkkkk";
+    githubId = 69540930;
+    name = "mirdukkkkk";
+  };
   mirkolenz = {
     name = "Mirko Lenz";
     email = "mirko@mirkolenz.com";
@@ -28239,7 +28252,7 @@
   };
   stepbrobd = {
     name = "Yifei Sun";
-    email = "ysun@hey.com";
+    email = "ysun@duck.com";
     matrix = "@ysun:beeper.com";
     github = "stepbrobd";
     githubId = 81826728;
@@ -30924,8 +30937,8 @@
     name = "Klaas van Schelven";
   };
   VarNepvius = {
-    name = "VarNapvius";
-    github = "VarNapvius";
+    name = "VarNepvius";
+    github = "VarNepvius";
     githubId = 14352929;
   };
   varunpatro = {
