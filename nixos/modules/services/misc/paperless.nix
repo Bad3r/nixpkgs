@@ -20,6 +20,11 @@ let
   # shared with every service and the paperless-manage wrapper via EnvironmentFile.
   secretKeyFile = "${cfg.dataDir}/nixos-paperless-secret-key.env";
 
+  defaultDir = path: "d '${path}' - ${cfg.user} ${config.users.users.${cfg.user}.group} - -";
+  createDirs =
+    name: rules:
+    "${config.systemd.package}/bin/systemd-tmpfiles --create ${pkgs.writeText "${name}.conf" (lib.concatLines rules)}";
+
   extraPythonPath = pythonPkgs.makePythonPath (cfg.extraPythonPackages pythonPkgs);
 
   env = {
@@ -506,22 +511,6 @@ in
           documentation = [ "https://docs.paperless-ngx.com" ];
         };
 
-        systemd.tmpfiles.settings."10-paperless" =
-          let
-            defaultRule = {
-              inherit (cfg) user;
-              inherit (config.users.users.${cfg.user}) group;
-            };
-          in
-          {
-            "${cfg.dataDir}".d = defaultRule;
-            # v3's Tantivy backend, unlike the old Whoosh one, does not create its
-            # index dir on demand and the reindex command aborts without it.
-            "${cfg.dataDir}/index".d = defaultRule;
-            "${cfg.mediaDir}".d = defaultRule;
-            "${cfg.consumptionDir}".d = if cfg.consumptionDirIsPublic then { mode = "777"; } else defaultRule;
-          };
-
         # v3 refuses the default PAPERLESS_SECRET_KEY. Generate one on first start,
         # reusing the key from older NixOS releases so existing sessions survive the
         # upgrade; all services load it via EnvironmentFile (see defaultServiceConfig).
@@ -539,10 +528,30 @@ in
             "paperless-task-queue.service"
             "paperless-web.service"
           ];
-          unitConfig.RequiresMountsFor = [ cfg.dataDir ];
+          unitConfig.RequiresMountsFor = [
+            cfg.dataDir
+            cfg.mediaDir
+            cfg.consumptionDir
+          ];
           serviceConfig = {
             Type = "oneshot";
             RemainAfterExit = true;
+            # Not systemd-tmpfiles-setup, which is not ordered after nofail mounts.
+            ExecStartPre = "+${
+              createDirs "paperless-dirs" [
+                (defaultDir cfg.dataDir)
+                # v3's Tantivy backend, unlike the old Whoosh one, does not create its
+                # index dir on demand and the reindex command aborts without it.
+                (defaultDir "${cfg.dataDir}/index")
+                (defaultDir cfg.mediaDir)
+                (
+                  if cfg.consumptionDirIsPublic then
+                    "d '${cfg.consumptionDir}' 777 - - - -"
+                  else
+                    defaultDir cfg.consumptionDir
+                )
+              ]
+            }";
             User = cfg.user;
             Group = config.users.users.${cfg.user}.group;
             UMask = "0077";
@@ -731,10 +740,6 @@ in
       }
 
       (lib.mkIf cfg.exporter.enable {
-        systemd.tmpfiles.rules = [
-          "d '${cfg.exporter.directory}' - ${cfg.user} ${config.users.users.${cfg.user}.group} - -"
-        ];
-
         services.paperless.exporter.settings = lib.mapAttrs (
           _: v: lib.mkDefault v
         ) options.services.paperless.exporter.settings.default;
@@ -746,6 +751,7 @@ in
             Type = "oneshot";
             User = cfg.user;
             WorkingDirectory = cfg.dataDir;
+            ExecStartPre = "+${createDirs "paperless-exporter-dirs" [ (defaultDir cfg.exporter.directory) ]}";
           };
           unitConfig =
             let
@@ -757,6 +763,7 @@ in
               ];
             in
             {
+              RequiresMountsFor = [ cfg.exporter.directory ];
               # Shut down the paperless services while the exporter runs
               Conflicts = services;
               After = services;
