@@ -121,10 +121,6 @@ effectiveStdenv.mkDerivation (finalAttrs: {
   };
 
   patches = [
-    # Strict chat templates (Qwen3.5+) raise on the mid-conversation system and
-    # developer messages Claude Code and Codex send, so fold them into the first one.
-    # https://github.com/ggml-org/llama.cpp/issues/27367
-    ./fold-non-leading-system-messages.patch
   ];
 
   nativeBuildInputs = [
