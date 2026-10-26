@@ -742,6 +742,8 @@ in
         systemd.services.paperless-exporter = {
           startAt = lib.defaultTo [ ] cfg.exporter.onCalendar;
           serviceConfig = {
+            # Units ordered after the exporter see the finished export.
+            Type = "oneshot";
             User = cfg.user;
             WorkingDirectory = cfg.dataDir;
           };
