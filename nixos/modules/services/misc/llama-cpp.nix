@@ -123,7 +123,6 @@ in
             formatArg = lib.generators.mkValueStringDefault { };
           }) cfg.settings)
         ];
-        ExecReload = "${lib.getExe' pkgs.coreutils "kill"} -HUP $MAINPID";
         Restart = "on-failure";
         RestartSec = 300;
 
