@@ -1,0 +1,149 @@
+Fold system messages that follow other turns into one leading system message
+when the chat template rejects or drops them.
+
+diff --git a/common/chat.cpp b/common/chat.cpp
+index 4856713..ebc16c7 100644
+--- a/common/chat.cpp
++++ b/common/chat.cpp
+@@ -997,6 +997,66 @@ static void map_developer_role_to_system(json & messages) {
+ }
+ 
+ 
++// joins two message contents with a blank line; string or typed-part content
++static void append_system_content(json & dst, const json & src) {
++    if (!dst.is_array() && !src.is_array()) {
++        const std::string a = dst.is_string() ? dst.get<std::string>() : "";
++        const std::string b = src.is_string() ? src.get<std::string>() : "";
++        dst = a.empty() ? b : b.empty() ? a : a + "\n\n" + b;
++        return;
++    }
++    const auto as_parts = [](const json & content) {
++        if (content.is_array()) {
++            return content;
++        }
++        json parts = json::array();
++        if (content.is_string() && !content.get<std::string>().empty()) {
++            parts.push_back({{"type", "text"}, {"text", content}});
++        }
++        return parts;
++    };
++    json       parts = as_parts(dst);
++    const json extra = as_parts(src);
++    if (!parts.empty() && !extra.empty()) {
++        parts.push_back({{"type", "text"}, {"text", "\n\n"}});
++    }
++    for (const auto & part : extra) {
++        parts.push_back(part);
++    }
++    dst = std::move(parts);
++}
++
++// if the template rejects or drops system messages after the first turn (Claude Code and
++// Codex send them mid-conversation), fold them in order into one leading system message
++static void fold_non_leading_system_messages(json & messages) {
++    json leading;
++    json others = json::array();
++    bool any_non_leading = false;
++    for (size_t i = 0; i < messages.size(); ++i) {
++        const auto & msg = messages[i];
++        if (!msg.contains("role") || msg.at("role") != "system") {
++            others.push_back(msg);
++            continue;
++        }
++        any_non_leading = any_non_leading || i > 0;
++        if (leading.is_null()) {
++            leading = msg;
++        } else {
++            append_system_content(leading["content"], msg.contains("content") ? msg.at("content") : json());
++        }
++    }
++    if (!any_non_leading) {
++        return;
++    }
++    LOG_DBG("Folding non-leading system messages into the leading system message\n");
++    json folded = json::array();
++    folded.push_back(std::move(leading));
++    for (auto & msg : others) {
++        folded.push_back(std::move(msg));
++    }
++    messages = std::move(folded);
++}
++
+ // if first message is system and template does not support it, merge it with next message
+ static void system_message_not_supported(json & messages) {
+     if (!messages.empty() && messages.front().at("role") == "system") {
+@@ -1336,6 +1396,10 @@ static common_chat_params common_chat_templates_apply_jinja(const struct common_
+         workaround::map_developer_role_to_system(params.messages);
+     }
+ 
++    if (!tmpl.original_caps().supports_non_leading_system) {
++        workaround::fold_non_leading_system_messages(params.messages);
++    }
++
+     if (!tmpl.original_caps().supports_system_role) {
+         workaround::system_message_not_supported(params.messages);
+     }
+diff --git a/common/jinja/caps.cpp b/common/jinja/caps.cpp
+index 6ff17d1..dd2021e 100644
+--- a/common/jinja/caps.cpp
++++ b/common/jinja/caps.cpp
+@@ -111,6 +111,7 @@ std::map<std::string, bool> caps::to_map() const {
+         {"supports_tool_calls", supports_tool_calls},
+         {"supports_parallel_tool_calls", supports_parallel_tool_calls},
+         {"supports_system_role", supports_system_role},
++        {"supports_non_leading_system", supports_non_leading_system},
+         {"supports_preserve_reasoning", supports_preserve_reasoning},
+         {"supports_reasoning_effort", supports_reasoning_effort},
+         {"supports_object_arguments", supports_object_arguments},
+@@ -231,6 +232,38 @@ caps caps_get(jinja::program & prog) {
+         }
+     );
+ 
++    JJ_DEBUG("%s\n", ">>> Running capability check: non-leading system message");
++
++    // case: system message after the first turn; strict templates (e.g. Qwen3.5+) raise on it
++    static const std::string system_marker = "SYSTEM_MARKER";
++    caps_try_execute(
++        prog,
++        [&]() {
++            const auto content = [&](const std::string & text) {
++                return result.supports_string_content
++                    ? json(text)
++                    : json::array({ json{ {"type", "text"}, {"text", text} } });
++            };
++            return json::array({
++                {
++                    {"role", "user"},
++                    {"content", content("User message")}
++                },
++                {
++                    {"role", "system"},
++                    {"content", content(system_marker)}
++                },
++            });
++        },
++        nullptr, // ctx_fn
++        nullptr, // tools_fn
++        [&](context &, bool success, value &, value &, const std::string & rendered) {
++            if (!success || rendered.find(system_marker) == std::string::npos) {
++                result.supports_non_leading_system = false;
++            }
++        }
++    );
++
+     JJ_DEBUG("%s\n", ">>> Running capability check: single tool with object arguments support");
+ 
+     // case: tools support: single call with object arguments
+diff --git a/common/jinja/caps.h b/common/jinja/caps.h
+index b81dd95..eab4105 100644
+--- a/common/jinja/caps.h
++++ b/common/jinja/caps.h
+@@ -11,6 +11,8 @@ struct caps {
+     bool supports_tools = true;
+     bool supports_tool_calls = true;
+     bool supports_system_role = true;
++    // renders a system message that follows other turns
++    bool supports_non_leading_system = true;
+     bool supports_parallel_tool_calls = true;
+ 
+     // supports preserve reasoning trace in the full history, not just the last assistant message
