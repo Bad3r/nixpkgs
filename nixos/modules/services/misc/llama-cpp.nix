@@ -2,10 +2,24 @@
   config,
   lib,
   pkgs,
+  utils,
   ...
 }:
 let
   cfg = config.services.llama-cpp;
+
+  settingsArgs = lib.cli.toCommandLine (optionName: {
+    option =
+      if lib.hasPrefix "-" optionName then
+        optionName
+      else if builtins.stringLength optionName > 1 then
+        "--${optionName}"
+      else
+        "-${optionName}";
+    sep = null;
+    explicitBool = false;
+    formatArg = lib.generators.mkValueStringDefault { };
+  }) cfg.settings;
 in
 {
   imports = [
@@ -108,21 +122,9 @@ in
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        ExecStart = toString [
-          (lib.getExe' cfg.package "llama-server")
-          (lib.cli.toCommandLine (optionName: {
-            option =
-              if lib.hasPrefix "-" optionName then
-                optionName
-              else if builtins.stringLength optionName > 1 then
-                "--${optionName}"
-              else
-                "-${optionName}";
-            sep = " ";
-            explicitBool = false;
-            formatArg = lib.generators.mkValueStringDefault { };
-          }) cfg.settings)
-        ];
+        ExecStart = utils.escapeSystemdExecArgs (
+          [ (lib.getExe' cfg.package "llama-server") ] ++ settingsArgs
+        );
         Restart = "on-failure";
         RestartSec = 10;
 
