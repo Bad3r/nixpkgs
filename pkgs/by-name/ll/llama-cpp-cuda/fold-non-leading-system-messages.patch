@@ -2,38 +2,49 @@ Fold system messages that follow other turns into one leading system message
 when the chat template rejects or drops them.
 
 diff --git a/common/chat.cpp b/common/chat.cpp
-index 4856713..ebc16c7 100644
+index 4856713..d07f6f0 100644
 --- a/common/chat.cpp
 +++ b/common/chat.cpp
-@@ -997,6 +997,66 @@ static void map_developer_role_to_system(json & messages) {
+@@ -997,6 +997,77 @@ static void map_developer_role_to_system(json & messages) {
  }
  
  
 +// joins two message contents with a blank line; string or typed-part content
 +static void append_system_content(json & dst, const json & src) {
-+    if (!dst.is_array() && !src.is_array()) {
-+        const std::string a = dst.is_string() ? dst.get<std::string>() : "";
-+        const std::string b = src.is_string() ? src.get<std::string>() : "";
-+        dst = a.empty() ? b : b.empty() ? a : a + "\n\n" + b;
++    const auto is_empty = [](const json & content) {
++        return content.is_null() || (content.is_string() && content.get<std::string>().empty()) ||
++               (content.is_array() && content.empty());
++    };
++    if (is_empty(src)) {
++        return;
++    }
++    if (is_empty(dst)) {
++        dst = src;
 +        return;
 +    }
 +    const auto as_parts = [](const json & content) {
 +        if (content.is_array()) {
 +            return content;
 +        }
-+        json parts = json::array();
-+        if (content.is_string() && !content.get<std::string>().empty()) {
-+            parts.push_back({{"type", "text"}, {"text", content}});
-+        }
-+        return parts;
++        return json::array({ json{ {"type", "text"}, {"text", content.is_string() ? content : json("")} } });
 +    };
-+    json       parts = as_parts(dst);
-+    const json extra = as_parts(src);
-+    if (!parts.empty() && !extra.empty()) {
-+        parts.push_back({{"type", "text"}, {"text", "\n\n"}});
-+    }
-+    for (const auto & part : extra) {
++    json parts = as_parts(dst);
++    parts.push_back({{"type", "text"}, {"text", "\n\n"}});
++    for (const auto & part : as_parts(src)) {
 +        parts.push_back(part);
++    }
++    // keep string content a string so later workarounds can read it as one
++    if (dst.is_string()) {
++        std::string text;
++        for (const auto & part : parts) {
++            if (part.value("type", "") != "text" || !part.contains("text") || !part.at("text").is_string()) {
++                dst = std::move(parts);
++                return;
++            }
++            text += part.at("text").get<std::string>();
++        }
++        dst = std::move(text);
++        return;
 +    }
 +    dst = std::move(parts);
 +}
@@ -72,7 +83,7 @@ index 4856713..ebc16c7 100644
  // if first message is system and template does not support it, merge it with next message
  static void system_message_not_supported(json & messages) {
      if (!messages.empty() && messages.front().at("role") == "system") {
-@@ -1336,6 +1396,10 @@ static common_chat_params common_chat_templates_apply_jinja(const struct common_
+@@ -1336,6 +1407,10 @@ static common_chat_params common_chat_templates_apply_jinja(const struct common_
          workaround::map_developer_role_to_system(params.messages);
      }
  
@@ -147,3 +158,51 @@ index b81dd95..eab4105 100644
      bool supports_parallel_tool_calls = true;
  
      // supports preserve reasoning trace in the full history, not just the last assistant message
+diff --git a/tests/test-chat.cpp b/tests/test-chat.cpp
+index 01b2220..d4e8978 100644
+--- a/tests/test-chat.cpp
++++ b/tests/test-chat.cpp
+@@ -7606,6 +7606,35 @@ static void test_developer_role_to_system_workaround() {
+     }
+ }
+ 
++// Qwen3.5 raises on a system message after the first turn; it must be folded into the leading one
++static void test_fold_non_leading_system_messages() {
++    LOG_DBG("%s\n", __func__);
++
++    auto tmpls = read_templates("models/templates/Qwen3.5-4B.jinja");
++    const auto msg = [](const std::string & role, const std::string & content) {
++        common_chat_msg m;
++        m.role    = role;
++        m.content = content;
++        return m;
++    };
++    const auto check = [&](const std::vector<common_chat_msg> & messages, const std::string & expected_system) {
++        common_chat_templates_inputs inputs;
++        inputs.messages              = messages;
++        inputs.add_generation_prompt = true;
++        const std::string prompt     = common_chat_templates_apply(tmpls.get(), inputs).prompt.str();
++        const std::string head       = "<|im_start|>system\n" + expected_system + "<|im_end|>\n<|im_start|>user\n";
++        if (prompt.rfind(head, 0) != 0 || prompt.find("<|im_start|>system", 1) != std::string::npos) {
++            throw std::runtime_error("expected one leading system block, got:\n" + prompt);
++        }
++    };
++
++    check({ msg("user", "Hi"), msg("system", "Env") }, "Env");
++    check({ msg("system", "Base"), msg("user", "Hi"), msg("system", "Env") }, "Base\n\nEnv");
++    auto parts = msg("system", "");
++    parts.content_parts = { { "text", "Env" } };
++    check({ msg("system", "Base"), msg("user", "Hi"), msg("system", ""), parts }, "Base\n\nEnv");
++}
++
+ // TranslateGemma raises on plain string user content, the specialized handler must rewrite it
+ static void test_translate_gemma() {
+     LOG_DBG("%s\n", __func__);
+@@ -8128,6 +8157,7 @@ int main(int argc, char ** argv) {
+         test_tools_oaicompat_json_conversion();
+         test_convert_responses_to_chatcmpl();
+         test_developer_role_to_system_workaround();
++        test_fold_non_leading_system_messages();
+         test_translate_gemma();
+         test_deepseek_v4_thinking_retention();
+         test_deepseek_v4_tool_result_ordering();
