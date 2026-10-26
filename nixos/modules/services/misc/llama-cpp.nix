@@ -124,7 +124,7 @@ in
           }) cfg.settings)
         ];
         Restart = "on-failure";
-        RestartSec = 300;
+        RestartSec = 10;
 
         DynamicUser = true;
         StateDirectory = "llama-cpp";
