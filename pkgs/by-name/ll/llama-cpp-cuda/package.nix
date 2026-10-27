@@ -2,8 +2,6 @@
 
 # nixpkgs-update: no auto update
 (llama-cpp.override { cudaSupport = true; }).overrideAttrs (oldAttrs: {
-  pname = "llama-cpp-cuda";
-
   patches = (oldAttrs.patches or [ ]) ++ [
     # Strict chat templates (Qwen3.5+) raise on the mid-conversation system and
     # developer messages Claude Code and Codex send, so fold them into the first one.
