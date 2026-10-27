@@ -64,12 +64,17 @@ let
   ) cfg.settings);
 
   manage = pkgs.writeShellScriptBin "paperless-manage" ''
+    ${lib.optionalString config.security.sudo-rs.enable ''
+      declare -A callerEnv
+      for name in $(compgen -e); do callerEnv[$name]=''${!name}; done
+    ''}
     set -o allexport # Export the following env vars
     ${lib.toShellVars env}
     ${lib.optionalString (cfg.environmentFile != null) "source ${cfg.environmentFile}"}
     if [[ -z "''${PAPERLESS_SECRET_KEY:-}" && -e '${secretKeyFile}' ]]; then
       source '${secretKeyFile}'
     fi
+    set +o allexport
 
     cd '${cfg.dataDir}'
     sudo=exec
@@ -77,6 +82,18 @@ let
       ${
         if config.security.sudo.enable then
           "sudo='exec ${config.security.wrapperDir}/sudo -u ${cfg.user} -E'"
+        else if config.security.sudo-rs.enable then
+          # sudo-rs has no bare -E, so pass every variable this script set by name
+          ''
+            declare -A preserve
+            for name in ${lib.escapeShellArgs (lib.attrNames env)}; do preserve[$name]=1; done
+            for name in $(compgen -e); do
+              if [[ ! -v "callerEnv[$name]" || "''${callerEnv[$name]}" != "''${!name}" ]]; then
+                preserve[$name]=1
+              fi
+            done
+            sudo="exec ${config.security.wrapperDir}/sudo -u ${cfg.user} --preserve-env=$(IFS=,; echo "''${!preserve[*]}")"
+          ''
         else
           ">&2 echo 'Aborting, paperless-manage must be run as user `${cfg.user}`!'; exit 2"
       }
