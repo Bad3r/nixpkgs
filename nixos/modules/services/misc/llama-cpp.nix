@@ -2,10 +2,24 @@
   config,
   lib,
   pkgs,
+  utils,
   ...
 }:
 let
   cfg = config.services.llama-cpp;
+
+  settingsArgs = lib.cli.toCommandLine (optionName: {
+    option =
+      if lib.hasPrefix "-" optionName then
+        optionName
+      else if builtins.stringLength optionName > 1 then
+        "--${optionName}"
+      else
+        "-${optionName}";
+    sep = null;
+    explicitBool = false;
+    formatArg = lib.generators.mkValueStringDefault { };
+  }) cfg.settings;
 in
 {
   imports = [
@@ -90,6 +104,21 @@ in
         '';
       };
 
+      apiKeyFile = lib.mkOption {
+        type = lib.types.nullOr lib.types.externalPath;
+        default = null;
+        example = "/run/secrets/llama-cpp-api-key";
+        description = ''
+          File containing the API keys clients must present, one per line;
+          lines starting with `#` are ignored and whitespace is not trimmed.
+
+          The file is passed to `llama-server` through a systemd credential,
+          so it is read at service start and never copied to the Nix store.
+          Do not set `api-key` or `api-key-file` in
+          {option}`services.llama-cpp.settings` together with this option.
+        '';
+      };
+
       openFirewall = lib.mkOption {
         type = lib.types.bool;
         default = false;
@@ -101,6 +130,16 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = cfg.apiKeyFile == null || !(cfg.settings ? api-key || cfg.settings ? api-key-file);
+        message = ''
+          `services.llama-cpp.settings` must not set `api-key` or `api-key-file`
+          when `services.llama-cpp.apiKeyFile` is set.
+        '';
+      }
+    ];
+
     systemd.services.llama-cpp = {
       description = "llama.cpp HTTP server";
       wants = [ "network.target" ];
@@ -108,24 +147,12 @@ in
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        ExecStart = toString [
-          (lib.getExe' cfg.package "llama-server")
-          (lib.cli.toCommandLine (optionName: {
-            option =
-              if lib.hasPrefix "-" optionName then
-                optionName
-              else if builtins.stringLength optionName > 1 then
-                "--${optionName}"
-              else
-                "-${optionName}";
-            sep = " ";
-            explicitBool = false;
-            formatArg = lib.generators.mkValueStringDefault { };
-          }) cfg.settings)
-        ];
-        ExecReload = "${lib.getExe' pkgs.coreutils "kill"} -HUP $MAINPID";
+        ExecStart =
+          utils.escapeSystemdExecArgs ([ (lib.getExe' cfg.package "llama-server") ] ++ settingsArgs)
+          + lib.optionalString (cfg.apiKeyFile != null) " --api-key-file %d/api-key";
+        LoadCredential = lib.optional (cfg.apiKeyFile != null) "api-key:${toString cfg.apiKeyFile}";
         Restart = "on-failure";
-        RestartSec = 300;
+        RestartSec = 10;
 
         DynamicUser = true;
         StateDirectory = "llama-cpp";
