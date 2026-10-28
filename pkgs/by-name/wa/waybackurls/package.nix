@@ -26,7 +26,7 @@ buildGoModule rec {
     description = "Tool to fetch all the URLs that the Wayback Machine knows about for a domain";
     homepage = "https://github.com/tomnomnom/waybackurls";
     changelog = "https://github.com/tomnomnom/waybackurls/releases/tag/${src.tag}";
-    license = lib.licenses.unfree;
+    license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ fab ];
     mainProgram = "waybackurls";
   };
