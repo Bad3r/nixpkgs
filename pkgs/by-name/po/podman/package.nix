@@ -60,6 +60,10 @@ buildGoModule (finalAttrs: {
 
     # we intentionally don't build and install the helper so we shouldn't display messages to users about it
     ./rm-podman-mac-helper-msg.patch
+
+    # keeps 8.8.8.8 out of containers whose DNS goes through the pasta or slirp4netns forwarder
+    # https://github.com/podman-container-tools/container-libs/issues/43
+    ./resolvconf-skip-default-dns-with-forwarder.patch
     # Fix `podman completion` in the build sandbox
     # https://github.com/podman-container-tools/podman/pull/29832
     (fetchpatch {
