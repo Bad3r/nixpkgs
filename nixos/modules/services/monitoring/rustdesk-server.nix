@@ -132,6 +132,8 @@ in
           ProtectKernelTunables = true;
           ProtectProc = "invisible";
           RestrictNamespaces = true;
+          # hbbs exits when its loopback self-test times out or its key is malformed.
+          Restart = "on-failure";
         };
       };
     in
@@ -160,13 +162,19 @@ in
 
       systemd.services.rustdesk-signal =
         let
-          relayArg = builtins.concatStringsSep ":" cfg.signal.relayHosts;
+          # hbbs splits the list on commas and rejects the flag without a value.
+          relayArgs = lib.optionals (cfg.signal.relayHosts != [ ]) [
+            "--relay-servers"
+            (lib.concatStringsSep "," cfg.signal.relayHosts)
+          ];
         in
         lib.mkIf cfg.signal.enable (
           lib.mkMerge [
             serviceDefaults
             {
-              serviceConfig.ExecStart = "${cfg.package}/bin/hbbs --relay-servers ${relayArg} ${lib.escapeShellArgs cfg.signal.extraArgs}";
+              serviceConfig.ExecStart = "${cfg.package}/bin/hbbs ${
+                lib.escapeShellArgs (relayArgs ++ cfg.signal.extraArgs)
+              }";
             }
           ]
         );
