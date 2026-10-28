@@ -186,6 +186,10 @@ flutter329.buildFlutterApplication rec {
       # with two GPUs can encode on the one that is not rendering. Drop once
       # hwcodec selects the encoder and the VA-API device itself.
       patch -p1 -d $cargoDepsCopy/*/hwcodec-* < ${./hwcodec-encoder-selection.patch}
+      # Upstream comments hevc_vaapi out over quality on one machine; this
+      # restores it only when RUSTDESK_HWCODEC_ENCODERS names it. Drop once
+      # hwcodec probes hevc_vaapi itself.
+      patch -p1 -d $cargoDepsCopy/*/hwcodec-* < ${./hwcodec-hevc-vaapi.patch}
       sed -e '1i #include <cstdint>' -i $cargoDepsCopy/*/webm-1.1.0/src/sys/libwebm/mkvparser/mkvparser.cc
       sed -e '1i #include <cstdint>' -i $cargoDepsCopy/*/webm-sys-1.0.4/libwebm/mkvparser/mkvparser.cc
     fi

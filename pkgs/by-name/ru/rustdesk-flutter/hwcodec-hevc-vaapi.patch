@@ -1,0 +1,26 @@
+--- a/src/ffmpeg_ram/encode.rs
++++ b/src/ffmpeg_ram/encode.rs
+@@ -255,12 +255,17 @@
+                     ..Default::default()
+                 });
+                 // remove because poor quality on one of my computer
+-                // codecs.push(CodecInfo {
+-                //     name: "hevc_vaapi".to_owned(),
+-                //     format: H265,
+-                //     priority: Priority::Good as _,
+-                //     ..Default::default()
+-                // });
++                // Restored only when RUSTDESK_HWCODEC_ENCODERS names it.
++                if std::env::var("RUSTDESK_HWCODEC_ENCODERS")
++                    .map_or(false, |v| v.split(',').any(|name| name.trim() == "hevc_vaapi"))
++                {
++                    codecs.push(CodecInfo {
++                        name: "hevc_vaapi".to_owned(),
++                        format: H265,
++                        priority: Priority::Good as _,
++                        ..Default::default()
++                    });
++                }
+             }
+         }
+ 
