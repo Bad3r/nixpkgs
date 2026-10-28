@@ -6,6 +6,8 @@
   versionCheckHook,
   bundlerEnv,
   bundlerUpdateScript,
+  nix-update-script,
+  _experimental-update-script-combinators,
   writeText,
   krb5,
   sslLegacyProvider ? false,
@@ -64,7 +66,11 @@ stdenv.mkDerivation (finalAttrs: {
       --prefix LD_LIBRARY_PATH : ${krb5.lib}/lib
   '';
 
-  passthru.updateScript = bundlerUpdateScript "evil-winrm";
+  # nix-update runs first so the Bundler regeneration locks the gem set the new release declares.
+  passthru.updateScript = _experimental-update-script-combinators.sequence [
+    (nix-update-script { })
+    (bundlerUpdateScript "evil-winrm")
+  ];
 
   nativeInstallCheckInputs = [ versionCheckHook ];
   doInstallCheck = true;
@@ -76,5 +82,6 @@ stdenv.mkDerivation (finalAttrs: {
     changelog = "https://github.com/Hackplayers/evil-winrm/blob/v${finalAttrs.version}/CHANGELOG.md";
     maintainers = with lib.maintainers; [ letgamer ];
     license = lib.licenses.lgpl3Plus;
+    maintainers = with lib.maintainers; [ bad3r ];
   };
 })
