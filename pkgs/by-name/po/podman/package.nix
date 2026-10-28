@@ -26,7 +26,6 @@
   fuse-overlayfs,
   util-linuxMinimal,
   nftables,
-  iptables,
   iproute2,
   catatonit,
   gvproxy,
@@ -38,19 +37,20 @@
   writableTmpDirAsHomeHook,
   coreutils,
   runtimeShell,
+  fetchpatch,
 }:
 let
   systemdLibs' = systemdLibs.override { withCompression = true; };
 in
 buildGoModule (finalAttrs: {
   pname = "podman";
-  version = "5.8.9";
+  version = "6.1.4";
 
   src = fetchFromGitHub {
     owner = "podman-container-tools";
     repo = "podman";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-nIWwG5QyIent0vJtEm8zDQLbqfTZmD4oKMbf2N5r2wA=";
+    hash = "sha256-RTPxNoKRqFGDFEYHUwPbsNAAZqNfBXbetfphxrwn6eM=";
   };
 
   patches = [
@@ -64,6 +64,13 @@ buildGoModule (finalAttrs: {
     # keeps 8.8.8.8 out of containers whose DNS goes through the pasta or slirp4netns forwarder
     # https://github.com/podman-container-tools/container-libs/issues/43
     ./resolvconf-skip-default-dns-with-forwarder.patch
+    # Fix `podman completion` in the build sandbox
+    # https://github.com/podman-container-tools/podman/pull/29832
+    (fetchpatch {
+      name = "fix-podman-completion.patch";
+      url = "https://github.com/podman-container-tools/podman/commit/7cef788844bdaae01ca672a55698d40428644eb4.patch";
+      hash = "sha256-CAECXYRFyOF4aIc9qIZQceiz5vE/gFGyitjPI48IhYU=";
+    })
   ];
 
   vendorHash = null;
@@ -155,9 +162,10 @@ buildGoModule (finalAttrs: {
 
   passthru = {
     tests = lib.optionalAttrs stdenv.hostPlatform.isLinux {
-      inherit (nixosTests) podman;
       # related modules
       inherit (nixosTests)
+        podman
+        podman-dns
         podman-tls-ghostunnel
         ;
       oci-containers-podman = nixosTests.oci-containers.podman;
@@ -169,7 +177,6 @@ buildGoModule (finalAttrs: {
       lib.optionals stdenv.hostPlatform.isLinux [
         fuse-overlayfs
         util-linuxMinimal
-        iptables
         iproute2
         nftables
       ]
@@ -188,7 +195,7 @@ buildGoModule (finalAttrs: {
         ]
         ++ lib.optionals stdenv.hostPlatform.isLinux [
           aardvark-dns # dns
-          catatonit # added here for the pause image and also set in `containersConf` for `init_path`
+          catatonit # added here for the pause image
           netavark # networking
           passt # rootless networking
           conmon # runtime monitor

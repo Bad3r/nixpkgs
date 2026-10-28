@@ -24,14 +24,12 @@
   smartmontools,
   replaceVars,
   stdenvNoCC,
-  touchegg,
   util-linux,
   vte,
   wrapGAppsHook3,
   xdg-utils,
   gtk4,
   desktop-file-utils,
-  xdg-user-dirs,
   libglycin,
   libglycin-gtk4,
 }:
@@ -74,7 +72,9 @@ lib.trivial.pipe super [
   }))
 
   (patchExtension "caffeine@patapon.info" (old: {
-    meta.maintainers = with lib.maintainers; [ eperuffo ];
+    meta = old.meta // {
+      maintainers = with lib.maintainers; [ eperuffo ];
+    };
   }))
 
   (patchExtension "copyous@boerdereinar.dev" (old: {
@@ -91,7 +91,9 @@ lib.trivial.pipe super [
   }))
 
   (patchExtension "dash-to-dock@micxgx.gmail.com" (old: {
-    meta.maintainers = with lib.maintainers; [ rhoriguchi ];
+    meta = old.meta // {
+      maintainers = with lib.maintainers; [ rhoriguchi ];
+    };
   }))
 
   (patchExtension "ddterm@amezin.github.com" (old: {
@@ -233,7 +235,9 @@ lib.trivial.pipe super [
         typelibPath = lib.makeSearchPath "/lib/girepository-1.0" [ libgtop ];
       })
     ];
-    meta.maintainers = with lib.maintainers; [ andersk ];
+    meta = old.meta // {
+      maintainers = with lib.maintainers; [ andersk ];
+    };
   }))
 
   (patchExtension "user-theme-x@tuberry.github.io" (old: {
@@ -254,22 +258,6 @@ lib.trivial.pipe super [
       })
     ];
   }))
-
-  (patchExtension "x11gestures@joseexposito.github.io" (old: {
-    # Extension can't find Touchegg
-    # https://github.com/NixOS/nixpkgs/issues/137621
-    postPatch = ''
-      substituteInPlace "src/touchegg/ToucheggConfig.js" \
-        --replace "GLib.build_filenamev([GLib.DIR_SEPARATOR_S, 'usr', 'share', 'touchegg', 'touchegg.conf'])" "'${touchegg}/share/touchegg/touchegg.conf'"
-    '';
-  }))
-
-  (patchExtension "pwcalc@thilomaurer.de" {
-    postPatch = ''
-      # remove unused dangling symlink
-      rm settings-importexport.ui
-    '';
-  })
 
   (patchExtension "TeaTimer@zener.sbg.at" {
     postPatch = ''

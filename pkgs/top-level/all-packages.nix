@@ -1001,8 +1001,6 @@ with pkgs;
 
   mkosi-full = mkosi.override { withQemu = true; };
 
-  openbugs = pkgsi686Linux.callPackage ../applications/science/machine-learning/openbugs { };
-
   openusd = python3Packages.openusd.override {
     withTools = true;
     withUsdView = true;
@@ -1010,7 +1008,7 @@ with pkgs;
 
   py7zr = with python3Packages; toPythonApplication py7zr;
 
-  inherit (callPackage ../development/libraries/sdbus-cpp { }) sdbus-cpp sdbus-cpp_2;
+  inherit (callPackages ../development/libraries/sdbus-cpp { }) sdbus-cpp sdbus-cpp_2;
 
   sdkmanager = with python3Packages; toPythonApplication sdkmanager;
 
@@ -2207,6 +2205,8 @@ with pkgs;
 
   keycloakPlugins = recurseIntoAttrs keycloak.plugins;
 
+  lean = lean4;
+
   limine-full = limine.override { enableAll = true; };
 
   logstash7 = callPackage ../tools/misc/logstash/7.x.nix {
@@ -2521,8 +2521,6 @@ with pkgs;
     etcDir = "/etc/ssh";
     withKerberos = true;
   };
-
-  sshd-openpgp-auth = callPackage ../by-name/ss/ssh-openpgp-auth/daemon.nix { };
 
   openvpn = callPackage ../tools/networking/openvpn { };
 
@@ -4020,7 +4018,7 @@ with pkgs;
       libcxx ? null,
       extraPackages ? lib.optional (
         cc.isGNU or false && stdenv.targetPlatform.isMinGW
-      ) targetPackages.threads.package,
+      ) targetPackages.threads,
       nixSupport ? { },
       ...
     }@extraArgs:
@@ -5203,8 +5201,6 @@ with pkgs;
     aspell = aspell.override { searchNixProfiles = false; };
   };
 
-  astal = recurseIntoAttrs (lib.makeScope newScope (callPackage ../development/libraries/astal { }));
-
   attr = callPackage ../development/libraries/attr { };
 
   # Not moved to aliases while we decide if we should split the package again.
@@ -5315,12 +5311,18 @@ with pkgs;
       stdenv = clangStdenv;
     };
   };
-  factorPackages = factorPackages-0_101;
+  factorPackages-0_102 = callPackage ./factor-packages.nix {
+    factor-unwrapped = callPackage ../development/compilers/factor-lang/0.102.nix {
+      stdenv = clangStdenv;
+    };
+  };
+  factorPackages = factorPackages-0_102;
 
   factor-lang-0_99 = factorPackages-0_99.factor-lang;
   factor-lang-0_100 = factorPackages-0_100.factor-lang;
   factor-lang-0_101 = factorPackages-0_101.factor-lang;
-  factor-lang = factor-lang-0_101;
+  factor-lang-0_102 = factorPackages-0_102.factor-lang;
+  factor-lang = factor-lang-0_102;
 
   inherit (callPackage ../development/libraries/ffmpeg { })
     ffmpeg_4
@@ -5512,14 +5514,23 @@ with pkgs;
     else
       throw "Unknown libc ${libc}";
 
+  # An optional threading library to be used by GCC's runtime libraries.
+  #
+  # When non-null, this package will be used for that purpose. When null, libc
+  # will be used instead.
+  #
+  # The package (like libc, for the sake of the fallback case when this is
+  # null) declares its model as `passthru.threadModel`.
+  #
+  # On MinGW the libc offers only `win32`; `windows.mcfgthreads` gives `mcf`,
+  # and `windows.pthreads` would give `posix`. `windows.mcfgthreads` is our
+  # default there because it is both fast / minimally diverged from native and
+  # featureful.
   threads =
-    lib.optionalAttrs (stdenv.hostPlatform.isMinGW && !(stdenv.hostPlatform.useLLVM or false))
-      {
-        # other possible values: win32 or posix
-        model = "mcf";
-        # For win32 or posix set this to null
-        package = windows.mcfgthreads;
-      };
+    if stdenv.hostPlatform.isMinGW && !(stdenv.hostPlatform.useLLVM or false) then
+      windows.mcfgthreads
+    else
+      null;
 
   # Only supported on Linux and only on glibc
   glibcLocales =
@@ -6146,8 +6157,7 @@ with pkgs;
 
   inherit (callPackages ../development/libraries/openssl { })
     openssl_3_5
-    openssl_3_6
-    openssl_4_0
+    openssl_4_1
     ;
 
   inherit
@@ -6354,8 +6364,6 @@ with pkgs;
     avrgcc = pkgsCross.avr.buildPackages.gcc;
     avrlibc = pkgsCross.avr.libc;
   };
-
-  simpleitk = callPackage ../development/libraries/simpleitk { lua = lua5_4; };
 
   skawarePackages = recurseIntoAttrs (callPackage ../development/skaware-packages { });
 
@@ -7075,7 +7083,7 @@ with pkgs;
   nginx = nginxStable;
 
   nginxStable = callPackage ../servers/http/nginx/stable.nix {
-    openssl = openssl_4_0;
+    openssl = openssl_4_1;
     zlib-ng = zlib-ng.override { withZlibCompat = true; };
     withPerl = false;
     # We don't use `with` statement here on purpose!
@@ -7086,7 +7094,7 @@ with pkgs;
   };
 
   nginxMainline = callPackage ../servers/http/nginx/mainline.nix {
-    openssl = openssl_4_0;
+    openssl = openssl_4_1;
     zlib-ng = zlib-ng.override { withZlibCompat = true; };
     withKTLS = true;
     withPerl = false;
@@ -7112,15 +7120,6 @@ with pkgs;
       packages // (lib.optionalAttrs config.allowAliases aliases)
     )
   );
-
-  # We should move to dynamic modules and create a nginxFull package with all modules
-  nginxShibboleth = nginxStable.override {
-    modules = [
-      nginxModules.rtmp
-      nginxModules.moreheaders
-      nginxModules.shibboleth
-    ];
-  };
 
   nsdiff = perlPackages.nsdiff;
 
@@ -7409,8 +7408,7 @@ with pkgs;
       util-linux = util-linuxMinimal;
     }
   );
-  fuse = fuse2;
-  fuse2 = lowPrio (if stdenv.hostPlatform.isDarwin then macfuse-stubs else fusePackages.fuse_2);
+  fuse = fuse3;
   fuse3 = lowPrio (
     if stdenv.hostPlatform.isDarwin then
       macfuse-stubs.override { isFuse3 = true; }
@@ -8683,12 +8681,6 @@ with pkgs;
 
   pianoteq = callPackage ../applications/audio/pianoteq { };
 
-  pidginPackages = recurseIntoAttrs (
-    callPackage ../applications/networking/instant-messengers/pidgin/pidgin-plugins { }
-  );
-
-  inherit (pidginPackages) pidgin;
-
   puredata-with-plugins =
     plugins: callPackage ../by-name/pu/puredata/wrapper.nix { inherit plugins; };
 
@@ -9608,9 +9600,9 @@ with pkgs;
 
   inherit (callPackage ../desktops/gnome/extensions { })
     gnomeExtensions
-    gnome48Extensions
     gnome49Extensions
     gnome50Extensions
+    gnome51Extensions
     ;
 
   lomiri = recurseIntoAttrs (callPackage ../desktops/lomiri { });
@@ -9871,8 +9863,6 @@ with pkgs;
   };
 
   isabelle-components = recurseIntoAttrs (callPackage ../by-name/is/isabelle/components { });
-
-  lean3 = lean;
 
   leo2 = callPackage ../applications/science/logic/leo2 {
     inherit (ocaml-ng.ocamlPackages_4_14_unsafe_string) ocaml camlp4;

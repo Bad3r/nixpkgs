@@ -12,13 +12,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "aws-lc";
-  version = "5.11.0";
+  version = "5.12.0";
 
   src = fetchFromGitHub {
     owner = "aws";
     repo = "aws-lc";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-2gsjaMgP8NcJVSdW2g4hGFySVfTfKJuSkjSrG8KTKWI=";
+    hash = "sha256-O+0UG6Zk6U9b73B9qDSZ9aC32WL1anJIgH0TRgVpONI=";
   };
 
   outputs = [
@@ -88,6 +88,9 @@ stdenv.mkDerivation (finalAttrs: {
     description = "General-purpose cryptographic library maintained by the AWS Cryptography team for AWS and their customers";
     homepage = "https://github.com/aws/aws-lc";
     changelog = "https://github.com/aws/aws-lc/releases/tag/v${finalAttrs.version}";
+    identifiers.cpeParts = lib.meta.cpeFullVersionWithVendor "amazon" finalAttrs.version // {
+      product = "aws_libcrypto";
+    };
     license =
       with lib.licenses;
       OR [
