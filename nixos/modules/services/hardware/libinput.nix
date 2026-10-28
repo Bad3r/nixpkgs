@@ -205,17 +205,21 @@ let
     };
 
     scrollMethod = lib.mkOption {
-      type = lib.types.enum [
-        "twofinger"
-        "edge"
-        "button"
-        "none"
-      ];
-      default = "twofinger";
+      type = lib.types.nullOr (
+        lib.types.enum [
+          "twofinger"
+          "edge"
+          "button"
+          "none"
+        ]
+      );
+      default = if deviceType == "touchpad" then "twofinger" else null;
+      defaultText = lib.literalExpression (if deviceType == "touchpad" then ''"twofinger"'' else "null");
       example = "edge";
       description = ''
         Specify the scrolling method: `twofinger`, `edge`,
-        `button`, or `none`
+        `button`, or `none`. Set to `null` to use the libinput default
+        for each device, since mice support neither `twofinger` nor `edge`.
       '';
     };
 
@@ -351,7 +355,9 @@ let
     ${lib.optionalString (cfg.${deviceType}.scrollButton != null)
       ''Option "ScrollButton" "${toString cfg.${deviceType}.scrollButton}"''
     }
-    Option "ScrollMethod" "${cfg.${deviceType}.scrollMethod}"
+    ${lib.optionalString (
+      cfg.${deviceType}.scrollMethod != null
+    ) ''Option "ScrollMethod" "${cfg.${deviceType}.scrollMethod}"''}
     Option "HorizontalScrolling" "${xorgBool cfg.${deviceType}.horizontalScrolling}"
     Option "SendEventsMode" "${cfg.${deviceType}.sendEventsMode}"
     Option "Tapping" "${xorgBool cfg.${deviceType}.tapping}"
