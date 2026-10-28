@@ -159,6 +159,11 @@ flutter329.buildFlutterApplication rec {
 
   patches = [
     ./make-build-reproducible.patch
+    # The service's sudo-rs fallback starts --server with only DISPLAY and a few
+    # session variables; this forwards LIBVA_*, RUSTDESK_HWCODEC_*,
+    # PULSE_LATENCY_MSEC, and PIPEWIRE_LATENCY from the service. Drop once
+    # RustDesk forwards the service environment there, or sudo-rs gains -E.
+    ./forward-hwcodec-env.patch
   ];
 
   prepareBuildRunner = ''
@@ -176,6 +181,11 @@ flutter329.buildFlutterApplication rec {
         --replace-fail "libayatana-appindicator3.so.1" "${lib.getLib libayatana-appindicator}/lib/libayatana-appindicator3.so.1"
       # Disable static linking of ffmpeg since https://github.com/21pages/hwcodec/commit/1873c34e3da070a462540f61c0b782b7ab15dc84
       sed -i 's/static=//g' $cargoDepsCopy/*/hwcodec-*/build.rs
+      # RUSTDESK_HWCODEC_ENCODERS limits the probed encoders and
+      # RUSTDESK_HWCODEC_VAAPI_DEVICE picks the VA-API render node, so a host
+      # with two GPUs can encode on the one that is not rendering. Drop once
+      # hwcodec selects the encoder and the VA-API device itself.
+      patch -p1 -d $cargoDepsCopy/*/hwcodec-* < ${./hwcodec-encoder-selection.patch}
       sed -e '1i #include <cstdint>' -i $cargoDepsCopy/*/webm-1.1.0/src/sys/libwebm/mkvparser/mkvparser.cc
       sed -e '1i #include <cstdint>' -i $cargoDepsCopy/*/webm-sys-1.0.4/libwebm/mkvparser/mkvparser.cc
     fi

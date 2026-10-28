@@ -1,0 +1,26 @@
+--- a/src/platform/linux.rs
++++ b/src/platform/linux.rs
+@@ -909,10 +909,22 @@
+                 "TERM",
+                 get_cur_term(&desktop.uid).unwrap_or_else(|| suggest_best_term()),
+             ));
++            // The sudo-rs fallback passes only these envs, so encoder and audio
++            // latency settings on the service would never reach the server.
++            let forwarded = std::env::vars_os().filter(|(key, _)| {
++                key.to_str().map_or(false, |key| {
++                    key.starts_with("LIBVA_")
++                        || key.starts_with("RUSTDESK_HWCODEC_")
++                        || key == "PULSE_LATENCY_MSEC"
++                        || key == "PIPEWIRE_LATENCY"
++                })
++            });
+             run_as_user(
+                 vec!["--server"],
+                 Some((desktop.uid.clone(), desktop.username.clone())),
+-                envs,
++                envs.into_iter()
++                    .map(|(key, value)| (OsString::from(key), OsString::from(value)))
++                    .chain(forwarded),
+             )
+         }
+         None => Ok(Some(crate::run_me(vec!["--server"])?)),

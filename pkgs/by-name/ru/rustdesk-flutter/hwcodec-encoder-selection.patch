@@ -1,0 +1,43 @@
+--- a/src/ffmpeg_ram/encode.rs
++++ b/src/ffmpeg_ram/encode.rs
+@@ -286,6 +286,24 @@
+             }
+         }
+ 
++        // A comma-separated allow-list; unset or empty keeps every candidate.
++        if let Ok(allowed) = std::env::var("RUSTDESK_HWCODEC_ENCODERS") {
++            let allowed: Vec<&str> = allowed
++                .split(',')
++                .map(str::trim)
++                .filter(|name| !name.is_empty())
++                .collect();
++            if !allowed.is_empty() {
++                codecs.retain(|c| allowed.contains(&c.name.as_str()));
++                if codecs.is_empty() {
++                    log::warn!(
++                        "RUSTDESK_HWCODEC_ENCODERS {:?} leaves no hardware encoder candidate",
++                        allowed
++                    );
++                }
++            }
++        }
++
+         // qsv doesn't support yuv420p
+         codecs.retain(|c| {
+             let ctx = ctx.clone();
+--- a/cpp/ffmpeg_ram/ffmpeg_ram_encode.cpp
++++ b/cpp/ffmpeg_ram/ffmpeg_ram_encode.cpp
+@@ -180,6 +180,13 @@
+         }
+       }
+ #endif
++      if (hw_device_type_ == AV_HWDEVICE_TYPE_VAAPI) {
++        // Without it, FFmpeg takes the first render node, whichever GPU that is.
++        const char *node = getenv("RUSTDESK_HWCODEC_VAAPI_DEVICE");
++        if (node && *node) {
++          device = node;
++        }
++      }
+       ret = av_hwdevice_ctx_create(&hw_device_ctx_, hw_device_type_,
+                                    device.length() == 0 ? NULL : device.c_str(),
+                                    NULL, 0);
