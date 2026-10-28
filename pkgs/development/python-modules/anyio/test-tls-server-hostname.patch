@@ -1,0 +1,14 @@
+Adapted from https://github.com/agronholm/anyio/commit/818e4ac441fa27e9fac893496fc5a4fbe0a58689
+("Don't pass `hostname` to TLSStream.wrap() for the server stream"), keeping only the
+test_tls_connectable hunk. The other hunk targets a test added after 4.14.2.
+
+--- a/tests/streams/test_tls.py
++++ b/tests/streams/test_tls.py
+@@ -615,7 +615,6 @@
+         async with await TLSStream.wrap(
+             server_stream,
+             server_side=True,
+-            hostname="localhost",
+             ssl_context=server_context,
+         ) as server_tls_stream:
+             message = await server_tls_stream.receive()

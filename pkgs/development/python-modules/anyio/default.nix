@@ -4,6 +4,7 @@
   buildPythonPackage,
   fetchFromGitHub,
   fetchpatch,
+  pythonOlder,
 
   # build-system
   setuptools-scm,
@@ -114,6 +115,10 @@ buildPythonPackage rec {
 
     # pip install requires network access
     "test_sourceless_install"
+  ]
+  ++ lib.optionals (pythonOlder "3.13") [
+    # Opens AF_INET6 sockets, which fail with EAFNOSUPPORT on builders booted with ipv6.disable=1
+    "TestFreePortFactory"
   ]
   ++ lib.optionals stdenv.hostPlatform.isDarwin [
     # PermissionError: [Errno 1] Operation not permitted: '/dev/console'
