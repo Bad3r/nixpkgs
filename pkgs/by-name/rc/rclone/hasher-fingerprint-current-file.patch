@@ -1,0 +1,53 @@
+hasher: fingerprint local objects from a fresh stat
+
+fingerprint() used the wrapped object's size and modtime from when it
+was listed, while local's own Hash re-stats and re-hashes a changed
+file. A local file rewritten between listing and transfer was therefore
+served the cached hash of its old content: S3 multi-thread uploads
+(files at or above --multi-thread-cutoff) take src.Hash(md5) before
+opening the file, so they sent the new content with the old MD5,
+failed verification and removed the uploaded object.
+
+When the base is local, build the fingerprint from a freshly stat'd
+base object, falling back to the wrapped object if the stat fails.
+Other bases keep the listed values to avoid an extra remote call per
+hash lookup.
+
+diff --git a/backend/hasher/object.go b/backend/hasher/object.go
+index ce6650c..ba3c813 100644
+--- a/backend/hasher/object.go
++++ b/backend/hasher/object.go
+@@ -304,10 +304,22 @@ func (r *hashingReader) Close() error {
+ // while `fs.Fingerprint` would select a hash _produced by hasher_
+ // creating unresolvable fingerprint loop.
+ func (o *Object) fingerprint(ctx context.Context) string {
+-	size := o.Object.Size()
++	// The base object keeps the size and modtime it was listed with. Stat
++	// local files again so that a file changed since then does not match
++	// the fingerprint of its old content; other bases are not re-read to
++	// avoid an extra remote call per hash lookup.
++	obj := o.Object
++	if o.f.Fs.Features().IsLocal {
++		if fresh, err := o.f.Fs.NewObject(ctx, o.Remote()); err == nil {
++			obj = fresh
++		} else {
++			fs.Debugf(o, "fingerprint: re-stat failed, keeping previous size and modtime: %v", err)
++		}
++	}
++	size := obj.Size()
+ 	timeStr := "-"
+ 	if o.f.fpTime {
+-		timeStr = o.Object.ModTime(ctx).UTC().Format(timeFormat)
++		timeStr = obj.ModTime(ctx).UTC().Format(timeFormat)
+ 		if timeStr == "" {
+ 			return ""
+ 		}
+@@ -315,7 +327,7 @@ func (o *Object) fingerprint(ctx context.Context) string {
+ 	hashStr := "-"
+ 	if o.f.fpHash != hash.None {
+ 		var err error
+-		hashStr, err = o.Object.Hash(ctx, o.f.fpHash)
++		hashStr, err = obj.Hash(ctx, o.f.fpHash)
+ 		if hashStr == "" || err != nil {
+ 			return ""
+ 		}
