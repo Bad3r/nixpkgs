@@ -24,6 +24,14 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   cargoHash = "sha256-mC4Ca8h87CZOiHdQPb9+Z+GoY3hXILvGcBABT7kgz40=";
 
+  # hbbs posts a hardware fingerprint to api.rustdesk.com at startup and daily
+  # to look for a newer release, with no option to turn it off; nixpkgs
+  # supplies the updates instead.
+  postPatch = ''
+    substituteInPlace src/main.rs \
+      --replace-fail "crate::common::check_software_update();" ""
+  '';
+
   nativeBuildInputs = [
     pkg-config
   ];
