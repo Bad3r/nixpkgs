@@ -35,11 +35,13 @@ export default async ({
   // Detect if running in a fork (not NixOS/nixpkgs)
   const isFork = context.repo.owner !== 'NixOS'
 
-  const orgId = (
-    await github.rest.orgs.get({
-      org: context.repo.owner,
-    })
-  ).data.id
+  const orgId = isFork
+    ? null
+    : (
+        await github.rest.orgs.get({
+          org: context.repo.owner,
+        })
+      ).data.id
 
   async function downloadMaintainerMap(branch: string): Promise<Maintainers> {
     const commits = (
@@ -191,6 +193,10 @@ export default async ({
   // Same for teams
   const teams: Record<number, Promise<{ slug: string } | null>> = {}
   function getTeam(id: number) {
+    if (isFork) {
+      return Promise.resolve(null)
+    }
+
     if (!teams[id]) {
       teams[id] = github
         .request<{ slug: string }>({

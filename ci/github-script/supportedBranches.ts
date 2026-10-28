@@ -53,6 +53,17 @@ export interface BranchClassification {
 }
 
 function classify(branch: string): BranchClassification {
+  // Fork-local exception: this repository targets nixpkgs-unstable directly for update PRs.
+  if (branch === 'nixpkgs-unstable') {
+    return {
+      branch,
+      order: orderConfig.master,
+      stable: false,
+      type: typeConfig.master,
+      version: 'unstable',
+    }
+  }
+
   const { prefix, version } = split(branch)
   return {
     branch,

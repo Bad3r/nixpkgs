@@ -7,7 +7,7 @@ import {
   getTargetBranchPolicy,
 } from './check-target-branch-policy.ts'
 import { dismissReviews, postReview } from './reviews.ts'
-import { split } from './supportedBranches.ts'
+import { classify, split } from './supportedBranches.ts'
 
 // TODO: should this be combined with the branch checks in prepare.ts?
 // They do seem quite similar, but this needs to run after eval,
@@ -52,9 +52,18 @@ type TargetBranchReviewFacts = {
   maxRebuildCount: number
 }
 
+// This fork targets nixpkgs-unstable, so every unstable primary branch has to
+// qualify wherever upstream hardcodes `master`.
+function isUnstablePrimaryBranch(base: string) {
+  const { stable, type } = classify(base)
+  return type.includes('primary') && !stable
+}
+
 function getStagingBranch(base: string) {
-  const version = split(base).version
-  return version ? `staging-${version}` : 'staging'
+  // split() reports `unstable` as a version for nixpkgs-unstable, which would
+  // name a `staging-unstable` branch that does not exist.
+  const { stable, version } = classify(base)
+  return stable ? `staging-${version}` : 'staging'
 }
 
 async function postMassRebuildReview(facts: TargetBranchReviewFacts) {
@@ -79,10 +88,11 @@ async function postMassRebuildReview(facts: TargetBranchReviewFacts) {
 
 async function postNixosRebuildReview(facts: TargetBranchReviewFacts) {
   const { github, context, core, dry, base, maxRebuildCount } = facts
+  const baseIsUnstablePrimary = isUnstablePrimaryBranch(base)
   let branchText: string
-  if (base === 'master' && maxRebuildCount >= 500) {
+  if (baseIsUnstablePrimary && maxRebuildCount >= 500) {
     branchText = '(probably either `staging-nixos` or `staging`)'
-  } else if (base === 'master') {
+  } else if (baseIsUnstablePrimary) {
     branchText = '(probably `staging-nixos`)'
   } else if (maxRebuildCount >= 500) {
     branchText = `(probably either \`staging-nixos-${split(base).version}\` or \`staging-${split(base).version}\`)`
@@ -91,7 +101,7 @@ async function postNixosRebuildReview(facts: TargetBranchReviewFacts) {
   }
   const body = [
     `The PR's base branch is set to \`${base}\`, but this PR rebuilds all NixOS tests.`,
-    base === 'master' && maxRebuildCount >= 500
+    baseIsUnstablePrimary && maxRebuildCount >= 500
       ? `Since this PR also causes ${maxRebuildCount} rebuilds, it may also be considered a mass rebuild.`
       : '',
     `Please [change the base branch](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/changing-the-base-branch-of-a-pull-request) to [the right base branch for your changes](https://github.com/NixOS/nixpkgs/blob/master/CONTRIBUTING.md#branch-conventions) ${branchText}.`,
