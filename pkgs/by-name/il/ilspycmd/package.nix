@@ -11,13 +11,13 @@
 }:
 buildDotnetModule (finalAttrs: {
   pname = "ilspycmd";
-  version = "11.1";
+  version = "11.2";
 
   src = fetchFromGitHub {
     owner = "icsharpcode";
     repo = "ILSpy";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-AaXFnAEugUdQ1MUx31rYS/9H+bUlenGCRwOxLXkIMnk=";
+    hash = "sha256-0QxVGaWfAfArHHqW8zmPAFHu7X3MmHVLEgDwqF4KS9w=";
   };
 
   nativeBuildInputs = [
@@ -31,10 +31,7 @@ buildDotnetModule (finalAttrs: {
   # bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
   env.LOCALE_ARCHIVE = lib.optionalString stdenvNoCC.hostPlatform.isLinux "${glibcLocales}/lib/locale/locale-archive";
 
-  dotnet-sdk = dotnetCorePackages.sdk_11_0 // {
-    # Upstream requires SDK 11, but the command-line projects target .NET 10.
-    inherit (dotnetCorePackages.sdk_10_0) packages targetPackages;
-  };
+  dotnet-sdk = dotnetCorePackages.sdk_11_0;
   dotnet-runtime = dotnetCorePackages.runtime_10_0;
   # Nixpkgs restores one runtime ID at a time, while upstream locks several.
   dotnetRestoreFlags = [ "--force-evaluate" ];
