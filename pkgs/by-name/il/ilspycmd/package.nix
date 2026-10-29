@@ -31,7 +31,10 @@ buildDotnetModule (finalAttrs: {
   # bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
   env.LOCALE_ARCHIVE = lib.optionalString stdenvNoCC.hostPlatform.isLinux "${glibcLocales}/lib/locale/locale-archive";
 
-  dotnet-sdk = dotnetCorePackages.sdk_11_0;
+  dotnet-sdk = dotnetCorePackages.sdk_11_0 // {
+    # Upstream requires SDK 11, but the command-line projects target .NET 10.
+    inherit (dotnetCorePackages.sdk_10_0) packages targetPackages;
+  };
   dotnet-runtime = dotnetCorePackages.runtime_10_0;
   # Nixpkgs restores one runtime ID at a time, while upstream locks several.
   dotnetRestoreFlags = [ "--force-evaluate" ];
