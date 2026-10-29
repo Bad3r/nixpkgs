@@ -11,13 +11,13 @@
 }:
 buildDotnetModule (finalAttrs: {
   pname = "ilspycmd";
-  version = "11.1";
+  version = "11.2";
 
   src = fetchFromGitHub {
     owner = "icsharpcode";
     repo = "ILSpy";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-AaXFnAEugUdQ1MUx31rYS/9H+bUlenGCRwOxLXkIMnk=";
+    hash = "sha256-0QxVGaWfAfArHHqW8zmPAFHu7X3MmHVLEgDwqF4KS9w=";
   };
 
   nativeBuildInputs = [
