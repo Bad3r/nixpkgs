@@ -142,6 +142,11 @@
     githubId = 56617252;
     matrix = "@oxc45:matrix.org";
   };
+  _0xdeafbeef = {
+    name = "Vladimir";
+    github = "0xdeafbeef";
+    githubId = 32823131;
+  };
   _0xErwin1 = {
     email = "ignacio@feuer.me";
     name = "Ignacio Perez";
@@ -3259,10 +3264,11 @@
     githubId = 2733215;
   };
   baksa = {
-    email = "baksa@pm.me";
+    email = "nix@baksa.cz";
     name = "Kryštof Baksa";
     github = "Golbinex";
     githubId = 62813600;
+    matrix = "@golbinex:beeper.com";
   };
   balodja = {
     email = "balodja@gmail.com";
@@ -10658,12 +10664,6 @@
     github = "giodamelio";
     githubId = 441646;
   };
-  giogadi = {
-    email = "lgtorres42@gmail.com";
-    github = "giogadi";
-    githubId = 1713676;
-    name = "Luis G. Torres";
-  };
   giomf = {
     name = "giomf";
     github = "giomf";
@@ -14931,6 +14931,12 @@
     name = "Kalitsune";
     github = "Kalitsune";
     githubId = 74075397;
+  };
+  kallisti-dev = {
+    email = "kallisti.dev@gmail.com";
+    github = "kallisti-dev";
+    githubId = 1530244;
+    name = "Adam Curtis";
   };
   kamadorueda = {
     name = "Kevin Amado";
