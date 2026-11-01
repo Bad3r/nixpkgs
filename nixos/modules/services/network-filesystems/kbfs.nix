@@ -8,6 +8,12 @@ let
   inherit (config.security) wrapperDir;
   cfg = config.services.kbfs;
 
+  # kbfsfuse and redirector exec `fusermount`; NixOS only wraps fusermount3.
+  fusermountShim = pkgs.runCommandLocal "kbfs-fusermount" { } ''
+    mkdir -p $out/bin
+    ln -s ${wrapperDir}/fusermount3 $out/bin/fusermount
+  '';
+
 in
 {
 
@@ -68,7 +74,7 @@ in
           # Do not issue a hard dependency on keybase, because kbfs can reconnect to a restarted service.
           # Do not issue a hard dependency on keybase-redirector, because it's ok if it fails (e.g., if it is disabled).
           wants = [ "keybase.service" ] ++ lib.optional cfg.enableRedirector "keybase-redirector.service";
-          path = [ "/run/wrappers" ];
+          path = [ fusermountShim ];
           unitConfig.ConditionUser = "!@system";
 
           serviceConfig = {
@@ -80,10 +86,10 @@ in
             ];
             ExecStartPre = [
               "${pkgs.coreutils}/bin/mkdir -p \"${cfg.mountPoint}\""
-              "-${wrapperDir}/fusermount -uz \"${cfg.mountPoint}\""
+              "-${wrapperDir}/fusermount3 -uz \"${cfg.mountPoint}\""
             ];
             ExecStart = "${pkgs.kbfs}/bin/kbfsfuse ${toString cfg.extraFlags} \"${cfg.mountPoint}\"";
-            ExecStop = "${wrapperDir}/fusermount -uz \"${cfg.mountPoint}\"";
+            ExecStop = "${wrapperDir}/fusermount3 -uz \"${cfg.mountPoint}\"";
             Restart = "on-failure";
             PrivateTmp = true;
           };
@@ -91,6 +97,8 @@ in
         };
 
         services.keybase.enable = true;
+
+        programs.fuse.enable = true;
 
         environment.systemPackages = [ pkgs.kbfs ];
       }
@@ -109,6 +117,7 @@ in
         systemd.user.services.keybase-redirector = {
           description = "Keybase Root Redirector for KBFS";
           wants = [ "keybase.service" ];
+          path = [ fusermountShim ];
           unitConfig.ConditionUser = "!@system";
 
           serviceConfig = {
