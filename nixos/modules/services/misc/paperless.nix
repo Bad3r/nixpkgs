@@ -9,7 +9,7 @@ let
   cfg = config.services.paperless;
   opt = options.services.paperless;
   pythonPkgs = cfg.package.python.pkgs;
-  defaultUser = "paperless";
+  defaultUsername = "paperless";
   defaultFont = "${pkgs.liberation_ttf}/share/fonts/truetype/LiberationSerif-Regular.ttf";
 
   # Don't start a redis instance if the user sets a custom redis connection
@@ -20,7 +20,7 @@ let
   # shared with every service and the paperless-manage wrapper via EnvironmentFile.
   secretKeyFile = "${cfg.dataDir}/nixos-paperless-secret-key.env";
 
-  defaultDir = path: "d '${path}' - ${cfg.user} ${config.users.users.${cfg.user}.group} - -";
+  defaultDir = path: "d '${path}' - ${cfg.user} ${cfg.group} - -";
   createDirs =
     name: rules:
     "${config.systemd.package}/bin/systemd-tmpfiles --create ${pkgs.writeText "${name}.conf" (lib.concatLines rules)}";
@@ -63,27 +63,39 @@ let
       toString s
   ) cfg.settings);
 
-  manage = pkgs.writeShellScriptBin "paperless-manage" ''
-    # Re-exec as the service user before sourcing, since the env files may be readable only by it
-    if [[ "$USER" != ${cfg.user} ]]; then
-      ${
-        if config.security.sudo.enable || config.security.sudo-rs.enable then
-          ''exec ${config.security.wrapperDir}/sudo -u ${cfg.user} "$(${lib.getExe' pkgs.coreutils "readlink"} -f "$0")" "$@"''
-        else
-          ">&2 echo 'Aborting, paperless-manage must be run as user `${cfg.user}`!'; exit 2"
-      }
-    fi
-
+  loadEnv = pkgs.writeShellScriptBin "paperless-manage-load-env" ''
     set -o allexport # Export the following env vars
     ${lib.toShellVars env}
     ${lib.optionalString (cfg.environmentFile != null) "source ${cfg.environmentFile}"}
     if [[ -z "''${PAPERLESS_SECRET_KEY:-}" && -e '${secretKeyFile}' ]]; then
       source '${secretKeyFile}'
     fi
-
+    set +o allexport
     cd '${cfg.dataDir}'
-    exec ${lib.getExe cfg.package} "$@"
+    ${lib.getExe cfg.package} "$@"
   '';
+  paperlessManageScript = (
+    pkgs.writeShellScriptBin "paperless-manage" ''
+      # Switch user and run script
+      case "$(whoami)" in
+        "root")
+          ${lib.getExe' pkgs.util-linux "runuser"} ${
+            lib.cli.toCommandLineShellGNU { } {
+              preserve-environment = true;
+              user = cfg.user;
+              group = cfg.group;
+              supp-group = if enableRedis then redisServer.group else null;
+            }
+          } -- ${lib.getExe loadEnv} "$@";;
+        "${cfg.user}")
+          ${lib.getExe loadEnv} "$@"  ;;
+        *)
+          echo "Aborting, paperless-manage must be run as 'root' or user '${cfg.user}'!" >&2
+          echo "You may wish to rerun this with 'sudo'  " >&2
+          exit 2
+      esac
+    ''
+  );
 
   defaultServiceConfig = {
     Slice = "system-paperless.slice";
@@ -128,6 +140,10 @@ let
     RestrictNamespaces = true;
     RestrictRealtime = true;
     RestrictSUIDSGID = true;
+    User = cfg.user;
+    Group = cfg.group;
+    # Fallback for when `cfg.user != defaultUsername`
+    SupplementaryGroups = lib.optional enableRedis redisServer.group;
     SystemCallArchitectures = "native";
     SystemCallFilter = [
       "@system-service"
@@ -275,7 +291,7 @@ in
 
     user = lib.mkOption {
       type = lib.types.str;
-      default = defaultUser;
+      default = defaultUsername;
       description = ''
         User under which Paperless runs
 
@@ -289,7 +305,7 @@ in
 
     group = lib.mkOption {
       type = lib.types.str;
-      default = defaultUser;
+      default = defaultUsername;
       description = ''
         Primary group under which Paperless runs
 
@@ -474,8 +490,8 @@ in
           }
         ];
 
-        services.paperless.manage = manage;
-        environment.systemPackages = [ manage ];
+        services.paperless.manage = paperlessManageScript;
+        environment.systemPackages = [ paperlessManageScript ];
 
         services.nginx = lib.mkIf cfg.configureNginx {
           enable = true;
@@ -576,7 +592,7 @@ in
               ]
             }";
             User = cfg.user;
-            Group = config.users.users.${cfg.user}.group;
+            Group = cfg.group;
             UMask = "0077";
             Slice = "system-paperless.slice";
             EnvironmentFile = lib.optional (cfg.environmentFile != null) cfg.environmentFile;
@@ -610,7 +626,6 @@ in
             "paperless-task-queue.service"
           ];
           serviceConfig = defaultServiceConfig // {
-            User = cfg.user;
             ExecStart = "${cfg.package}/bin/celery --app paperless beat --loglevel INFO";
             Restart = "on-failure";
             LoadCredential = lib.optionalString (
@@ -669,7 +684,6 @@ in
           ]
           ++ lib.optional cfg.database.createLocally "postgresql.target";
           serviceConfig = defaultServiceConfig // {
-            User = cfg.user;
             ExecStart = "${cfg.package}/bin/celery --app paperless worker --loglevel INFO";
             Restart = "on-failure";
             # The `mbind` syscall is needed for running the classifier.
@@ -691,7 +705,6 @@ in
           ]
           ++ lib.optional cfg.database.createLocally "postgresql.target";
           serviceConfig = defaultServiceConfig // {
-            User = cfg.user;
             ExecStart = "${lib.getExe cfg.package} document_consumer";
             Restart = "on-failure";
             PrivateNetwork = cfg.database.createLocally; # defaultServiceConfig enables this by default, needs to be disabled for remote DBs
@@ -713,8 +726,7 @@ in
           ]
           ++ lib.optional cfg.database.createLocally "postgresql.target";
           serviceConfig = defaultServiceConfig // {
-            User = cfg.user;
-            ExecStart = "${lib.getExe pythonPkgs.granian} --interface asginl --ws paperless.asgi:application";
+            ExecStart = "${lib.getExe cfg.package.python.pkgs.granian} --interface asginl --ws paperless.asgi:application";
             Restart = "on-failure";
 
             LimitNOFILE = 65536;
@@ -736,16 +748,18 @@ in
           unitConfig.JoinsNamespaceOf = "paperless-task-queue.service";
         };
 
-        users = lib.optionalAttrs (cfg.user == defaultUser) {
-          users.${defaultUser} = {
-            extraGroups = [ config.services.redis.servers.paperless.group ];
-            group = defaultUser;
+        users = lib.optionalAttrs (cfg.user == defaultUsername) {
+          users.${cfg.user} = {
+            extraGroups = lib.optional enableRedis redisServer.group;
+            group = cfg.group;
             home = cfg.dataDir;
             uid = config.ids.uids.paperless;
           };
 
-          groups.${defaultUser} = {
-            gid = config.ids.gids.paperless;
+          groups = lib.optionalAttrs (cfg.group == defaultUsername) {
+            ${cfg.group} = {
+              gid = config.ids.gids.paperless;
+            };
           };
         };
 
@@ -773,6 +787,7 @@ in
             # Units ordered after the exporter see the finished export.
             Type = "oneshot";
             User = cfg.user;
+            Group = cfg.group;
             WorkingDirectory = cfg.dataDir;
             ExecStartPre = "+${createDirs "paperless-exporter-dirs" [ (defaultDir cfg.exporter.directory) ]}";
           };
@@ -795,7 +810,7 @@ in
               OnSuccess = services;
             };
           enableStrictShellChecks = true;
-          path = [ manage ];
+          path = [ paperlessManageScript ];
           script = ''
             paperless-manage document_exporter ${cfg.exporter.directory} ${
               lib.cli.toCommandLineShellGNU { } cfg.exporter.settings
