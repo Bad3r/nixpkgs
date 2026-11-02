@@ -2413,6 +2413,8 @@ self: super: with self; {
 
   better-exceptions = callPackage ../development/python-modules/better-exceptions { };
 
+  better-optimize = callPackage ../development/python-modules/better-optimize { };
+
   betterproto = callPackage ../development/python-modules/betterproto { };
 
   betterproto-rust-codec = callPackage ../development/python-modules/betterproto-rust-codec { };
@@ -3984,6 +3986,8 @@ self: super: with self; {
   cx-logging = callPackage ../development/python-modules/cx-logging { };
 
   cx-oracle = callPackage ../development/python-modules/cx-oracle { };
+
+  cxx = callPackage ../development/python-modules/cxx { };
 
   cxxfilt = callPackage ../development/python-modules/cxxfilt { };
 
@@ -9783,8 +9787,6 @@ self: super: with self; {
     }
   );
 
-  libparse-python = callPackage ../development/python-modules/libparse-python/package.nix { };
-
   libpass = callPackage ../development/python-modules/libpass { };
 
   libpcap = callPackage ../development/python-modules/libpcap {
@@ -10271,6 +10273,8 @@ self: super: with self; {
   llm-video-frames = callPackage ../development/python-modules/llm-video-frames { };
 
   llmx = callPackage ../development/python-modules/llmx { };
+
+  lln-libparse = callPackage ../development/python-modules/lln-libparse/package.nix { };
 
   llvmlite = callPackage ../development/python-modules/llvmlite {
     inherit (pkgs) cmake ninja;
@@ -12848,6 +12852,10 @@ self: super: with self; {
 
   opentelemetry-distro = callPackage ../development/python-modules/opentelemetry-distro { };
 
+  opentelemetry-exporter-http-transport =
+    callPackage ../development/python-modules/opentelemetry-exporter-http-transport
+      { };
+
   opentelemetry-exporter-otlp =
     callPackage ../development/python-modules/opentelemetry-exporter-otlp
       { };
@@ -14862,8 +14870,6 @@ self: super: with self; {
   pycups = callPackage ../development/python-modules/pycups { };
 
   pycurl = callPackage ../development/python-modules/pycurl { };
-
-  pycxx = callPackage ../development/python-modules/pycxx { };
 
   pycycling = callPackage ../development/python-modules/pycycling { };
 
@@ -17247,7 +17253,9 @@ self: super: with self; {
 
   python-mpd2 = callPackage ../development/python-modules/python-mpd2 { };
 
-  python-mpv-jsonipc = callPackage ../development/python-modules/python-mpv-jsonipc { };
+  python-mpv-jsonipc = callPackage ../development/python-modules/python-mpv-jsonipc {
+    inherit (pkgs) mpv;
+  };
 
   python-multipart = callPackage ../development/python-modules/python-multipart { };
 
@@ -17418,8 +17426,6 @@ self: super: with self; {
   python-tsp = callPackage ../development/python-modules/python-tsp { };
 
   python-twitch-client = callPackage ../development/python-modules/python-twitch-client { };
-
-  python-twitter = callPackage ../development/python-modules/python-twitter { };
 
   python-u2flib-host = callPackage ../development/python-modules/python-u2flib-host { };
 
@@ -23051,7 +23057,7 @@ self: super: with self; {
 
   xmpppy = callPackage ../development/python-modules/xmpppy { };
 
-  xnatpy = callPackage ../development/python-modules/xnatpy { };
+  xnat = callPackage ../development/python-modules/xnat { };
 
   xnd = callPackage ../development/python-modules/xnd { };
 

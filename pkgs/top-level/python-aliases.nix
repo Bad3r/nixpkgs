@@ -389,6 +389,7 @@ mapAliases {
   libbs = throw "'libbs' has been replaced by 'declib', which uses a different Python module name"; # Added 2026-08-20
   libclang = clang; # added 2026-06-18
   libgpiod = gpiod; # added 2026-03-30
+  libparse-python = lib.warnOnInstantiate "'libparse-python' has been renamed to 'lln-libparse'" lln-libparse; # Added 2026-11-01
   libpyfoscam = throw "libpyfoscam was removed because Home Assistant switched to libpyfoscamcgi"; # added 2025-07-03
   libvirt = libvirt-python; # added 2026-07-20
   line_profiler = throw "'line_profiler' has been renamed to/replaced by 'line-profiler'"; # Converted to throw 2025-10-29
@@ -548,6 +549,7 @@ mapAliases {
   pycategories = throw "'pycategories' has been removed as it was broken and unmaintained"; # added 2025-11-08
   PyChromecast = throw "'PyChromecast' has been renamed to/replaced by 'pychromecast'"; # Converted to throw 2025-10-29
   pycrc = throw "'pycrc' has been removed because its source is unavailable"; # Added 2025-12-22
+  pycxx = cxx; # Added 2026-10-31
   pydns = throw "'pydns' has been renamed to/replaced by 'py3dns'"; # Converted to throw 2025-10-29
   pyechonest = throw "pyechonest was removed because it was broken and unmaintained"; # added 2025-08-26
   pyeiscp = throw "'pyeiscp' was removed because it was an unmaintained leaf package."; # added 2026-01-22
@@ -648,6 +650,7 @@ mapAliases {
   python-qt = throw "python-qt has been removed, because hard to maintain and not required by anything"; # Added 2025-01-14
   python-simple-hipchat = throw "'python-simple-hipchat' has been removed because it was broken and unmaintained"; # added 2025-08-26
   python-subunit = throw "'python-subunit' has been renamed to/replaced by 'subunit'"; # Converted to throw 2025-10-29
+  python-twitter = throw "'python-twitter' has been removed because it is archived upstream"; # Added 2026-11-01
   python-u2flib-server = throw "'python-u2flib-server' has been removed, since it was broken and archived upstream"; # added 2025-11-08
   python-unrar = unrar; # Added 2026-08-25
   python-unshare = throw "python-unshare was removed as unmaintained since 2016"; # added 2025-05-25
@@ -843,6 +846,7 @@ mapAliases {
   xcaplib = warnAlias "'xcaplib' has been renamed to/replaced by 'python3-xcaplib'" python3-xcaplib; # added 2026-10-21
   xlib = python-xlib; # added 2026-06-21
   XlsxWriter = throw "'XlsxWriter' has been renamed to/replaced by 'xlsxwriter'"; # Converted to throw 2025-10-29
+  xnatpy = xnat; # added 2026-11-01
   y-py = throw "'y-py' has been removed as it was archived upstream; consider using 'pycrdt' instead"; # Added 2026-01-21
   Yapsy = throw "'Yapsy' has been renamed to/replaced by 'yapsy'"; # Converted to throw 2025-10-29
   yasi = throw "'yasi' has been removed as it is unmaintained upstream"; # Added 2026-01-31

@@ -1108,8 +1108,6 @@ with pkgs;
   fceux-qt5 = fceux.override { ___qtVersion = "5"; };
   fceux-qt6 = fceux.override { ___qtVersion = "6"; };
 
-  kega-fusion = pkgsi686Linux.callPackage ../applications/emulators/kega-fusion { };
-
   mame-tools = lib.addMetaAttrs {
     description = mame.meta.description + " (tools only)";
   } (lib.getOutput "tools" mame);
@@ -4580,6 +4578,7 @@ with pkgs;
     electron_42-bin
     electron_43-bin
     electron_44-bin
+    electron_45-bin
     ;
 
   inherit (callPackages ../development/tools/electron/chromedriver { })
@@ -4589,6 +4588,7 @@ with pkgs;
     electron-chromedriver_42
     electron-chromedriver_43
     electron-chromedriver_44
+    electron-chromedriver_45
     ;
 
   inherit
@@ -4620,6 +4620,10 @@ with pkgs;
           src = electron-source.electron_44;
           bin = electron_44-bin;
         };
+        electron_45 = getElectronPkg {
+          src = electron-source.electron_45;
+          bin = electron_45-bin;
+        };
       }
     )
     electron_39
@@ -4628,6 +4632,7 @@ with pkgs;
     electron_42
     electron_43
     electron_44
+    electron_45
     ;
   electron = electron_43;
   electron-bin = electron_43-bin;
@@ -7000,14 +7005,20 @@ with pkgs;
       kanidm_1_11 = callPackage ../servers/kanidm/1_11.nix {
         kanidmWithSecretProvisioning = kanidmWithSecretProvisioning_1_11;
       };
+      kanidm_1_12 = callPackage ../servers/kanidm/1_12.nix {
+        kanidmWithSecretProvisioning = kanidmWithSecretProvisioning_1_12;
+      };
 
       kanidmWithSecretProvisioning_1_10 = kanidm_1_10.override { enableSecretProvisioning = true; };
       kanidmWithSecretProvisioning_1_11 = kanidm_1_11.override { enableSecretProvisioning = true; };
+      kanidmWithSecretProvisioning_1_12 = kanidm_1_12.override { enableSecretProvisioning = true; };
     })
     kanidm_1_10
     kanidm_1_11
+    kanidm_1_12
     kanidmWithSecretProvisioning_1_10
     kanidmWithSecretProvisioning_1_11
+    kanidmWithSecretProvisioning_1_12
     ;
 
   mailmanPackages = recurseIntoAttrs (callPackage ../servers/mail/mailman { });
@@ -9206,6 +9217,8 @@ with pkgs;
 
   zathuraPkgs = recurseIntoAttrs (callPackage ../applications/misc/zathura { });
   zathura = zathuraPkgs.zathuraWrapper;
+  zathura_mupdf = zathura.override { useMupdf = true; };
+  zathura_poppler = zathura.override { useMupdf = false; };
 
   zeroc-ice-cpp11 = zeroc-ice.override { cpp11 = true; };
 
@@ -9317,9 +9330,9 @@ with pkgs;
 
   ddnet-server = ddnet.override { buildClient = false; };
 
-  dwarf-fortress-packages = recurseIntoAttrs (callPackage ../games/dwarf-fortress { });
+  dwarf-fortress-packages = recurseIntoAttrs (callPackage ../by-name/dw/dwarf-fortress { });
 
-  inherit (dwarf-fortress-packages) dwarf-fortress dwarf-fortress-full dwarf-therapist;
+  inherit (dwarf-fortress-packages) dwarf-fortress-full dwarf-therapist;
 
   dfhack = dwarf-fortress-packages.dwarf-fortress-full;
 
