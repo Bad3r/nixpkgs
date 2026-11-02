@@ -177,10 +177,14 @@ in
           User = cfg.user;
           Group = cfg.group;
 
+          ExecStartPre = [
+            # drop a stale single-instance lock; systemd already runs one instance
+            "${pkgs.coreutils}/bin/rm -f ${utils.escapeSystemdExecArg "${cfg.profileDir}/qBittorrent/config/lockfile"}"
+          ]
           # the config file has to be writable, so we have to do this weird dance
-          ExecStartPre = lib.mkIf (cfg.serverConfig != { }) ''
-            ${pkgs.coreutils}/bin/install -Dm600 ${configFile} "${cfg.profileDir}/qBittorrent/config/qBittorrent.conf"
-          '';
+          ++ optionals (cfg.serverConfig != { }) [
+            "${pkgs.coreutils}/bin/install -Dm600 ${configFile} ${utils.escapeSystemdExecArg "${cfg.profileDir}/qBittorrent/config/qBittorrent.conf"}"
+          ];
 
           ExecStart = utils.escapeSystemdExecArgs (
             [
