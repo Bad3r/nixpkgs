@@ -1,0 +1,241 @@
+From bcd7299f7a6640f100beef96019433a3f68a421b Mon Sep 17 00:00:00 2001
+From: Bad3r <github@unsigned.sh>
+Date: Wed, 4 Nov 2026 00:25:06 +0300
+Subject: [PATCH] Match icon sizes as the icon theme specification does
+
+find_icon_in_theme() accepted a Threshold directory for any size between
+Size / Threshold and Size * Threshold, ignored Scale, and returned nothing
+when no directory matched. With the default threshold of 2, a 16x16
+directory answered a 32 px request ahead of 32x32 or scalable icons, and a
+size without a matching directory (including min_icon_size = 0) found no
+icon at all.
+
+Follow the specification's LookupIcon: a directory matches at scale 1
+when Fixed Size equals the size, Scalable MinSize <= size <= MaxSize, or
+Threshold Size - Threshold <= size <= Size + Threshold. Without a match,
+return the icon from the directory with the smallest DirectorySizeDistance,
+preferring the larger directory on a tie, before trying inherited themes.
+---
+ src/icon-lookup.c  | 107 ++++++++++++++++++++++++++++++++-------------
+ src/icon-lookup.h  |  10 ++---
+ test/icon-lookup.c |  33 ++++++++++++--
+ 3 files changed, 111 insertions(+), 39 deletions(-)
+
+diff --git a/src/icon-lookup.c b/src/icon-lookup.c
+index 578dca5..e07edd2 100644
+--- a/src/icon-lookup.c
++++ b/src/icon-lookup.c
+@@ -12,6 +12,7 @@
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <assert.h>
++#include <limits.h>
+ 
+ #include "ini.h"
+ #include "utils.h"
+@@ -261,45 +262,89 @@ void add_default_theme(int theme_index) {
+         default_themes_index[default_themes_count - 1] = theme_index;
+ }
+ 
++// DirectoryMatchesSize from the icon theme specification, at scale 1
++static bool dir_matches_size(const struct icon_theme_dir *dir, int size) {
++        if (dir->scale != 1)
++                return false;
++        switch (dir->type) {
++                case THEME_DIR_FIXED:
++                        return dir->size == size;
++                case THEME_DIR_SCALABLE:
++                        return dir->min_size <= size && size <= dir->max_size;
++                case THEME_DIR_THRESHOLD:
++                        return dir->size - dir->threshold <= size
++                                && size <= dir->size + dir->threshold;
++        }
++        return false;
++}
++
++// DirectorySizeDistance from the icon theme specification, at scale 1
++static int dir_size_distance(const struct icon_theme_dir *dir, int size) {
++        int min = dir->size, max = dir->size;
++        if (dir->type == THEME_DIR_SCALABLE) {
++                min = dir->min_size;
++                max = dir->max_size;
++        } else if (dir->type == THEME_DIR_THRESHOLD) {
++                min = dir->size - dir->threshold;
++                max = dir->size + dir->threshold;
++        }
++        if (size < min * dir->scale)
++                return min * dir->scale - size;
++        if (size > max * dir->scale)
++                return size - max * dir->scale;
++        return 0;
++}
++
++static char *find_icon_in_dir(const char *name, const struct icon_theme *theme,
++                const struct icon_theme_dir *dir) {
++        const char *suffixes[] = { ".svg", ".svgz", ".png", ".xpm", NULL };
++        for (char **location = theme->locations; *location; location++) {
++                for (const char **suf = suffixes; *suf; suf++) {
++                        char *name_with_extension = g_strconcat(name, *suf, NULL);
++                        char *icon = g_build_filename(*location, theme->subdir_theme,
++                                        dir->name, name_with_extension,
++                                        NULL);
++                        g_free(name_with_extension);
++                        if (is_readable_file(icon))
++                                return icon;
++                        g_free(icon);
++                }
++        }
++        return NULL;
++}
++
+ // see icon-lookup.h
+ char *find_icon_in_theme(const char *name, int theme_index, int size) {
+         struct icon_theme *theme = &icon_themes[theme_index];
+         LOG_D("Finding icon %s in theme %s", STR_NN(name), STR_NN(theme->name));
++        char *closest = NULL;
++        int closest_distance = INT_MAX;
++        int closest_size = 0;
+         for (int i = 0; i < theme->dirs_count; i++) {
+-                bool match_size = false;
+-                struct icon_theme_dir dir = theme->dirs[i];
+-                switch (dir.type) {
+-                        case THEME_DIR_FIXED:
+-                                match_size = dir.size == size;
+-                                break;
+-
+-                        case THEME_DIR_SCALABLE:
+-                                match_size = dir.min_size <= size && dir.max_size >= size;
+-                                break;
+-
+-                        case THEME_DIR_THRESHOLD:
+-                                match_size = (float)dir.size / dir.threshold <= size
+-                                        && dir.size * dir.threshold >= size;
+-                                break;
++                const struct icon_theme_dir *dir = &theme->dirs[i];
++                bool match_size = dir_matches_size(dir, size);
++                int distance = 0;
++                int dir_size = dir->size * dir->scale;
++                if (!match_size) {
++                        // Without a matching directory the closest size
++                        // wins, and the larger one on a tie.
++                        distance = dir_size_distance(dir, size);
++                        if (distance > closest_distance
++                                        || (distance == closest_distance && dir_size <= closest_size))
++                                continue;
+                 }
+-                if (!match_size)
++
++                char *icon = find_icon_in_dir(name, theme, dir);
++                if (!icon)
+                         continue;
+-
+-                const char *suffixes[] = { ".svg", ".svgz", ".png", ".xpm", NULL };
+-                for (char **location = theme->locations; *location; location++) {
+-                        for (const char **suf = suffixes; *suf; suf++) {
+-                                char *name_with_extension = g_strconcat(name, *suf, NULL);
+-                                char *icon = g_build_filename(*location, theme->subdir_theme,
+-                                                dir.name, name_with_extension,
+-                                                NULL);
+-                                g_free(name_with_extension);
+-                                if (is_readable_file(icon))
+-                                        return icon;
+-                                g_free(icon);
+-                        }
+-                }
++                g_free(closest);
++                if (match_size)
++                        return icon;
++                closest = icon;
++                closest_distance = distance;
++                closest_size = dir_size;
+         }
+-        return NULL;
++        return closest;
+ }
+ 
+ char *find_icon_in_theme_with_inherit(const char *name, int theme_index, int size) {
+diff --git a/src/icon-lookup.h b/src/icon-lookup.h
+index 74e5dcd..efc0c1b 100644
+--- a/src/icon-lookup.h
++++ b/src/icon-lookup.h
+@@ -58,8 +58,9 @@ int load_icon_theme(char *name);
+ void add_default_theme(int theme_index);
+ 
+ /**
+- * Find icon of specified size in selected theme. This function will not return
+- * icons that cannot be scaled to @p size according to index.theme.
++ * Find icon of specified size in selected theme. An icon from a directory that
++ * matches @p size according to index.theme comes first, otherwise the icon
++ * from the directory closest to @p size, the larger one on a tie.
+  *
+  * @param name         Name of the icon or full path to it.
+  * @param theme_index  Index of the theme to use.
+@@ -72,9 +73,8 @@ char *find_icon_in_theme(const char *name, int theme_index, int size);
+ void set_default_theme(int theme_index);
+ 
+ /**
+- * Find icon of specified size in the default theme or an inherited theme. This
+- * function will not return icons that cannot be scaled to @p size according to
+- * index.theme.
++ * Find icon of specified size in the default theme or an inherited theme. Each
++ * theme is searched as by #find_icon_in_theme before the next one.
+ 
+  *
+  * @param name Name of the icon or full path to it.
+diff --git a/test/icon-lookup.c b/test/icon-lookup.c
+index e2cb85d..6697996 100644
+--- a/test/icon-lookup.c
++++ b/test/icon-lookup.c
+@@ -36,12 +36,37 @@ TEST test_find_icon(void)
+         setup_test_theme();
+         find_icon_test("edit", 8, "16x16", "actions", "edit.png");
+         find_icon_test("edit", 16, "16x16", "actions", "edit.png");
+-        find_icon_test("edit", 32, "16x16", "actions", "edit.png");
+-        find_icon_test("edit", 48, "16x16", "actions", "edit.png");
++        find_icon_test("edit", 32, "32x32", "actions", "edit.png");
++        find_icon_test("edit", 48, "32x32", "actions", "edit.png");
+         find_icon_test("edit", 49, "32x32", "actions", "edit.png");
+         find_icon_test("edit", 64, "32x32", "actions", "edit.png");
+         find_icon_test("preferences", 16, "16x16", "apps", "preferences.png");
+-        find_icon_test("preferences", 32, "16x16", "apps", "preferences.png");
++        find_icon_test("preferences", 32, "32x32", "apps", "preferences.png");
++        free_all_themes();
++        PASS();
++}
++
++TEST test_find_icon_threshold(void)
++{
++        setup_test_theme();
++        // 16x16/actions: Size=16, Threshold=3; 16x16/apps: Size=16, Threshold=2
++        find_icon_test("edit", 13, "16x16", "actions", "edit.png");
++        find_icon_test("edit", 19, "16x16", "actions", "edit.png");
++        find_icon_test("preferences", 14, "16x16", "apps", "preferences.png");
++        find_icon_test("preferences", 18, "16x16", "apps", "preferences.png");
++        free_all_themes();
++        PASS();
++}
++
++TEST test_find_icon_closest_size(void)
++{
++        setup_test_theme();
++        // No directory matches these sizes at scale 1.
++        find_icon_test("edit", 31, "16x16@2x", "actions", "edit.png");
++        find_icon_test("preferences", 0, "16x16", "apps", "preferences.png");
++        find_icon_test("preferences", 24, "16x16", "apps", "preferences.png");
++        find_icon_test("preferences", 25, "16x16@2x", "apps", "preferences.png");
++        find_icon_test("preferences", 100, "32x32@2x", "apps", "preferences.png");
+         free_all_themes();
+         PASS();
+ }
+@@ -178,6 +203,8 @@ SUITE (suite_icon_lookup)
+ {
+         RUN_TEST(test_load_theme_from_dir);
+         RUN_TEST(test_find_icon);
++        RUN_TEST(test_find_icon_threshold);
++        RUN_TEST(test_find_icon_closest_size);
+         RUN_TEST(test_new_icon_overrides_raw_icon);
+         RUN_TEST(test_find_icon_merged_base_dirs);
+         bool bench = false;
+-- 
+2.56.0
+

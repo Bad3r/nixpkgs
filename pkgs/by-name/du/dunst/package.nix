@@ -42,6 +42,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   patches = [
     ./icon-theme-merge-base-dirs.patch
+    ./icon-theme-spec-size-matching.patch
   ];
 
   nativeBuildInputs = [
