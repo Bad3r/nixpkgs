@@ -1,0 +1,185 @@
+From 0970205acc84019312248cf3728fed7e8ffdc33e Mon Sep 17 00:00:00 2001
+From: Bad3r <github@unsigned.sh>
+Date: Wed, 4 Nov 2026 00:10:05 +0300
+Subject: [PATCH] Search icon theme directories in every base directory
+
+The icon theme specification merges a theme's directories across all
+base directories ($HOME/.icons, $XDG_DATA_DIRS/icons, /usr/share/pixmaps).
+Recursive lookup only searched the base directory holding the first
+index.theme, so icons installed under another base directory's copy of
+the theme (typically hicolor) were never found.
+
+Keep the first index.theme as the theme description and record every
+base directory that contains the theme, searching them in order for each
+matching theme directory.
+---
+ src/icon-lookup.c                             | 38 +++++++++++++------
+ src/icon-lookup.h                             |  8 ++--
+ .../icons-merged/theme/16x16/apps/merged.svg  |  1 +
+ test/icon-lookup.c                            | 34 +++++++++++++++++
+ 4 files changed, 67 insertions(+), 14 deletions(-)
+ create mode 100644 test/data/icons-merged/theme/16x16/apps/merged.svg
+
+diff --git a/src/icon-lookup.c b/src/icon-lookup.c
+index cac3782..578dca5 100644
+--- a/src/icon-lookup.c
++++ b/src/icon-lookup.c
+@@ -64,7 +64,8 @@ int load_icon_theme_from_dir(const char *icon_dir, const char *subdir_theme) {
+         icon_themes = g_realloc(icon_themes, icon_themes_count * sizeof(struct icon_theme));
+         int index = icon_themes_count - 1;
+         icon_themes[index].name = g_strdup(section_get_value(ini, &ini->sections[0], "Name"));
+-        icon_themes[index].location = g_strdup(icon_dir);
++        icon_themes[index].locations = g_new0(char *, 2);
++        icon_themes[index].locations[0] = g_strdup(icon_dir);
+         icon_themes[index].subdir_theme = g_strdup(subdir_theme);
+         icon_themes[index].inherits_index = NULL;
+         icon_themes[index].inherits_count = 0;
+@@ -187,8 +188,22 @@ int load_icon_theme(char *name) {
+ 
+         for (size_t i = 0; i < theme_path->len; i++) {
+                 int theme_index = load_icon_theme_from_dir(theme_path->pdata[i], name);
+-                if (theme_index != -1)
+-                        return theme_index;
++                if (theme_index == -1)
++                        continue;
++
++                // The first index.theme describes the theme, but its
++                // directories are merged across all base directories.
++                GPtrArray *locations = g_ptr_array_new();
++                for (size_t j = 0; j < theme_path->len; j++) {
++                        char *dir = g_build_filename(theme_path->pdata[j], name, NULL);
++                        if (g_file_test(dir, G_FILE_TEST_IS_DIR))
++                                g_ptr_array_add(locations, g_strdup(theme_path->pdata[j]));
++                        g_free(dir);
++                }
++                g_ptr_array_add(locations, NULL);
++                g_strfreev(icon_themes[theme_index].locations);
++                icon_themes[theme_index].locations = (char **)g_ptr_array_free(locations, FALSE);
++                return theme_index;
+         }
+ 
+         LOG_W("Could not find theme %s", STR_NN(name));
+@@ -208,7 +223,7 @@ void finish_icon_theme(struct icon_theme *theme) {
+                 finish_icon_theme_dir(&theme->dirs[i]);
+         }
+         g_free(theme->name);
+-        g_free(theme->location);
++        g_strfreev(theme->locations);
+         g_free(theme->subdir_theme);
+         g_free(theme->inherits_index);
+         g_free(theme->dirs);
+@@ -267,18 +282,19 @@ char *find_icon_in_theme(const char *name, int theme_index, int size) {
+                                         && dir.size * dir.threshold >= size;
+                                 break;
+                 }
+-                if (match_size) {
+-                        const char *suffixes[] = { ".svg", ".svgz", ".png", ".xpm", NULL };
++                if (!match_size)
++                        continue;
++
++                const char *suffixes[] = { ".svg", ".svgz", ".png", ".xpm", NULL };
++                for (char **location = theme->locations; *location; location++) {
+                         for (const char **suf = suffixes; *suf; suf++) {
+                                 char *name_with_extension = g_strconcat(name, *suf, NULL);
+-                                char *icon = g_build_filename(theme->location, theme->subdir_theme,
++                                char *icon = g_build_filename(*location, theme->subdir_theme,
+                                                 dir.name, name_with_extension,
+                                                 NULL);
+-                                if (is_readable_file(icon)) {
+-                                        g_free(name_with_extension);
+-                                        return icon;
+-                                }
+                                 g_free(name_with_extension);
++                                if (is_readable_file(icon))
++                                        return icon;
+                                 g_free(icon);
+                         }
+                 }
+diff --git a/src/icon-lookup.h b/src/icon-lookup.h
+index 0426d4b..74e5dcd 100644
+--- a/src/icon-lookup.h
++++ b/src/icon-lookup.h
+@@ -12,7 +12,7 @@
+ 
+ struct icon_theme {
+         char *name;
+-        char *location; // full path to the theme
++        char **locations; // base directories containing the theme, in lookup order
+         char *subdir_theme; // name of the directory in which the theme is located
+ 
+         int inherits_count;
+@@ -35,8 +35,10 @@ struct icon_theme_dir {
+ 
+ 
+ /**
+- * Load a theme with given name from a standard icon directory. Don't call this
+- * function if the theme is already loaded.
++ * Load a theme with given name from the standard icon directories. The first
++ * index.theme found describes the theme, and its directories are searched in
++ * every base directory that contains the theme. Don't call this function if
++ * the theme is already loaded.
+  *
+  * @param name Name of the directory in which the theme is located. Note that
+  *             it is NOT the name of the theme as specified in index.theme.
+diff --git a/test/data/icons-merged/theme/16x16/apps/merged.svg b/test/data/icons-merged/theme/16x16/apps/merged.svg
+new file mode 100644
+index 0000000..81ef5d3
+--- /dev/null
++++ b/test/data/icons-merged/theme/16x16/apps/merged.svg
+@@ -0,0 +1 @@
++<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><rect width="16" height="16"/></svg>
+diff --git a/test/icon-lookup.c b/test/icon-lookup.c
+index 819a9d7..e2cb85d 100644
+--- a/test/icon-lookup.c
++++ b/test/icon-lookup.c
+@@ -73,6 +73,39 @@ TEST test_new_icon_overrides_raw_icon(void) {
+         PASS();
+ }
+ 
++static void set_test_theme_path(const char *first, const char *second) {
++        theme_path = g_ptr_array_new_full(2, g_free);
++        g_ptr_array_add(theme_path, g_build_filename(base, "data", first, NULL));
++        g_ptr_array_add(theme_path, g_build_filename(base, "data", second, NULL));
++}
++
++#define find_merged_icon_test(iconname, size, icondir, ...) { \
++        char *icon = find_icon_path(iconname, size); \
++        char *expected = g_build_filename(base, "data", icondir, "theme", __VA_ARGS__, NULL); \
++        ASSERTm("Could not find icon", icon); \
++        ASSERT_STR_EQ(expected, icon); \
++        g_free(expected); \
++        g_free(icon); \
++}
++
++TEST test_find_icon_merged_base_dirs(void)
++{
++        // icons-merged/theme has no index.theme, so the theme is described
++        // by icons/theme/index.theme in either order.
++        set_test_theme_path("icons", "icons-merged");
++        add_default_theme(load_icon_theme("theme"));
++        find_merged_icon_test("edit", 16, "icons", "16x16", "actions", "edit.png");
++        find_merged_icon_test("merged", 16, "icons-merged", "16x16", "apps", "merged.svg");
++        free_all_themes();
++
++        set_test_theme_path("icons-merged", "icons");
++        add_default_theme(load_icon_theme("theme"));
++        find_merged_icon_test("edit", 16, "icons", "16x16", "actions", "edit.png");
++        find_merged_icon_test("merged", 16, "icons-merged", "16x16", "apps", "merged.svg");
++        free_all_themes();
++        PASS();
++}
++
+ // TODO move this out of the test suite, since this isn't a real test
+ TEST test_bench_search(void)
+ {
+@@ -146,6 +179,7 @@ SUITE (suite_icon_lookup)
+         RUN_TEST(test_load_theme_from_dir);
+         RUN_TEST(test_find_icon);
+         RUN_TEST(test_new_icon_overrides_raw_icon);
++        RUN_TEST(test_find_icon_merged_base_dirs);
+         bool bench = false;
+         if (bench) {
+                 RUN_TEST(test_bench_search);
+-- 
+2.56.0
+

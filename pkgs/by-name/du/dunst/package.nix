@@ -40,6 +40,10 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-Idh/moq+OjD3VpZKJ3blO1JAK7PPX42z15rQz/JZb84=";
   };
 
+  patches = [
+    ./icon-theme-merge-base-dirs.patch
+  ];
+
   nativeBuildInputs = [
     perl
     pkg-config
