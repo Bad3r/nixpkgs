@@ -164,6 +164,10 @@ flutter329.buildFlutterApplication rec {
     # PULSE_LATENCY_MSEC, and PIPEWIRE_LATENCY from the service. Drop once
     # RustDesk forwards the service environment there, or sudo-rs gains -E.
     ./forward-hwcodec-env.patch
+    # Dark-theme and accent colors from rustdesk/palette.json in
+    # $XDG_CONFIG_HOME or $XDG_CONFIG_DIRS; see the header of
+    # flutter/lib/common/palette.dart for the keys.
+    ./palette.patch
   ];
 
   prepareBuildRunner = ''

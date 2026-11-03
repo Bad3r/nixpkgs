@@ -1,0 +1,538 @@
+diff --git a/flutter/lib/common.dart b/flutter/lib/common.dart
+index b80e0b5..24431b4 100644
+--- a/flutter/lib/common.dart
++++ b/flutter/lib/common.dart
+@@ -29,6 +29,7 @@ import 'package:window_manager/window_manager.dart';
+ import 'package:window_size/window_size.dart' as window_size;
+ 
+ import '../consts.dart';
++import 'common/palette.dart';
+ import 'common/widgets/overlay.dart';
+ import 'mobile/pages/file_manager_page.dart';
+ import 'mobile/pages/remote_page.dart';
+@@ -181,17 +182,17 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
+   );
+ 
+   static final dark = ColorThemeExtension(
+-    border: Color(0xFF555555),
++    border: Palette.border ?? Color(0xFF555555),
+     border2: Color(0xFFE5E5E5),
+     border3: Colors.white24,
+-    highlight: Color(0xFF3F3F3F),
++    highlight: Palette.hover ?? Color(0xFF3F3F3F),
+     drag_indicator: Colors.grey,
+     shadow: Colors.grey,
+     errorBannerBg: Color(0xFF470F2D),
+     me: Colors.greenAccent,
+     toastBg: Colors.white.withOpacity(0.6),
+     toastText: Colors.black,
+-    divider: Colors.white38,
++    divider: Palette.border ?? Colors.white38,
+   );
+ 
+   @override
+@@ -249,16 +250,16 @@ class MyTheme {
+   MyTheme._();
+ 
+   static const Color grayBg = Color(0xFFEFEFF2);
+-  static const Color accent = Color(0xFF0071FF);
+-  static const Color accent50 = Color(0x770071FF);
+-  static const Color accent80 = Color(0xAA0071FF);
++  static final Color accent = Palette.accent ?? const Color(0xFF0071FF);
++  static final Color accent50 = accent.withAlpha(0x77);
++  static final Color accent80 = accent.withAlpha(0xAA);
+   static const Color canvasColor = Color(0xFF212121);
+   static const Color border = Color(0xFFCCCCCC);
+   static const Color idColor = Color(0xFF00B6F0);
+   static const Color darkGray = Color.fromARGB(255, 148, 148, 148);
+   static const Color cmIdColor = Color(0xFF21790B);
+   static const Color dark = Colors.black87;
+-  static const Color button = Color(0xFF2C8CFF);
++  static final Color button = Palette.accent ?? const Color(0xFF2C8CFF);
+   static const Color hoverBorder = Color(0xFF999999);
+ 
+   // ListTile
+@@ -400,7 +401,7 @@ class MyTheme {
+             ),
+           )
+         : null,
+-    textTheme: const TextTheme(
++    textTheme: TextTheme(
+         titleLarge: TextStyle(fontSize: 19, color: Colors.black87),
+         titleSmall: TextStyle(fontSize: 14, color: Colors.black87),
+         bodySmall: TextStyle(fontSize: 12, color: Colors.black87, height: 1.25),
+@@ -468,12 +469,15 @@ class MyTheme {
+       TabbarTheme.light,
+     ],
+   );
+-  static ThemeData darkTheme = ThemeData(
++  static ThemeData darkTheme = _paletteForeground(ThemeData(
+     useMaterial3: false,
+     brightness: Brightness.dark,
+-    hoverColor: Color.fromARGB(255, 45, 46, 53),
+-    scaffoldBackgroundColor: Color(0xFF18191E),
+-    dialogBackgroundColor: Color(0xFF18191E),
++    hoverColor: Palette.hover ?? Color.fromARGB(255, 45, 46, 53),
++    scaffoldBackgroundColor: Palette.background ?? Color(0xFF18191E),
++    dialogBackgroundColor: Palette.background ?? Color(0xFF18191E),
++    canvasColor: Palette.popup,
++    dividerColor: Palette.border,
++    hintColor: Palette.foregroundMuted,
+     appBarTheme: AppBarTheme(
+       shadowColor: Colors.transparent,
+     ),
+@@ -483,14 +487,14 @@ class MyTheme {
+         borderRadius: BorderRadius.circular(18.0),
+         side: BorderSide(
+           width: 1,
+-          color: Color(0xFF24252B),
++          color: Palette.border ?? Color(0xFF24252B),
+         ),
+       ),
+     ),
+     scrollbarTheme: scrollbarThemeDark,
+     inputDecorationTheme: (isDesktop || isWebDesktop)
+         ? InputDecorationTheme(
+-            fillColor: Color(0xFF24252B),
++            fillColor: Palette.surface ?? Color(0xFF24252B),
+             filled: true,
+             isDense: true,
+             border: OutlineInputBorder(
+@@ -498,7 +502,7 @@ class MyTheme {
+             ),
+           )
+         : null,
+-    textTheme: const TextTheme(
++    textTheme: TextTheme(
+       titleLarge: TextStyle(fontSize: 19),
+       titleSmall: TextStyle(fontSize: 14),
+       bodySmall: TextStyle(fontSize: 12, height: 1.25),
+@@ -509,10 +513,10 @@ class MyTheme {
+         color: accent80,
+       ),
+     ),
+-    cardColor: Color(0xFF24252B),
++    cardColor: Palette.surface ?? Color(0xFF24252B),
+     visualDensity: VisualDensity.adaptivePlatformDensity,
+-    tabBarTheme: const TabBarTheme(
+-      labelColor: Colors.white70,
++    tabBarTheme: TabBarTheme(
++      labelColor: Palette.foreground ?? Colors.white70,
+     ),
+     tooltipTheme: tooltipTheme(),
+     splashColor: (isDesktop || isWebDesktop) ? Colors.transparent : null,
+@@ -523,7 +527,7 @@ class MyTheme {
+             style: TextButton.styleFrom(
+               splashFactory: NoSplash.splashFactory,
+               disabledForegroundColor: Colors.white70,
+-              foregroundColor: Colors.white70,
++              foregroundColor: Palette.foreground ?? Colors.white70,
+               shape: RoundedRectangleBorder(
+                 borderRadius: BorderRadius.circular(18.0),
+               ),
+@@ -543,10 +547,10 @@ class MyTheme {
+     ),
+     outlinedButtonTheme: OutlinedButtonThemeData(
+       style: OutlinedButton.styleFrom(
+-        backgroundColor: Color(0xFF24252B),
+-        side: BorderSide(color: Colors.white12, width: 0.5),
++        backgroundColor: Palette.surface ?? Color(0xFF24252B),
++        side: BorderSide(color: Palette.border ?? Colors.white12, width: 0.5),
+         disabledForegroundColor: Colors.white70,
+-        foregroundColor: Colors.white70,
++        foregroundColor: Palette.foreground ?? Colors.white70,
+         shape: RoundedRectangleBorder(
+           borderRadius: BorderRadius.circular(8.0),
+         ),
+@@ -558,15 +562,18 @@ class MyTheme {
+     listTileTheme: listTileTheme,
+     menuBarTheme: MenuBarThemeData(
+         style: MenuStyle(
+-            backgroundColor: MaterialStatePropertyAll(Color(0xFF121212)))),
++            backgroundColor: MaterialStatePropertyAll(
++                Palette.popup ?? Color(0xFF121212)))),
+     colorScheme: ColorScheme.dark(
+-      primary: Colors.blue,
++      primary: Palette.accent ?? Colors.blue,
+       secondary: accent,
+-      background: Color(0xFF24252B),
++      background: Palette.surface ?? Color(0xFF24252B),
++      surface: Palette.popup ?? Color(0xff121212),
+     ),
+     popupMenuTheme: PopupMenuThemeData(
++        color: Palette.popup,
+         shape: RoundedRectangleBorder(
+-      side: BorderSide(color: Colors.white24),
++      side: BorderSide(color: Palette.border ?? Colors.white24),
+       borderRadius: BorderRadius.all(Radius.circular(8.0)),
+     )),
+   ).copyWith(
+@@ -574,7 +581,19 @@ class MyTheme {
+       ColorThemeExtension.dark,
+       TabbarTheme.dark,
+     ],
+-  );
++  ));
++
++  // Recolors text and icons, keeping labelLarge in the accent.
++  static ThemeData _paletteForeground(ThemeData theme) {
++    final foreground = Palette.foreground;
++    if (foreground == null) return theme;
++    return theme.copyWith(
++      textTheme: theme.textTheme
++          .apply(bodyColor: foreground, displayColor: foreground)
++          .copyWith(labelLarge: theme.textTheme.labelLarge),
++      iconTheme: theme.iconTheme.copyWith(color: foreground),
++    );
++  }
+ 
+   static ThemeMode getThemeModePreference() {
+     return themeModeFromString(bind.mainGetLocalOption(key: kCommConfKeyTheme));
+@@ -928,7 +947,7 @@ class OverlayDialogManager {
+                                   style: flatButtonStyle,
+                                   onPressed: cancel,
+                                   child: Text(translate('Cancel'),
+-                                      style: const TextStyle(
++                                      style: TextStyle(
+                                           color: MyTheme.accent)))))
+                 ])),
+         onCancel: showCancel ? cancel : null,
+diff --git a/flutter/lib/common/palette.dart b/flutter/lib/common/palette.dart
+new file mode 100644
+index 0000000..85245b0
+--- /dev/null
++++ b/flutter/lib/common/palette.dart
+@@ -0,0 +1,96 @@
++import 'dart:convert';
++import 'dart:io';
++
++import 'package:flutter/material.dart';
++
++/// Dark-theme colors from the first rustdesk/palette.json found in
++/// $XDG_CONFIG_HOME, then each of $XDG_CONFIG_DIRS. Every key is optional and
++/// holds "#RRGGBB" or "#RRGGBBAA"; a missing key keeps the stock color.
++class Palette {
++  Palette._();
++
++  static const keys = {
++    'accent',
++    'background',
++    'surface',
++    'popup',
++    'hover',
++    'border',
++    'foreground',
++    'foregroundMuted',
++  };
++
++  static final Map<String, Color> _colors = _load();
++
++  static Color? get accent => _colors['accent'];
++  // Main panes, dialogs, and the active tab.
++  static Color? get background => _colors['background'];
++  // Side panel, tab bar, cards, inputs, and outlined buttons.
++  static Color? get surface => _colors['surface'];
++  // Menus, dropdowns, and popup menus.
++  static Color? get popup => _colors['popup'];
++  static Color? get hover => _colors['hover'];
++  static Color? get border => _colors['border'];
++  static Color? get foreground => _colors['foreground'];
++  static Color? get foregroundMuted => _colors['foregroundMuted'];
++
++  static List<String> _searchDirs() {
++    final env = Platform.environment;
++    final home = env['HOME'];
++    final configHome = env['XDG_CONFIG_HOME'] ??
++        (home == null || home.isEmpty ? null : '$home/.config');
++    final configDirs = env['XDG_CONFIG_DIRS'];
++    return [
++      if (configHome != null && configHome.isNotEmpty) configHome,
++      ...(configDirs == null || configDirs.isEmpty ? '/etc/xdg' : configDirs)
++          .split(':')
++          .where((dir) => dir.isNotEmpty),
++    ];
++  }
++
++  static Map<String, Color> _load() {
++    if (!(Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
++      return {};
++    }
++    for (final dir in _searchDirs()) {
++      final file = File('$dir/rustdesk/palette.json');
++      if (!file.existsSync()) continue;
++      try {
++        return _parse(jsonDecode(file.readAsStringSync()), file.path);
++      } catch (e) {
++        debugPrint('palette: ignoring ${file.path}: $e');
++        return {};
++      }
++    }
++    return {};
++  }
++
++  static Map<String, Color> _parse(Object? json, String path) {
++    if (json is! Map<String, dynamic>) {
++      throw const FormatException('top level is not an object');
++    }
++    final colors = <String, Color>{};
++    json.forEach((key, value) {
++      if (!keys.contains(key)) {
++        debugPrint('palette: $path: unknown key "$key"');
++        return;
++      }
++      final color = value is String ? _parseHex(value) : null;
++      if (color == null) {
++        debugPrint('palette: $path: "$key" is not #RRGGBB or #RRGGBBAA');
++        return;
++      }
++      colors[key] = color;
++    });
++    return colors;
++  }
++
++  static Color? _parseHex(String value) {
++    final match =
++        RegExp(r'^#([0-9a-fA-F]{6})([0-9a-fA-F]{2})?$').firstMatch(value);
++    if (match == null) return null;
++    final rgb = int.parse(match.group(1)!, radix: 16);
++    final alpha = int.parse(match.group(2) ?? 'ff', radix: 16);
++    return Color((alpha << 24) | rgb);
++  }
++}
+diff --git a/flutter/lib/common/widgets/peer_card.dart b/flutter/lib/common/widgets/peer_card.dart
+index 1f9f3ed..962d3aa 100644
+--- a/flutter/lib/common/widgets/peer_card.dart
++++ b/flutter/lib/common/widgets/peer_card.dart
+@@ -528,7 +528,7 @@ abstract class BasePeerCard extends StatelessWidget {
+       (await _buildMenuItems(context))
+           .map((e) => e.build(
+               context,
+-              const MenuConfig(
++              MenuConfig(
+                   commonColor: CustomPopupMenuTheme.commonColor,
+                   height: CustomPopupMenuTheme.height,
+                   dividerHeight: CustomPopupMenuTheme.dividerHeight)))
+diff --git a/flutter/lib/common/widgets/peer_tab_page.dart b/flutter/lib/common/widgets/peer_tab_page.dart
+index 4849f27..f15a277 100644
+--- a/flutter/lib/common/widgets/peer_tab_page.dart
++++ b/flutter/lib/common/widgets/peer_tab_page.dart
+@@ -347,7 +347,7 @@ class _PeerTabPageState extends State<PeerTabPage>
+         items: menu
+             .map((entry) => entry.build(
+                 context,
+-                const MenuConfig(
++                MenuConfig(
+                   commonColor: MyTheme.accent,
+                   height: 20.0,
+                   dividerHeight: 12.0,
+diff --git a/flutter/lib/desktop/pages/connection_page.dart b/flutter/lib/desktop/pages/connection_page.dart
+index 1d4928b..373dad6 100644
+--- a/flutter/lib/desktop/pages/connection_page.dart
++++ b/flutter/lib/desktop/pages/connection_page.dart
+@@ -593,7 +593,7 @@ class _ConnectionPageState extends State<ConnectionPage>
+                                           ))
+                                       .map((e) => e.build(
+                                           context,
+-                                          const MenuConfig(
++                                          MenuConfig(
+                                               commonColor: CustomPopupMenuTheme
+                                                   .commonColor,
+                                               height:
+diff --git a/flutter/lib/desktop/pages/desktop_home_page.dart b/flutter/lib/desktop/pages/desktop_home_page.dart
+index 6d370cb..84525a9 100644
+--- a/flutter/lib/desktop/pages/desktop_home_page.dart
++++ b/flutter/lib/desktop/pages/desktop_home_page.dart
+@@ -196,7 +196,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
+         children: [
+           Container(
+             width: 2,
+-            decoration: const BoxDecoration(color: MyTheme.accent),
++            decoration: BoxDecoration(color: MyTheme.accent),
+           ).marginOnly(top: 5),
+           Expanded(
+             child: Padding(
+diff --git a/flutter/lib/desktop/pages/desktop_setting_page.dart b/flutter/lib/desktop/pages/desktop_setting_page.dart
+index 82f038c..2a92510 100644
+--- a/flutter/lib/desktop/pages/desktop_setting_page.dart
++++ b/flutter/lib/desktop/pages/desktop_setting_page.dart
+@@ -36,7 +36,7 @@ const double _kRadioLeftMargin = 10;
+ const double _kListViewBottomMargin = 15;
+ const double _kTitleFontSize = 20;
+ const double _kContentFontSize = 15;
+-const Color _accentColor = MyTheme.accent;
++final Color _accentColor = MyTheme.accent;
+ const String _kSettingPageControllerTag = 'settingPageController';
+ const String _kSettingPageTabKeyTag = 'settingPageTabKey';
+ 
+@@ -306,7 +306,7 @@ class _DesktopSettingPageState extends State<DesktopSettingPage>
+     final settingsText = Text(
+       translate('Settings'),
+       textAlign: TextAlign.left,
+-      style: const TextStyle(
++      style: TextStyle(
+         color: _accentColor,
+         fontSize: _kTitleFontSize,
+         fontWeight: FontWeight.w400,
+diff --git a/flutter/lib/desktop/pages/remote_tab_page.dart b/flutter/lib/desktop/pages/remote_tab_page.dart
+index 0b94a49..eb6536e 100644
+--- a/flutter/lib/desktop/pages/remote_tab_page.dart
++++ b/flutter/lib/desktop/pages/remote_tab_page.dart
+@@ -24,7 +24,7 @@ import '../../common/widgets/dialog.dart';
+ import '../../models/platform_model.dart';
+ 
+ class _MenuTheme {
+-  static const Color blueColor = MyTheme.button;
++  static final Color blueColor = MyTheme.button;
+   // kMinInteractiveDimension
+   static const double height = 20.0;
+   static const double dividerHeight = 12.0;
+@@ -348,7 +348,7 @@ class _ConnectionTabPageState extends State<ConnectionTabPage> {
+       items: menu
+           .map((entry) => entry.build(
+               context,
+-              const MenuConfig(
++              MenuConfig(
+                 commonColor: _MenuTheme.blueColor,
+                 height: _MenuTheme.height,
+                 dividerHeight: _MenuTheme.dividerHeight,
+diff --git a/flutter/lib/desktop/pages/terminal_tab_page.dart b/flutter/lib/desktop/pages/terminal_tab_page.dart
+index 2612c9d..6cde75a 100644
+--- a/flutter/lib/desktop/pages/terminal_tab_page.dart
++++ b/flutter/lib/desktop/pages/terminal_tab_page.dart
+@@ -483,7 +483,7 @@ class _TerminalTabPageState extends State<TerminalTabPage> {
+       items: menu
+           .map((e) => e.build(
+                 context,
+-                const MenuConfig(
++                MenuConfig(
+                   commonColor: CustomPopupMenuTheme.commonColor,
+                   height: CustomPopupMenuTheme.height,
+                   dividerHeight: CustomPopupMenuTheme.dividerHeight,
+diff --git a/flutter/lib/desktop/pages/view_camera_tab_page.dart b/flutter/lib/desktop/pages/view_camera_tab_page.dart
+index 36fa623..1e96929 100644
+--- a/flutter/lib/desktop/pages/view_camera_tab_page.dart
++++ b/flutter/lib/desktop/pages/view_camera_tab_page.dart
+@@ -24,7 +24,7 @@ import 'package:bot_toast/bot_toast.dart';
+ import '../../models/platform_model.dart';
+ 
+ class _MenuTheme {
+-  static const Color blueColor = MyTheme.button;
++  static final Color blueColor = MyTheme.button;
+   // kMinInteractiveDimension
+   static const double height = 20.0;
+   static const double dividerHeight = 12.0;
+@@ -314,7 +314,7 @@ class _ViewCameraTabPageState extends State<ViewCameraTabPage> {
+       items: menu
+           .map((entry) => entry.build(
+               context,
+-              const MenuConfig(
++              MenuConfig(
+                 commonColor: _MenuTheme.blueColor,
+                 height: _MenuTheme.height,
+                 dividerHeight: _MenuTheme.dividerHeight,
+diff --git a/flutter/lib/desktop/widgets/popup_menu.dart b/flutter/lib/desktop/widgets/popup_menu.dart
+index 28432a9..cdad004 100644
+--- a/flutter/lib/desktop/widgets/popup_menu.dart
++++ b/flutter/lib/desktop/widgets/popup_menu.dart
+@@ -748,7 +748,7 @@ class MenuEntryButton<T> extends MenuEntryBase<T> {
+ }
+ 
+ class CustomPopupMenuTheme {
+-  static const Color commonColor = MyTheme.accent;
++  static final Color commonColor = MyTheme.accent;
+   // kMinInteractiveDimension
+   static const double height = 20.0;
+   static const double dividerHeight = 3.0;
+diff --git a/flutter/lib/desktop/widgets/remote_toolbar.dart b/flutter/lib/desktop/widgets/remote_toolbar.dart
+index 19b3fa9..4682e5d 100644
+--- a/flutter/lib/desktop/widgets/remote_toolbar.dart
++++ b/flutter/lib/desktop/widgets/remote_toolbar.dart
+@@ -324,8 +324,8 @@ class ToolbarState {
+ }
+ 
+ class _ToolbarTheme {
+-  static const Color blueColor = MyTheme.button;
+-  static const Color hoverBlueColor = MyTheme.accent;
++  static final Color blueColor = MyTheme.button;
++  static final Color hoverBlueColor = MyTheme.accent;
+   static Color inactiveColor = Colors.grey[800]!;
+   static Color hoverInactiveColor = Colors.grey[850]!;
+ 
+@@ -3536,7 +3536,7 @@ class _DraggableShowHideState extends State<_DraggableShowHide> {
+     const double iconSize = 20;
+ 
+     buttonWrapper(VoidCallback? onPressed, Widget child,
+-        {Color hoverColor = _ToolbarTheme.blueColor}) {
++        {Color? hoverColor}) {
+       final bgColor = buttonStyle.backgroundColor?.resolve({});
+       return TextButton(
+         onPressed: onPressed,
+@@ -3544,7 +3544,8 @@ class _DraggableShowHideState extends State<_DraggableShowHide> {
+         style: buttonStyle.copyWith(
+           backgroundColor: MaterialStateProperty.resolveWith((states) {
+             if (states.contains(MaterialState.hovered)) {
+-              return (bgColor ?? hoverColor).withOpacity(0.15);
++              return (bgColor ?? hoverColor ?? _ToolbarTheme.blueColor)
++                  .withOpacity(0.15);
+             }
+             return bgColor;
+           }),
+diff --git a/flutter/lib/desktop/widgets/tabbar_widget.dart b/flutter/lib/desktop/widgets/tabbar_widget.dart
+index 9ef7d38..1b34bbf 100644
+--- a/flutter/lib/desktop/widgets/tabbar_widget.dart
++++ b/flutter/lib/desktop/widgets/tabbar_widget.dart
+@@ -7,6 +7,7 @@ import 'package:desktop_multi_window/desktop_multi_window.dart';
+ import 'package:flutter/gestures.dart';
+ import 'package:flutter/material.dart' hide TabBarTheme;
+ import 'package:flutter_hbb/common.dart';
++import 'package:flutter_hbb/common/palette.dart';
+ import 'package:flutter_hbb/consts.dart';
+ import 'package:flutter_hbb/desktop/pages/remote_page.dart';
+ import 'package:flutter_hbb/desktop/pages/view_camera_page.dart';
+@@ -1455,7 +1456,7 @@ class TabbarTheme extends ThemeExtension<TabbarTheme> {
+       required this.closeHoverColor,
+       required this.selectedTabBackgroundColor});
+ 
+-  static const light = TabbarTheme(
++  static final light = TabbarTheme(
+       selectedTabIconColor: MyTheme.accent,
+       unSelectedTabIconColor: Color.fromARGB(255, 162, 203, 241),
+       selectedTextColor: Colors.black,
+@@ -1467,17 +1468,18 @@ class TabbarTheme extends ThemeExtension<TabbarTheme> {
+       closeHoverColor: Colors.white,
+       selectedTabBackgroundColor: Colors.white54);
+ 
+-  static const dark = TabbarTheme(
++  static final dark = TabbarTheme(
+       selectedTabIconColor: MyTheme.accent,
+       unSelectedTabIconColor: Color.fromARGB(255, 30, 65, 98),
+-      selectedTextColor: Colors.white,
+-      unSelectedTextColor: Color.fromARGB(255, 192, 192, 192),
++      selectedTextColor: Palette.foreground ?? Colors.white,
++      unSelectedTextColor:
++          Palette.foregroundMuted ?? Color.fromARGB(255, 192, 192, 192),
+       selectedIconColor: Color.fromARGB(255, 192, 192, 192),
+       unSelectedIconColor: Color.fromARGB(255, 255, 255, 255),
+-      dividerColor: Color.fromARGB(255, 64, 64, 64),
+-      hoverColor: Colors.black26,
++      dividerColor: Palette.border ?? Color.fromARGB(255, 64, 64, 64),
++      hoverColor: Palette.hover ?? Colors.black26,
+       closeHoverColor: Colors.black,
+-      selectedTabBackgroundColor: Colors.black26);
++      selectedTabBackgroundColor: Palette.background ?? Colors.black26);
+ 
+   @override
+   ThemeExtension<TabbarTheme> copyWith({
+diff --git a/flutter/lib/mobile/widgets/gesture_help.dart b/flutter/lib/mobile/widgets/gesture_help.dart
+index 8e86681..4201c44 100644
+--- a/flutter/lib/mobile/widgets/gesture_help.dart
++++ b/flutter/lib/mobile/widgets/gesture_help.dart
+@@ -361,7 +361,7 @@ class GestureInfo extends StatelessWidget {
+   final double width;
+ 
+   final iconSize = 35.0;
+-  final iconColor = MyTheme.accent;
++  Color get iconColor => MyTheme.accent;
+ 
+   @override
+   Widget build(BuildContext context) {
