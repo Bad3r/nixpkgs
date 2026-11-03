@@ -1,5 +1,5 @@
 diff --git a/flutter/lib/common.dart b/flutter/lib/common.dart
-index b80e0b5..24431b4 100644
+index b80e0b5..72fc436 100644
 --- a/flutter/lib/common.dart
 +++ b/flutter/lib/common.dart
 @@ -29,6 +29,7 @@ import 'package:window_manager/window_manager.dart';
@@ -15,8 +15,9 @@ index b80e0b5..24431b4 100644
  
    static final dark = ColorThemeExtension(
 -    border: Color(0xFF555555),
+-    border2: Color(0xFFE5E5E5),
 +    border: Palette.border ?? Color(0xFF555555),
-     border2: Color(0xFFE5E5E5),
++    border2: Palette.border ?? Color(0xFFE5E5E5),
      border3: Colors.white24,
 -    highlight: Color(0xFF3F3F3F),
 +    highlight: Palette.hover ?? Color(0xFF3F3F3F),
@@ -74,7 +75,7 @@ index b80e0b5..24431b4 100644
 -    dialogBackgroundColor: Color(0xFF18191E),
 +    hoverColor: Palette.hover ?? Color.fromARGB(255, 45, 46, 53),
 +    scaffoldBackgroundColor: Palette.background ?? Color(0xFF18191E),
-+    dialogBackgroundColor: Palette.background ?? Color(0xFF18191E),
++    dialogBackgroundColor: Palette.dialog ?? Color(0xFF18191E),
 +    canvasColor: Palette.popup,
 +    dividerColor: Palette.border,
 +    hintColor: Palette.foregroundMuted,
@@ -94,7 +95,7 @@ index b80e0b5..24431b4 100644
      inputDecorationTheme: (isDesktop || isWebDesktop)
          ? InputDecorationTheme(
 -            fillColor: Color(0xFF24252B),
-+            fillColor: Palette.surface ?? Color(0xFF24252B),
++            fillColor: Palette.input ?? Color(0xFF24252B),
              filled: true,
              isDense: true,
              border: OutlineInputBorder(
@@ -197,12 +198,22 @@ index b80e0b5..24431b4 100644
                                            color: MyTheme.accent)))))
                  ])),
          onCancel: showCancel ? cancel : null,
+@@ -3678,6 +3697,9 @@ class ComboBox extends StatelessWidget {
+     current = keys[index];
+     return Container(
+       decoration: BoxDecoration(
++        color: Theme.of(context).brightness == Brightness.dark
++            ? Palette.input
++            : null,
+         border: Border.all(
+           color: enabled
+               ? MyTheme.color(context).border2 ?? MyTheme.border
 diff --git a/flutter/lib/common/palette.dart b/flutter/lib/common/palette.dart
 new file mode 100644
-index 0000000..85245b0
+index 0000000..7cbbcf6
 --- /dev/null
 +++ b/flutter/lib/common/palette.dart
-@@ -0,0 +1,96 @@
+@@ -0,0 +1,102 @@
 +import 'dart:convert';
 +import 'dart:io';
 +
@@ -217,7 +228,9 @@ index 0000000..85245b0
 +  static const keys = {
 +    'accent',
 +    'background',
++    'dialog',
 +    'surface',
++    'input',
 +    'popup',
 +    'hover',
 +    'border',
@@ -228,11 +241,15 @@ index 0000000..85245b0
 +  static final Map<String, Color> _colors = _load();
 +
 +  static Color? get accent => _colors['accent'];
-+  // Main panes, dialogs, and the active tab.
++  // Main panes and the active tab.
 +  static Color? get background => _colors['background'];
-+  // Side panel, tab bar, cards, inputs, and outlined buttons.
++  // Dialogs; falls back to background.
++  static Color? get dialog => _colors['dialog'] ?? background;
++  // Side panel, tab bar, cards, and outlined buttons.
 +  static Color? get surface => _colors['surface'];
-+  // Menus, dropdowns, and popup menus.
++  // Text fields and dropdown buttons; falls back to surface.
++  static Color? get input => _colors['input'] ?? surface;
++  // Menus, dropdown lists, and popup menus.
 +  static Color? get popup => _colors['popup'];
 +  static Color? get hover => _colors['hover'];
 +  static Color? get border => _colors['border'];
