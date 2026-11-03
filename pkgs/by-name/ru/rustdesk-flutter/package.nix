@@ -168,6 +168,9 @@ flutter329.buildFlutterApplication rec {
     # $XDG_CONFIG_HOME or $XDG_CONFIG_DIRS; see the header of
     # flutter/lib/common/palette.dart for the keys.
     ./palette.patch
+    # hide-window-buttons = "Y" in RustDesk_local.toml drops the drawn
+    # minimize, maximize, and close buttons for a window manager's own.
+    ./hide-window-buttons.patch
   ];
 
   prepareBuildRunner = ''

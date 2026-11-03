@@ -1,0 +1,25 @@
+diff --git a/flutter/lib/desktop/widgets/tabbar_widget.dart b/flutter/lib/desktop/widgets/tabbar_widget.dart
+index 1b34bbf..215b59c 100644
+--- a/flutter/lib/desktop/widgets/tabbar_widget.dart
++++ b/flutter/lib/desktop/widgets/tabbar_widget.dart
+@@ -700,6 +700,11 @@ class _DesktopTabState extends State<DesktopTab>
+   }
+ }
+ 
++// "hide-window-buttons" = "Y" in RustDesk_local.toml leaves minimize,
++// maximize, and close to the window manager.
++final bool _hideWindowButtons =
++    bind.mainGetLocalOption(key: 'hide-window-buttons') == 'Y';
++
+ class WindowActionPanel extends StatefulWidget {
+   final bool isMainWindow;
+   final Rx<DesktopTabState> state;
+@@ -767,7 +772,7 @@ class WindowActionPanelState extends State<WindowActionPanel> {
+           }
+         }),
+         if (widget.tail != null) widget.tail!,
+-        if (!kUseCompatibleUiMode)
++        if (!kUseCompatibleUiMode && !_hideWindowButtons)
+           Row(
+             children: [
+               if (widget.showMinimize && !isMacOS)
