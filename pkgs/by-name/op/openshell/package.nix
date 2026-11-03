@@ -8,6 +8,7 @@
   cacert,
   coreutils,
   gitMinimal,
+  nix-update-script,
   openssh,
   pkg-config,
   z3,
@@ -62,6 +63,14 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   nativeInstallCheckInputs = [ versionCheckHook ];
   doInstallCheck = true;
+
+  passthru.updateScript = nix-update-script {
+    # skip the rolling `dev` prerelease
+    extraArgs = [
+      "--version-regex"
+      "^v([0-9]+\\.[0-9]+\\.[0-9]+)$"
+    ];
+  };
 
   meta = {
     changelog = "https://github.com/NVIDIA/OpenShell/releases/tag/v${finalAttrs.version}";
