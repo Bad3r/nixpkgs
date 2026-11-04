@@ -1,0 +1,315 @@
+From 6806f1a17ba8eda54bbce9d96f92cef58b7e1436 Mon Sep 17 00:00:00 2001
+From: Bad3r <github@unsigned.sh>
+Date: Wed, 4 Nov 2026 16:25:07 +0300
+Subject: [PATCH] Draw notification backgrounds on whole device pixels
+
+At a fractional scale, draw_rounded_rect() scaled x and y without
+rounding, and draw_rect() and the content subsurface rounded the width
+and height on their own, so a rectangle's far edge could land a pixel
+away from where the next one starts. With gap_size = 0, a notification
+with rounded corners started at a fractional offset (y = 161.6 for the
+last of three at scale 1.1146), which left a light row under the
+separator and a blended two-row bottom frame. A one-pixel frame or
+separator also scaled to one or two rows, depending on where the
+notification started.
+
+Round both edges of each span and derive the size from them, so edges
+shared in logical units stay shared on screen. render_background() now
+works in device pixels: each notification's outer edges are its
+rounded logical edges, and the frame and separator are inset by their
+rounded scaled widths, so they are equally thick on every notification.
+The progress bar border passes a whole-pixel origin and translates the
+context by half its line width, as the removed TODO suggested. At scale
+1 a rounded border is unchanged; a square border (the default) used to
+have its half-pixel offset rounded away by draw_rect(), and its side
+edges are now one sharp column instead of two blended ones, as with
+rounded corners.
+---
+ src/draw.c  | 90 +++++++++++++++++++++++++++++---------------------
+ test/draw.c | 94 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 147 insertions(+), 37 deletions(-)
+
+diff --git a/src/draw.c b/src/draw.c
+index ff8088e..49c127a 100644
+--- a/src/draw.c
++++ b/src/draw.c
+@@ -537,12 +537,24 @@ static int frame_internal_radius (int r, int w, int h)
+         return ret / s;
+ }
+ 
++/**
++ * Scale the span from `pos` to `pos + len` and round both ends to whole pixels,
++ * so that spans sharing an edge before scaling still share it afterwards.
++ */
++static inline void scale_span(double pos, double len, double scale, double *ret_pos, double *ret_len)
++{
++        *ret_pos = round(pos * scale);
++        *ret_len = round((pos + len) * scale) - *ret_pos;
++}
++
+ /**
+  * A small wrapper around cairo_rectange for drawing a scaled rectangle.
+  */
+ static inline void draw_rect(cairo_t *c, double x, double y, double width, double height, double scale)
+ {
+-        cairo_rectangle(c, round(x * scale), round(y * scale), round(width * scale), round(height * scale));
++        scale_span(x, width, scale, &x, &width);
++        scale_span(y, height, scale, &y, &height);
++        cairo_rectangle(c, x, y, width, height);
+ }
+ 
+ /**
+@@ -550,8 +562,8 @@ static inline void draw_rect(cairo_t *c, double x, double y, double width, doubl
+  * The top corners will get rounded by `corner_radius`, if `first` is set.
+  * Respectably the same for `last` with the bottom corners.
+  *
+- * TODO: Pass additional frame width information to fix blurry lines due to fractional scaling
+- *       X and Y can then be calculated as:  x = round(x*scale) + half_frame_width
++ * The edges land on whole pixels at any scale. To stroke the path, translate
++ * the context by half the line width first.
+  */
+ void draw_rounded_rect(cairo_t *c, float x, float y, int width, int height, int corner_radius, double scale, enum corner_pos corners)
+ {
+@@ -561,10 +573,13 @@ void draw_rounded_rect(cairo_t *c, float x, float y, int width, int height, int
+                 return;
+         }
+ 
+-        width = round(width * scale);
+-        height = round(height * scale);
+-        x *= scale;
+-        y *= scale;
++        double sx, sy, sw, sh;
++        scale_span(x, width, scale, &sx, &sw);
++        scale_span(y, height, scale, &sy, &sh);
++        x = sx;
++        y = sy;
++        width = sw;
++        height = sh;
+         corner_radius = round(corner_radius * scale);
+ 
+         // Nothing valid to draw
+@@ -716,8 +731,21 @@ static cairo_surface_t *render_background(cairo_surface_t *srf,
+                                           int *ret_width,
+                                           double scale)
+ {
+-        int x = 0;
+-        int radius_int = corner_radius;
++        /* Work in device pixels, so that the frame and separator have the
++         * same thickness on every notification, wherever it starts. */
++        int frame_width = round(settings.frame_width * scale);
++        int separator_height = round(settings.separator_height * scale);
++        int top = 0, bottom = settings.separator_height;
++
++        if (corners & (C_TOP | _C_FIRST))
++                top = settings.frame_width;
++        if (corners & (C_BOT | _C_LAST))
++                bottom = settings.frame_width;
++
++        int radius_int = frame_internal_radius(corner_radius, settings.frame_width, height);
++
++        int x1 = 0, x2 = round(width * scale);
++        int y1 = round(y * scale), y2 = round((y + top + height + bottom) * scale);
+ 
+         cairo_t *c = cairo_create(srf);
+ 
+@@ -727,36 +755,23 @@ static cairo_surface_t *render_background(cairo_surface_t *srf,
+         /* for correct combination of adjacent areas */
+         cairo_set_operator(c, CAIRO_OPERATOR_ADD);
+ 
+-        if (corners & (C_TOP | _C_FIRST))
+-                height += settings.frame_width;
+-        if (corners & (C_BOT | _C_LAST))
+-                height += settings.frame_width;
+-        else
+-                height += settings.separator_height;
+-
+-        draw_rounded_rect(c, x, y, width, height, corner_radius, scale, corners);
++        draw_rounded_rect(c, x1, y1, x2 - x1, y2 - y1, round(corner_radius * scale), 1, corners);
+ 
+         /* adding frame */
+-        x += settings.frame_width;
+-        if (corners & (C_TOP | _C_FIRST)) {
+-                y += settings.frame_width;
+-                height -= settings.frame_width;
+-        }
+-
+-        width -= 2 * settings.frame_width;
+-
++        x1 += frame_width;
++        x2 -= frame_width;
++        if (top)
++                y1 += frame_width;
+         if (corners & (C_BOT | _C_LAST))
+-                height -= settings.frame_width;
++                y2 -= frame_width;
+         else
+-                height -= settings.separator_height;
++                y2 -= separator_height;
+ 
+-        radius_int = frame_internal_radius(corner_radius, settings.frame_width, height);
+-
+-        draw_rounded_rect(c, x, y, width, height, radius_int, scale, corners);
++        draw_rounded_rect(c, x1, y1, x2 - x1, y2 - y1, round(radius_int * scale), 1, corners);
+         cairo_set_source_rgba(c, COLOR(cl, frame.r), COLOR(cl, frame.g), COLOR(cl, frame.b), COLOR(cl, frame.a));
+         cairo_fill(c);
+ 
+-        draw_rounded_rect(c, x, y, width, height, radius_int, scale, corners);
++        draw_rounded_rect(c, x1, y1, x2 - x1, y2 - y1, round(radius_int * scale), 1, corners);
+         cairo_set_source_rgba(c, COLOR(cl, bg.r), COLOR(cl, bg.g), COLOR(cl, bg.b), COLOR(cl, bg.a));
+         cairo_fill(c);
+ 
+@@ -768,7 +783,7 @@ static cairo_surface_t *render_background(cairo_surface_t *srf,
+                 struct color sep_color = layout_get_sepcolor(cl, cl_next);
+                 cairo_set_source_rgba(c, sep_color.r, sep_color.g, sep_color.b, sep_color.a);
+ 
+-                draw_rect(c, settings.frame_width, y + height, width, settings.separator_height, scale);
++                cairo_rectangle(c, x1, y2, x2 - x1, separator_height);
+ 
+                 cairo_fill(c);
+         }
+@@ -776,11 +791,9 @@ static cairo_surface_t *render_background(cairo_surface_t *srf,
+         cairo_destroy(c);
+ 
+         if (ret_width)
+-                *ret_width = width;
++                *ret_width = width - 2 * settings.frame_width;
+ 
+-        return cairo_surface_create_for_rectangle(srf,
+-                                                  round(x * scale), round(y * scale),
+-                                                  round(width * scale), round(height * scale));
++        return cairo_surface_create_for_rectangle(srf, x1, y1, x2 - x1, y2 - y1);
+ }
+ 
+ static void render_content(cairo_t *c, struct colored_layout *cl, int width, int height, double scale)
+@@ -920,13 +933,16 @@ static void render_content(cairo_t *c, struct colored_layout *cl, int width, int
+                 // border
+                 cairo_set_source_rgba(c, COLOR(cl, frame.r), COLOR(cl, frame.g), COLOR(cl, frame.b), COLOR(cl, frame.a));
+                 cairo_set_line_width(c, frame_width * scale);
++                cairo_save(c);
++                cairo_translate(c, half_frame_width * scale, 0);
+                 draw_rounded_rect(c,
+-                                frame_x + half_frame_width + 1,
++                                frame_x + 1,
+                                 frame_y,
+                                 progress_width - frame_width - 2,
+                                 progress_height,
+                                 settings.progress_bar_corner_radius,
+                                 scale, settings.progress_bar_corners);
++                cairo_restore(c);
+                 cairo_stroke(c);
+         }
+ }
+diff --git a/test/draw.c b/test/draw.c
+index f2a881e..9e272c2 100644
+--- a/test/draw.c
++++ b/test/draw.c
+@@ -376,6 +376,98 @@ TEST test_layout_render_gaps(void)
+         PASS();
+ }
+ 
++TEST test_draw_rounded_rect_snaps_edges(void)
++{
++        const double scale = 1.1145833333;
++        const enum corner_pos corners[] = { C_NONE, C_TOP, C_BOT, C_ALL };
++        cairo_surface_t *srf = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
++        cairo_t *cr = cairo_create(srf);
++
++        for (size_t i = 0; i < G_N_ELEMENTS(corners); i++) {
++                for (int y = 0; y < 100; y++) {
++                        double x1, y1, x2, y2;
++
++                        cairo_new_path(cr);
++                        draw_rounded_rect(cr, 1, y, 278, 73, 8, scale, corners[i]);
++                        cairo_path_extents(cr, &x1, &y1, &x2, &y2);
++
++                        ASSERT_EQ_FMT(round(1 * scale), x1, "%f");
++                        ASSERT_EQ_FMT(round(279 * scale), x2, "%f");
++                        ASSERT_EQ_FMT(round(y * scale), y1, "%f");
++                        ASSERT_EQ_FMT(round((y + 73) * scale), y2, "%f");
++                }
++        }
++
++        cairo_destroy(cr);
++        cairo_surface_destroy(srf);
++        PASS();
++}
++
++TEST test_render_background_fractional_scale(void)
++{
++        const double scale = 1.1145833333;
++        const int width = 280, height = 64, count = 3;
++        int original_frame_width = settings.frame_width;
++        int original_separator_height = settings.separator_height;
++        enum separator_color original_sep_color = settings.sep_color.type;
++        settings.frame_width = 1;
++        settings.separator_height = 1;
++        settings.sep_color.type = SEP_FRAME;
++
++        GSList *notifications = get_dummy_notifications(count);
++        GSList *layouts = get_dummy_layouts(notifications);
++        int total = count * height + 2 * settings.frame_width + (count - 1) * settings.separator_height;
++        cairo_surface_t *srf = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
++                                                          round(width * scale),
++                                                          round(total * scale));
++
++        int y = 0;
++        enum corner_pos corners = C_TOP | _C_FIRST;
++        for (GSList *iter = layouts; iter; iter = iter->next) {
++                struct colored_layout *cl = iter->data;
++                cl->n->colors.frame = (struct color) { 1, 0, 0, 1 };
++                cl->n->colors.bg = (struct color) { 0, 0, 1, 1 };
++                if (!iter->next)
++                        corners |= C_BOT | _C_LAST;
++
++                cairo_surface_destroy(render_background(srf, cl, NULL, y, width, height, 8, corners, NULL, scale));
++
++                y += height + settings.separator_height;
++                if (corners & _C_FIRST)
++                        y += settings.frame_width;
++                corners = C_NONE;
++        }
++
++        // Every row down the middle is pure frame or pure background, and
++        // each frame line is exactly as thick as a scaled frame_width.
++        cairo_surface_flush(srf);
++        const unsigned char *data = cairo_image_surface_get_data(srf);
++        int stride = cairo_image_surface_get_stride(srf);
++        int x = cairo_image_surface_get_width(srf) / 2;
++        int lines = 0, run = 0;
++        for (int row = 0; row < cairo_image_surface_get_height(srf); row++) {
++                uint32_t px = *(const uint32_t *)(data + row * stride + x * 4);
++                ASSERT(px == 0xffff0000 || px == 0xff0000ff);
++                if (px == 0xffff0000) {
++                        if (run++ == 0)
++                                lines++;
++                } else if (run) {
++                        ASSERT_EQ(round(scale), run);
++                        run = 0;
++                }
++        }
++        ASSERT_EQ(round(scale), run);
++        ASSERT_EQ(count + 1, lines);
++
++        cairo_surface_destroy(srf);
++        g_slist_free_full(layouts, free_colored_layout);
++        g_slist_free_full(notifications, free_dummy_notification);
++        settings.frame_width = original_frame_width;
++        settings.separator_height = original_separator_height;
++        settings.sep_color.type = original_sep_color;
++        PASS();
++}
++
+ SUITE(suite_draw)
+ {
+         output = &dummy_output;
+@@ -391,5 +483,7 @@ SUITE(suite_draw)
+                         RUN_TEST(test_calculate_dimensions_height_min);
+                         RUN_TEST(test_layout_render_no_gaps);
+                         RUN_TEST(test_layout_render_gaps);
++                        RUN_TEST(test_draw_rounded_rect_snaps_edges);
++                        RUN_TEST(test_render_background_fractional_scale);
+         });
+ }
+-- 
+2.56.0
+
