@@ -2,7 +2,6 @@
   lib,
   stdenv,
   fetchFromGitHub,
-  fetchpatch,
   replaceVars,
   python3Packages,
   libunistring,
@@ -149,15 +148,6 @@ buildPythonApplication rec {
 
     (replaceVars ./libxkbcommon-runtime-path.patch {
       libxkbcommon = "${lib.getLib libxkbcommon}/lib/libxkbcommon.so.0";
-    })
-
-    # X11: accept wheel events from sources without smooth scrolling (XTEST
-    # injection by remote desktop tools) when a smooth-scrolling mouse is present.
-    # https://github.com/kovidgoyal/kitty/issues/10773
-    (fetchpatch {
-      url = "https://github.com/kovidgoyal/kitty/commit/8a390c5062cb0f6050e2a91dd499af4fa0a62780.patch";
-      excludes = [ "docs/changelog.rst" ];
-      hash = "sha256-mBpPGP8uyauZrseKw+InMblaCO+OmE0rnlJKHbzWYmM=";
     })
   ];
 
