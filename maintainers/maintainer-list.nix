@@ -1685,6 +1685,11 @@
     githubId = 26391003;
     name = "Amadej Kastelic";
   };
+  amaidurova = {
+    github = "amaidurova";
+    githubId = 295547583;
+    name = "An Mai";
+  };
   aman9das = {
     email = "amandas62640@gmail.com";
     github = "Aman9das";
@@ -6033,6 +6038,13 @@
     github = "Creator54";
     githubId = 34543609;
     name = "creator54";
+  };
+  creepycode = {
+    email = "nixpkgs-jvb3dh3u@creepy.sh";
+    github = "ByteZ1337";
+    githubId = 42820438;
+    name = "creepycode";
+    keys = [ { fingerprint = "62FB 090D A7C1 2EE1 326F  B69E 94D2 598D 5A23 AD5E"; } ];
   };
   crem = {
     email = "max@alstercaminer.com";
@@ -30036,6 +30048,11 @@
     githubId = 1486805;
     name = "Toon Nolten";
   };
+  toothbrush = {
+    github = "toothbrush";
+    githubId = 423357;
+    name = "toothbrush";
+  };
   tophcodes = {
     email = "toki@toph.so";
     github = "tophcodes";
@@ -31038,6 +31055,12 @@
     github = "vinnymeller";
     githubId = 19894025;
     name = "Vinny Meller";
+  };
+  vinso = {
+    email = "8vinso8@gmail.com";
+    github = "8Vinso8";
+    githubId = 44764023;
+    name = "Vinso";
   };
   vinylen = {
     email = "victor@viclab.se";
