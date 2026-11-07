@@ -26,6 +26,9 @@
       third-party endpoint (fp.impersonate.pro) which isn't reachable from the test VM
     - test_websocket.py is ignored because it imports names that websockets >= 16
       removed (upstream pins websockets < 16)
+    - nghttpd is run line-buffered: since nghttp2 1.70 it prints its "listen" line
+      with std::println, which does not flush a pipe, so the nghttpd fixture never
+      sees it, times out, and leaves the server holding port 8443 for later tests
 */
 { config, lib, ... }:
 let
@@ -88,6 +91,10 @@ let
   # Test script
   curl-impersonate-test =
     let
+      nghttpd = pkgs.writeShellScriptBin "nghttpd" ''
+        exec ${lib.getExe' pkgs.coreutils "stdbuf"} -oL ${lib.getExe' pkgs.nghttp2 "nghttpd"} "$@"
+      '';
+
       # Build miniature libcurl client used by test driver
       minicurl =
         pkgs.runCommandCC "minicurl"
@@ -114,7 +121,7 @@ let
           bash
           coreutils
           python3Packages.pytest
-          nghttp2
+          nghttpd
           tcpdump
         ]
       }"
