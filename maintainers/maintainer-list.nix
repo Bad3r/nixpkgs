@@ -447,6 +447,12 @@
     githubId = 241628;
     name = "Adam Russell";
   };
+  a4blue = {
+    email = "a4blue@hotmail.de";
+    github = "a4blue";
+    githubId = 1339417;
+    name = "Alexander Ratajczak";
+  };
   aacebedo = {
     email = "alexandre@acebedo.fr";
     github = "aacebedo";
@@ -9780,6 +9786,12 @@
     github = "fmthoma";
     githubId = 5918766;
     name = "Franz Thoma";
+  };
+  fnl = {
+    email = "nixos@finnloske.de";
+    github = "benular";
+    githubId = 136812920;
+    name = "Finn Loske";
   };
   fnune = {
     email = "fausto.nunez@mailbox.org";
@@ -20394,6 +20406,11 @@
     githubId = 6295090;
     name = "Mats";
   };
+  mykiwi = {
+    github = "mykiwi";
+    githubId = 334432;
+    name = "Romain Gautier";
+  };
   mymindstorm = {
     name = "Brendan Early";
     email = "mymindstorm@evermiss.net";
@@ -20411,6 +20428,13 @@
     github = "Myrl";
     githubId = 9636071;
     name = "Myrl Hex";
+  };
+  mysaa = {
+    name = "Samy Avrillon";
+    email = "mysaa@hadoly.fr";
+    github = "MysaaJava";
+    githubId = 33335046;
+    keys = [ { fingerprint = "8803 52F5 FD83 DF24 F414  13CC 4E77 7255 80DA 73CE"; } ];
   };
   MysteryBlokHed = {
     name = "Adam Thompson-Sharpe";

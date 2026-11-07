@@ -6447,8 +6447,6 @@ self: super: with self; {
 
   flightradarapi = callPackage ../development/python-modules/flightradarapi { };
 
-  flipr-api = callPackage ../development/python-modules/flipr-api { };
-
   flit = callPackage ../development/python-modules/flit { };
 
   flit-core = callPackage ../development/python-modules/flit-core { };
@@ -8680,6 +8678,8 @@ self: super: with self; {
 
   iso4217 = callPackage ../development/python-modules/iso4217 { };
 
+  iso4217parse = callPackage ../development/python-modules/iso4217parse { };
+
   iso639-lang = callPackage ../development/python-modules/iso639-lang { };
 
   iso8601 = callPackage ../development/python-modules/iso8601 { };
@@ -9762,6 +9762,10 @@ self: super: with self; {
   liblarch = callPackage ../development/python-modules/liblarch { };
 
   liblistenbrainz = callPackage ../development/python-modules/liblistenbrainz { };
+
+  libloot = callPackage ../development/python-modules/libloot {
+    libloot-native = pkgs.libloot;
+  };
 
   liblp = callPackage ../development/python-modules/liblp { };
 
@@ -11517,6 +11521,8 @@ self: super: with self; {
 
   mutf8 = callPackage ../development/python-modules/mutf8 { };
 
+  mvcrender = callPackage ../development/python-modules/mvcrender { };
+
   mvg = callPackage ../development/python-modules/mvg { };
 
   mwcli = callPackage ../development/python-modules/mwcli { };
@@ -13188,6 +13194,8 @@ self: super: with self; {
   otter-grader = callPackage ../development/python-modules/otter-grader { };
 
   otxv2 = callPackage ../development/python-modules/otxv2 { };
+
+  ouilookup = callPackage ../development/python-modules/ouilookup { };
 
   ouman-eh-800-api = callPackage ../development/python-modules/ouman-eh-800-api { };
 
@@ -15992,7 +16000,9 @@ self: super: with self; {
 
   pypdf3 = callPackage ../development/python-modules/pypdf3 { };
 
-  pypdfium2 = callPackage ../development/python-modules/pypdfium2 { };
+  pypdfium2 = callPackage ../development/python-modules/pypdfium2 {
+    inherit (pkgs) jq;
+  };
 
   pypeg2 = callPackage ../development/python-modules/pypeg2 { };
 
@@ -22401,6 +22411,8 @@ self: super: with self; {
   vacuum-map-parser-viomi = callPackage ../development/python-modules/vacuum-map-parser-viomi { };
 
   vacuum-map-parser-xiaomi = callPackage ../development/python-modules/vacuum-map-parser-xiaomi { };
+
+  valetudo-map-parser = callPackage ../development/python-modules/valetudo-map-parser { };
 
   valhallaapi = callPackage ../development/python-modules/valhallaapi { };
 
