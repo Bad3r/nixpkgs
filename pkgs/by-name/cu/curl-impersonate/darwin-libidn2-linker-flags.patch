@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f7c4d67..89ac386 100644
+index 13c14ac..494ba96 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -503,6 +503,12 @@ endif()
+@@ -612,6 +612,12 @@ endif()
  if(CMAKE_MSVC_RUNTIME_LIBRARY)
    list(APPEND _curl_platform_flags "-DCMAKE_MSVC_RUNTIME_LIBRARY=${CMAKE_MSVC_RUNTIME_LIBRARY}")
  endif()
@@ -12,6 +12,6 @@ index f7c4d67..89ac386 100644
 +  list(APPEND _curl_platform_flags "-DCMAKE_EXE_LINKER_FLAGS=${_curl_exe_linker_flags}")
 +  list(APPEND _curl_platform_flags "-DCMAKE_SHARED_LINKER_FLAGS=${_curl_shared_linker_flags}")
 +endif()
- if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-   # Static BoringSSL is C++. Retain its runtime even when link flags are
-   # evaluated before the OpenSSL archives.
+ 
+ set(_curl_openssl_flags)
+ if(CURL_SUBPROJECT_FORCE_OPENSSL_PATHS)

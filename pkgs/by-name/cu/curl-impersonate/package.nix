@@ -17,7 +17,7 @@
 }:
 stdenv.mkDerivation rec {
   pname = "curl-impersonate";
-  version = "2.1.1";
+  version = "2.3.2";
 
   outputs = [
     "out"
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
     owner = "lexiforest";
     repo = "curl-impersonate";
     tag = "v${version}";
-    hash = "sha256-AgC66L0z6cYVqePwc7yO1iO9F/6YD6dTqWKCcCrNLzc=";
+    hash = "sha256-PVpokqvksemCMJcyFDUlARxopa+MmVhyZWVBLD5WlQ4=";
   };
 
   separateDebugInfo = true;
@@ -59,19 +59,22 @@ stdenv.mkDerivation rec {
   ];
 
   # Upstream CMake build wants its own specific versions of
-  # zlib, zstd, brotli, nghttp2, ngtcp2, nghttp3, boringssl.
+  # zlib, zstd, brotli, nghttp2, ngtcp2, nghttp3, c-ares, boringssl.
   # These come from passthru.deps, instead of buildInputs.
 
-  cmakeFlags =
-    lib.optionals stdenv.hostPlatform.isLinux [
-      "-DCURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt"
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [
-      # This fork's CMakeLists sets USE_APPLE_IDN=ON expecting curl to use Apple's IDN support.
-      # This however results in no IDN at all in the built binary (none listed in -V)? Force to
-      # use libidn instead, this needs the -liconv in postPatch below
-      "-DUSE_LIBIDN2=ON"
-    ];
+  cmakeFlags = [
+    # Upstream otherwise derives the version from git and reports "local".
+    "-DCURL_IMPERSONATE_VERSION=${version}"
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isLinux [
+    "-DCURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt"
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isDarwin [
+    # This fork's CMakeLists sets USE_APPLE_IDN=ON expecting curl to use Apple's IDN support.
+    # This however results in no IDN at all in the built binary (none listed in -V)? Force to
+    # use libidn instead, this needs the -liconv in postPatch below
+    "-DUSE_LIBIDN2=ON"
+  ];
 
   patches = [
     ./darwin-libidn2-linker-flags.patch
@@ -83,23 +86,22 @@ stdenv.mkDerivation rec {
     in
     ''
       substituteInPlace CMakeLists.txt \
-        --replace-fail 'URL "''${ZLIB_URL}"' 'URL "${localDep "zlib-1.3.1.tar.gz"}"' \
+        --replace-fail 'URL "''${ZLIB_URL}"' 'URL "${localDep "zlib-1.3.2.tar.gz"}"' \
         --replace-fail 'URL "''${ZSTD_URL}"' 'URL "${localDep "zstd-1.5.7.tar.gz"}"' \
-        --replace-fail 'URL "''${BROTLI_URL}"' 'URL "${localDep "brotli-1.2.0.tar.gz"}"' \
+        --replace-fail 'URL "''${BROTLI_URL}"' 'URL "${localDep "brotli-1.2.1.tar.gz"}"' \
         --replace-fail 'URL "''${BORINGSSL_URL}"' 'URL "${localDep "boringssl-156c7b75ae9b8c3b3f847acf264f17594c3859fb.zip"}"' \
         --replace-fail 'URL "''${NGHTTP2_URL}"' 'URL "${localDep "nghttp2-1.63.0.tar.bz2"}"' \
         --replace-fail 'URL "''${NGTCP2_URL}"' 'URL "${localDep "ngtcp2-1.20.0.tar.bz2"}"' \
         --replace-fail 'URL "''${NGHTTP3_URL}"' 'URL "${localDep "nghttp3-1.15.0.tar.bz2"}"' \
-        --replace-fail 'URL "''${CURL_URL}"' 'URL "${localDep "curl-8_21_0.tar.gz"}"'
-
-      substituteInPlace scripts/build-libidn2.sh \
-        --replace-fail '[ -f "$archive" ] || curl -L "$libidn2_url" -o "$archive"' \
-          '[ -f "$archive" ] || cp ${passthru.deps."libidn2-2.3.7.tar.gz"} "$archive"'
+        --replace-fail 'URL "''${CARES_URL}"' 'URL "${localDep "c-ares-1.34.9.tar.gz"}"' \
+        --replace-fail 'URL "''${CURL_URL}"' 'URL "${localDep "curl-8_23_0.tar.gz"}"'
     '';
 
   preConfigure = ''
     # Prebuild libidn2 (statically, with bundled libunistring) offline,
-    # matching `make prepare-libidn2`.
+    # matching `make prepare-libidn2`. The script skips its download when the
+    # archive is already present with the expected hash.
+    install -Dm644 ${passthru.deps."libidn2-2.3.7.tar.gz"} build/deps/downloads/libidn2-2.3.7.tar.gz
     BUILD_DIR="$PWD/build" ZIG_FLAGS='-target ${stdenv.hostPlatform.config}' ./scripts/build-libidn2.sh
   '';
 
@@ -110,6 +112,7 @@ stdenv.mkDerivation rec {
     install -Dm755 deps/build/curl/src/curl-impersonate $out/bin/curl-impersonate
     cp -P deps/build/curl/lib/libcurl-impersonate.* $out/lib/
     cp -r deps/src/curl/include/curl $dev/include/curl
+    install -Dm644 -t $dev/include/curl-impersonate ../include/curl-impersonate/webcrypto.h
     install -Dm755 -t $out/bin ../bin/curl_*
 
     runHook postInstall

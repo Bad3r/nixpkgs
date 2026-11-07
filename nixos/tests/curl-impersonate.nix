@@ -24,6 +24,8 @@
       uses upstream for its tests.
     - test_http3_fingerprint is skipped because it requires connecting to
       third-party endpoint (fp.impersonate.pro) which isn't reachable from the test VM
+    - test_websocket.py is ignored because it imports names that websockets >= 16
+      removed (upstream pins websockets < 16)
 */
 { config, lib, ... }:
 let
@@ -130,11 +132,12 @@ let
       mkdir -p usr/{bin,lib}
       cp -rs ${pkgs.curl-impersonate}/* ${minicurl}/* usr/
 
-      cp -r ${pkgs.curl-impersonate.src}/tests ./
+      # test_generate_fingerprints.py loads ../scripts/generate_fingerprints.py
+      cp -r ${pkgs.curl-impersonate.src}/tests ${pkgs.curl-impersonate.src}/scripts ./
 
       # Run tests
       cd tests
-      pytest . --install-dir ../usr --capture-interface eth1 --exitfirst -k 'not test_http2_headers and not test_http3_fingerprint'
+      pytest . --install-dir ../usr --capture-interface eth1 --exitfirst --ignore=test_websocket.py -k 'not test_http2_headers and not test_http3_fingerprint'
     '';
 in
 {
@@ -178,6 +181,10 @@ in
         );
 
         security.pki.certificateFiles = [ "${tls-certs}/ca.pem" ];
+
+        # curl waits for an HTTPS-RR lookup before sending the ClientHello; the
+        # DHCP-provided resolver never answers in the VM, so leave none configured.
+        networking.useDHCP = false;
       };
   };
 
