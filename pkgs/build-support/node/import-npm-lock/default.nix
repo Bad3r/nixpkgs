@@ -54,6 +54,13 @@ let
                 {
                   url = module.resolved;
                   hash = module.integrity;
+                  # npm unpacks a `file:` dependency only when the path ends in a tarball suffix,
+                  # and links it as a directory otherwise (codeload.github.com/.../tar.gz/<rev>).
+                  name =
+                    let
+                      base = lib.strings.sanitizeDerivationName (baseNameOf module.resolved);
+                    in
+                    if match ".*\\.(tgz|tar\\.gz|tar)" base != null then base else "${base}.tgz";
                 }
                 // fetcherOpts
               ))
