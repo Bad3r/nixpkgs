@@ -3,6 +3,7 @@
   stdenv,
   fetchFromGitHub,
   rustPlatform,
+  aws-lc,
   versionCheckHook,
   writableTmpDirAsHomeHook,
   cacert,
@@ -11,6 +12,7 @@
   nix-update-script,
   openssh,
   pkg-config,
+  sqlite,
   z3,
 }:
 
@@ -32,7 +34,11 @@ rustPlatform.buildRustPackage (finalAttrs: {
     rustPlatform.bindgenHook
   ];
 
-  buildInputs = [ z3 ];
+  buildInputs = [
+    aws-lc
+    sqlite
+    z3
+  ];
 
   nativeCheckInputs = [
     cacert
