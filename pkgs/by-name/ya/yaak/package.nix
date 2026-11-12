@@ -11,6 +11,8 @@
   webkitgtk_4_1,
   glib,
   gtk3,
+  libgit2,
+  libssh2,
   openssl,
   pango,
   cairo,
@@ -18,6 +20,9 @@
   librsvg,
   gdk-pixbuf,
   adwaita-icon-theme,
+  sqlite,
+  zlib,
+  zstd,
   protobuf,
   perl,
   cacert,
@@ -77,6 +82,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
   buildInputs = [
     glib
     gtk3
+    libgit2
+    libssh2
     openssl
     pango
     cairo
@@ -84,6 +91,9 @@ rustPlatform.buildRustPackage (finalAttrs: {
     librsvg
     gdk-pixbuf
     adwaita-icon-theme
+    sqlite
+    zlib
+    zstd
   ]
   ++ lib.optionals stdenv.hostPlatform.isLinux [
     webkitgtk_4_1
