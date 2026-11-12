@@ -16,8 +16,8 @@
   llama-index-workflows,
   nest-asyncio,
   networkx,
-  nltk-data,
   nltk,
+  nltk-data,
   numpy,
   openai,
   pandas,
@@ -32,8 +32,8 @@
   setuptools,
   sqlalchemy,
   tenacity,
-  tinytag,
   tiktoken,
+  tinytag,
   tqdm,
   typing-extensions,
   typing-inspect,
@@ -109,8 +109,8 @@ buildPythonPackage (finalAttrs: {
     setuptools
     sqlalchemy
     tenacity
-    tinytag
     tiktoken
+    tinytag
     tqdm
     typing-extensions
     typing-inspect

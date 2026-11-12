@@ -5,6 +5,7 @@
   pkg-config,
   libsodium,
   sqlite,
+  zstd,
   nix-update-script,
   testers,
   rustdesk-server,
@@ -39,6 +40,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
   buildInputs = [
     libsodium
     sqlite
+    zstd
   ];
 
   passthru = {

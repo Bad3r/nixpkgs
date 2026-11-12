@@ -33,13 +33,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "icinga2${nameSuffix}";
-  version = "2.16.3";
+  version = "2.16.6";
 
   src = fetchFromGitHub {
     owner = "icinga";
     repo = "icinga2";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-0gKNHtSc6uaabDHujlUKrcZfx6wz0vDp7Z4YMSem4iY=";
+    hash = "sha256-GwcYYx1EJReySndIGflGaBuF6SWF/41jIOyv+Fyxgck=";
   };
 
   patches = [
@@ -143,6 +143,9 @@ stdenv.mkDerivation (finalAttrs: {
     homepage = "https://www.icinga.com";
     license = lib.licenses.gpl3Plus;
     platforms = lib.platforms.linux;
-    maintainers = with lib.maintainers; [ helsinki-Jo ];
+    maintainers = with lib.maintainers; [
+      helsinki-Jo
+      al2klimov
+    ];
   };
 })

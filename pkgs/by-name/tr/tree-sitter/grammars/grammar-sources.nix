@@ -1423,7 +1423,7 @@
 
   inko = {
     version = "0.9.0";
-    url = "github:inko-lang/tree-sitter-inko";
+    url = "codeberg:inko-lang/tree-sitter-inko";
     hash = "sha256-thSOSJLxRztyp3krxS2yGUTCof42JotCcFmK08/Lb4M=";
     meta = {
       license = lib.licenses.mpl20;
@@ -3134,9 +3134,9 @@
   };
 
   tera = {
-    version = "0.1.0";
+    version = "0.1.2";
     url = "github:uncenter/tree-sitter-tera";
-    hash = "sha256-1Gb947YJnEFrCVKAuz06kwJdKD9PMab/alFJtyYjBso=";
+    hash = "sha256-zjD92no4d2aGb4HDR0sbnvV/igwsUbO19QnSnT0QtTg=";
     meta = {
       license = lib.licenses.mit;
     };
