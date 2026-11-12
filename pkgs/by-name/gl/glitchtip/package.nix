@@ -7,6 +7,7 @@
   stdenv,
   makeWrapper,
   nixosTests,
+  zstd,
 }:
 
 let
@@ -15,7 +16,7 @@ let
     packageOverrides = final: prev: {
       django = final.django_6;
       django-allauth-async = final.callPackage ./django-allauth-async.nix { };
-      glitchtip-rust = final.callPackage ./glitchtip-rust.nix { };
+      glitchtip-rust = final.callPackage ./glitchtip-rust.nix { inherit zstd; };
       # Necessary until glitchtip works with mcp 2.x
       mcp = final.mcp_1;
     };
@@ -155,7 +156,6 @@ stdenv.mkDerivation (finalAttrs: {
     changelog = "https://gitlab.com/glitchtip/glitchtip-backend/-/blob/v${finalAttrs.version}/CHANGELOG";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [
-      defelo
       felbinger
     ];
     mainProgram = "glitchtip-manage";

@@ -1,9 +1,11 @@
 {
   lib,
+  aws-lc,
   buildPythonPackage,
   django,
   django-async-backend,
   fetchFromGitLab,
+  pkg-config,
   postgresql,
   postgresqlTestHook,
   psycopg,
@@ -31,9 +33,12 @@ buildPythonPackage (finalAttrs: {
   };
 
   nativeBuildInputs = [
+    pkg-config
     rustPlatform.cargoSetupHook
     rustPlatform.maturinBuildHook
   ];
+
+  buildInputs = [ aws-lc ];
 
   dependencies = [
     django
@@ -73,7 +78,6 @@ buildPythonPackage (finalAttrs: {
     changelog = "https://gitlab.com/glitchtip/django-vpg/-/releases/${finalAttrs.src.tag}";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [
-      defelo
       felbinger
     ];
   };
