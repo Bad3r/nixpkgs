@@ -986,6 +986,8 @@
   ./services/misc/packagekit.nix
   ./services/misc/paisa.nix
   ./services/misc/paperless.nix
+  ./services/misc/pelican-panel.nix
+  ./services/misc/pelican-wings.nix
   ./services/misc/persistent-evdev.nix
   ./services/misc/pinchflat.nix
   ./services/misc/pinnwand.nix
@@ -1629,6 +1631,7 @@
   ./services/security/warpgate.nix
   ./services/security/yubikey-agent.nix
   ./services/system/automatic-timezoned.nix
+  ./services/system/bootvine.nix
   ./services/system/bpftune.nix
   ./services/system/cachix-agent/default.nix
   ./services/system/cachix-watch-store.nix

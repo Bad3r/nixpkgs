@@ -3799,12 +3799,6 @@
     githubId = 34919100;
     name = "Brendan Hall";
   };
-  bhankas = {
-    email = "payas@relekar.org";
-    github = "bhankas";
-    githubId = 24254289;
-    name = "Payas Relekar";
-  };
   bhansconnect = {
     github = "bhansconnect";
     githubId = 8334696;
@@ -5812,6 +5806,17 @@
     matrix = "@colin:uninsane.org";
     github = "uninsane";
     githubId = 106709944;
+  };
+  colinxu2020 = {
+    email = "colinxu2020@gmail.com";
+    github = "colinxu2020";
+    githubId = 63941938;
+    name = "Xu Colin";
+    keys = [
+      {
+        fingerprint = "8135 7B65 4FBE F2AD 009C EB3A 30CA D8CC 8FD6 EE77";
+      }
+    ];
   };
   collares = {
     email = "mauricio@collares.org";
@@ -10822,6 +10827,12 @@
     github = "Gordon-BP";
     githubId = 77560236;
     name = "Gordon Clark";
+  };
+  gordon01 = {
+    email = "etc9053@gmail.com";
+    github = "Gordon01";
+    githubId = 4996834;
+    name = "Alexander Sergeev";
   };
   gotcha = {
     email = "gotcha@bubblenet.be";
@@ -26597,7 +26608,7 @@
     name = "Christian Rackerseder";
   };
   screwys = {
-    email = "screwygit@proton.me";
+    email = "me@screwy.dev";
     github = "screwys";
     githubId = 254296947;
     name = "screwy";

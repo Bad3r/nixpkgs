@@ -2228,6 +2228,9 @@ with pkgs;
   nodejs-slim_26 = callPackage ../development/web/nodejs/v26.nix { };
   nodejs_26 = callPackage ../development/web/nodejs/symlink.nix { nodejs-slim = nodejs-slim_26; };
 
+  nodejs-slim_27 = callPackage ../development/web/nodejs/v27.nix { };
+  nodejs_27 = callPackage ../development/web/nodejs/symlink.nix { nodejs-slim = nodejs-slim_27; };
+
   # Update this when adding the newest nodejs major version!
   nodejs_latest = nodejs_26;
   nodejs-slim_latest = nodejs-slim_26;
@@ -6870,10 +6873,15 @@ with pkgs;
   home-assistant-custom-components = recurseIntoAttrs (
     lib.makeExtensible (
       self:
-      lib.packagesFromDirectoryRecursive {
-        inherit (home-assistant.python3Packages) callPackage;
-        directory = ../servers/home-assistant/custom-components;
-      }
+      let
+        packages = lib.packagesFromDirectoryRecursive {
+          inherit (home-assistant.python3Packages) callPackage;
+          directory = ../servers/home-assistant/custom-components;
+        };
+
+        aliases = import ../servers/home-assistant/custom-components/aliases.nix self;
+      in
+      packages // (lib.optionalAttrs config.allowAliases aliases)
     )
   );
   home-assistant-custom-lovelace-modules = recurseIntoAttrs (
@@ -7915,7 +7923,7 @@ with pkgs;
   );
   android-studio-for-platform = androidStudioForPlatformPackages.stable;
 
-  arelle = with python3Packages; toPythonApplication arelle;
+  arelle = with python3Packages; toPythonApplication arelle-release;
 
   audacious = audacious-bare.override { withPlugins = true; };
 
