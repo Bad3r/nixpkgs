@@ -11,7 +11,6 @@
   webkitgtk_4_1,
   glib,
   gtk3,
-  libgit2,
   libssh2,
   openssl,
   libgit2,
@@ -22,7 +21,6 @@
   librsvg,
   gdk-pixbuf,
   adwaita-icon-theme,
-  sqlite,
   zlib,
   zstd,
   protobuf,
@@ -84,7 +82,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
   buildInputs = [
     glib
     gtk3
-    libgit2
     libssh2
     openssl
     libgit2
@@ -95,7 +92,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
     librsvg
     gdk-pixbuf
     adwaita-icon-theme
-    sqlite
     zlib
     zstd
   ]
