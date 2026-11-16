@@ -14,6 +14,8 @@
   libgit2,
   libssh2,
   openssl,
+  libgit2,
+  sqlite,
   pango,
   cairo,
   pixman,
@@ -85,6 +87,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
     libgit2
     libssh2
     openssl
+    libgit2
+    sqlite
     pango
     cairo
     pixman
