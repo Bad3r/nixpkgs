@@ -2600,10 +2600,6 @@ with pkgs;
 
   specup = haskellPackages.specup.bin;
 
-  spglib = callPackage ../development/libraries/spglib {
-    inherit (llvmPackages) openmp;
-  };
-
   spice-gtk = callPackage ../by-name/sp/spice-glib/package.nix { withGtk = true; };
 
   # to match naming of other package repositories
@@ -2646,10 +2642,6 @@ with pkgs;
   su = shadow.su;
 
   subzerod = with python3Packages; toPythonApplication subzerod;
-
-  tartube-yt-dlp = tartube.override {
-    youtube-dl = yt-dlp;
-  };
 
   buildTeleport = callPackage ../build-support/teleport { };
 
@@ -7172,10 +7164,6 @@ with pkgs;
     enableUnstable = true;
   };
 
-  b43Firmware_6_30_163_46 =
-    callPackage ../os-specific/linux/firmware/b43-firmware/6.30.163.46.nix
-      { };
-
   batctl = callPackage ../os-specific/linux/batman-adv/batctl.nix { };
 
   bluez5 = bluez;
@@ -7205,10 +7193,6 @@ with pkgs;
   error-inject = recurseIntoAttrs (callPackages ../os-specific/linux/error-inject { });
 
   libffado = ffado;
-
-  freefall = callPackage ../os-specific/linux/freefall {
-    inherit (linuxPackages) kernel;
-  };
 
   fusePackages = dontRecurseIntoAttrs (
     callPackage ../os-specific/linux/fuse {
@@ -9023,10 +9007,6 @@ with pkgs;
     ;
 
   ydiff = with python3.pkgs; toPythonApplication ydiff;
-
-  youtube-dl = with python3Packages; toPythonApplication youtube-dl;
-
-  youtube-dl-light = with python3Packages; toPythonApplication youtube-dl-light;
 
   yt-dlp-light = yt-dlp.override {
     atomicparsleySupport = false;

@@ -1577,6 +1577,8 @@ self: super: with self; {
 
   attacut = callPackage ../development/python-modules/attacut { };
 
+  attn-gym = callPackage ../development/python-modules/attn-gym { };
+
   attr = callPackage ../development/python-modules/attr { };
 
   attrdict = callPackage ../development/python-modules/attrdict { };
@@ -4063,7 +4065,7 @@ self: super: with self; {
 
   daff = callPackage ../development/python-modules/daff { };
 
-  daft = callPackage ../development/python-modules/daft { };
+  daft = callPackage ../development/python-modules/daft { inherit (pkgs) zstd; };
 
   dahlia = callPackage ../development/python-modules/dahlia { };
 
@@ -4358,7 +4360,7 @@ self: super: with self; {
 
   deltachat2 = callPackage ../development/python-modules/deltachat2 { };
 
-  deltalake = callPackage ../development/python-modules/deltalake { };
+  deltalake = callPackage ../development/python-modules/deltalake { inherit (pkgs) zstd; };
 
   deluge-client = callPackage ../development/python-modules/deluge-client { };
 
@@ -4742,6 +4744,8 @@ self: super: with self; {
   django-formtools = callPackage ../development/python-modules/django-formtools { };
 
   django-fsm = callPackage ../development/python-modules/django-fsm { };
+
+  django-fsm-2 = callPackage ../development/python-modules/django-fsm-2 { };
 
   django-google-analytics-app =
     callPackage ../development/python-modules/django-google-analytics-app
@@ -14295,8 +14299,6 @@ self: super: with self; {
 
   protoletariat = callPackage ../development/python-modules/protoletariat { };
 
-  proton-client = callPackage ../development/python-modules/proton-client { };
-
   proton-core = callPackage ../development/python-modules/proton-core { };
 
   proton-keyring-linux = callPackage ../development/python-modules/proton-keyring-linux { };
@@ -14396,21 +14398,24 @@ self: super: with self; {
 
   pulumi-aws = callPackage ../development/python-modules/pulumi-aws { };
 
-  pulumi-aws-native = pkgs.pulumiPackages.pulumi-aws-native.sdks.python;
+  pulumi-aws-native = callPackage pkgs.pulumiPackages.pulumi-aws-native.sdks.python.override { };
 
-  pulumi-azure-native = pkgs.pulumiPackages.pulumi-azure-native.sdks.python;
+  pulumi-azure-native = callPackage pkgs.pulumiPackages.pulumi-azure-native.sdks.python.override { };
 
-  pulumi-command = pkgs.pulumiPackages.pulumi-command.sdks.python;
+  pulumi-command = callPackage pkgs.pulumiPackages.pulumi-command.sdks.python.override { };
 
-  pulumi-hcloud = pkgs.pulumiPackages.pulumi-hcloud.sdks.python;
+  pulumi-hcloud = callPackage pkgs.pulumiPackages.pulumi-hcloud.sdks.python.override { };
 
-  pulumi-kubernetes = pkgs.pulumiPackages.pulumi-kubernetes.sdks.python;
+  pulumi-kubernetes =
+    callPackage
+      (pkgs.pulumiPackages.pulumi-kubernetes.override { python3Packages = self; }).sdks.python.override
+      { };
 
-  pulumi-linode = pkgs.pulumiPackages.pulumi-linode.sdks.python;
+  pulumi-linode = callPackage pkgs.pulumiPackages.pulumi-linode.sdks.python.override { };
 
-  pulumi-random = pkgs.pulumiPackages.pulumi-random.sdks.python;
+  pulumi-random = callPackage pkgs.pulumiPackages.pulumi-random.sdks.python.override { };
 
-  pulumiverse-talos = pkgs.pulumiPackages.pulumiverse-talos.sdks.python;
+  pulumiverse-talos = callPackage pkgs.pulumiPackages.pulumiverse-talos.sdks.python.override { };
 
   pure-cdb = callPackage ../development/python-modules/pure-cdb { };
 
@@ -21153,6 +21158,8 @@ self: super: with self; {
 
   toolz = callPackage ../development/python-modules/toolz { };
 
+  toon-format = callPackage ../development/python-modules/toon-format { };
+
   toonapi = callPackage ../development/python-modules/toonapi { };
 
   toposort = callPackage ../development/python-modules/toposort { };
@@ -22917,8 +22924,6 @@ self: super: with self; {
 
   whodap = callPackage ../development/python-modules/whodap { };
 
-  whois = callPackage ../development/python-modules/whois { };
-
   whois-api = callPackage ../development/python-modules/whois-api { };
 
   whoisdomain = callPackage ../development/python-modules/whoisdomain { };
@@ -23282,10 +23287,6 @@ self: super: with self; {
   youseedee = callPackage ../development/python-modules/youseedee { };
 
   youtokentome = callPackage ../development/python-modules/youtokentome { };
-
-  youtube-dl = callPackage ../development/python-modules/youtube-dl { };
-
-  youtube-dl-light = callPackage ../development/python-modules/youtube-dl { ffmpegSupport = false; };
 
   youtube-search = callPackage ../development/python-modules/youtube-search { };
 
