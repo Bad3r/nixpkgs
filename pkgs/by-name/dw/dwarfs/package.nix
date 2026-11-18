@@ -1,7 +1,6 @@
 {
   lib,
   fetchFromGitHub,
-  fetchpatch,
   stdenv,
   bison,
   boost,
@@ -43,15 +42,6 @@ stdenv.mkDerivation (finalAttrs: {
     fetchSubmodules = true;
     hash = "sha256-eLFg4sjrGUgIzynmjOvnN4vYa6crfKmI5mZm211oZP8=";
   };
-
-  patches = [
-    # libarchive 3.8.10 makes archive_write_close() fail after a failed write,
-    # which made dwarfsextract call std::terminate(). https://github.com/mhx/dwarfs/pull/391
-    (fetchpatch {
-      url = "https://github.com/mhx/dwarfs/commit/0f5a7720f03dbb2e2fb12300272826fb458aac5f.patch?full_index=1";
-      hash = "sha256-laGlfPZgfG5Xn8Se/7XTK3wYg0hhsOMQhzWTlwBZQR8=";
-    })
-  ];
 
   cmakeFlags = [
     "-DNIXPKGS_DWARFS_VERSION_OVERRIDE=v${finalAttrs.version}" # see https://github.com/mhx/dwarfs/issues/155
