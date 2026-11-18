@@ -45,13 +45,13 @@
     "vendorHash": "sha256-iYrZ1u5na162vXZ+DbgmwoyC0/d73DznUcypORQp2Lk="
   },
   "aliyun_alicloud": {
-    "hash": "sha256-R/NNA0zLxno04YxQWvDeA+bXhgjM/7Q0WOoSu2lLMAM=",
+    "hash": "sha256-WSXNmHNcHdZ95ndZtELcuj6I7k5F7q2BP4/YRYOZQFw=",
     "homepage": "https://registry.terraform.io/providers/aliyun/alicloud",
     "owner": "aliyun",
     "repo": "terraform-provider-alicloud",
-    "rev": "v2.1.0",
+    "rev": "v2.2.0",
     "spdx": "MPL-2.0",
-    "vendorHash": "sha256-xXqRH1UVZOtkGElprO7NCxiOWiyh0Jx9pb+7Iy0Cw/M="
+    "vendorHash": "sha256-udVHUSZ1EOuvVgXmczSZr0y0L70CtB0uDdHKoJClCuQ="
   },
   "aminueza_minio": {
     "hash": "sha256-Km4YRcwpJryHNOUosOzpc9iOQvU0xpYsedJtPz3jnmM=",
@@ -119,13 +119,13 @@
     "vendorHash": null
   },
   "bpg_proxmox": {
-    "hash": "sha256-Y9dB9GFq15jel7isS3UYJiwkPrGhQZSZRmNA5ISkOo4=",
+    "hash": "sha256-WyLntlTXncgKFwT2Rx4rU+rEEwUYNMbYnfIYq87XJ38=",
     "homepage": "https://registry.terraform.io/providers/bpg/proxmox",
     "owner": "bpg",
     "repo": "terraform-provider-proxmox",
-    "rev": "v0.120.0",
+    "rev": "v0.122.0",
     "spdx": "MPL-2.0",
-    "vendorHash": "sha256-8A2or7Qn2YjExLrp17Xidd5+3AMPKF6UsGg85Emyq9o="
+    "vendorHash": "sha256-l7ez8tCpwaOc18nfwHjMtq/1rirV3OyB4iiI1oix4EM="
   },
   "brightbox_brightbox": {
     "hash": "sha256-bvwdtiwzXElhsXLmftXZQ567ExcC0E0L/5OeqIdp1SQ=",
@@ -786,13 +786,13 @@
     "vendorHash": "sha256-mnKXYT0GfIS+ODzBCS9l4rLF1ugadesmpgdOgj74nLg="
   },
   "jianyuan_sentry": {
-    "hash": "sha256-Mths66WPu6LVclZx+oC6sN3HNnjTGSfitDgWzl0JIbI=",
+    "hash": "sha256-FimRTFvn/u6FsJFb06iD44GGpb87B9+nVN2muVlFWGc=",
     "homepage": "https://registry.terraform.io/providers/jianyuan/sentry",
     "owner": "jianyuan",
     "repo": "terraform-provider-sentry",
-    "rev": "v0.15.5",
+    "rev": "v0.16.0",
     "spdx": "MIT",
-    "vendorHash": "sha256-ncLndxP/0V+BjpOCd57+069+JIAM2deDPpZftRwm+E8="
+    "vendorHash": "sha256-b+OcjtsnSvyqk4MnIp7yltKJvTYaEhY1M08AtG+Nv9A="
   },
   "jkossis_garage": {
     "hash": "sha256-j9rf8ynqPl0JTv/K5ouVBitH41lIRnDiMvulx7OarZE=",
@@ -913,13 +913,13 @@
     "vendorHash": "sha256-Z/Z5TvhAigUDxi7zvrgmmuoPwMoztAidFChmHWQ/Vc4="
   },
   "mongey_kafka": {
-    "hash": "sha256-rTa6c7jAMH027V7h/yUGVGz6TS0PDdObilxU0Vpr6FI=",
+    "hash": "sha256-fmanUq9RtjEw6BEjegtYmI3wFXTB7485G35ykW4QtwI=",
     "homepage": "https://registry.terraform.io/providers/Mongey/kafka",
     "owner": "Mongey",
     "repo": "terraform-provider-kafka",
-    "rev": "v0.13.1",
+    "rev": "v0.13.2",
     "spdx": "MIT",
-    "vendorHash": "sha256-JRqBv5N+i5yhKrC+Eenm1xmwylNF7k/EIJXaklrsFfA="
+    "vendorHash": "sha256-MTmWvZDMOvQHG4Ll9t6p0KtA3bAgOh8aE21xsryNuis="
   },
   "mongey_kafka-connect": {
     "hash": "sha256-A20rLdvunuTU3zZOJ1bj/yIaWs+xsdvSmpDPuxN7XQc=",
@@ -1129,13 +1129,13 @@
     "vendorHash": "sha256-6M6jTrukO0VhyZRdYbbICm22upbGyOkUSuHqMLTPcEM="
   },
   "rootlyhq_rootly": {
-    "hash": "sha256-Rr6CmH0n3DyFvTWOYEw2NMhVm2k6GyqyM+9fq7v5AbY=",
+    "hash": "sha256-iipTDUJXJo1i5mbHbdPX9Uuog+dLvI684rTtEcrIwwM=",
     "homepage": "https://registry.terraform.io/providers/rootlyhq/rootly",
     "owner": "rootlyhq",
     "repo": "terraform-provider-rootly",
-    "rev": "v5.24.0",
+    "rev": "v5.27.0",
     "spdx": "MPL-2.0",
-    "vendorHash": "sha256-wtVA37PIlxkZcGKD/Q7N6Se7IyuFTq6G6doyzN4SX70="
+    "vendorHash": "sha256-Gia+3GYko8qHMEBiF2Zh6gwSrVRKqqutlMnxPmK4nCs="
   },
   "rundeck_rundeck": {
     "hash": "sha256-g8unbz8+UGLiAOJju6E2bLkygvZgHkv173PdMDefmrc=",
@@ -1228,11 +1228,11 @@
     "vendorHash": "sha256-skswuFKhN4FFpIunbom9rM/FVRJVOFb1WwHeAIaEjn8="
   },
   "spacelift-io_spacelift": {
-    "hash": "sha256-PoD3FhVtKeSCr2KWwtv9whDMK/4FvSKwhhFgkluyZqI=",
+    "hash": "sha256-SmuSGJNr3aTIfWYWO7RF/jNN74oJDPqMnMUQWea0pp0=",
     "homepage": "https://registry.terraform.io/providers/spacelift-io/spacelift",
     "owner": "spacelift-io",
     "repo": "terraform-provider-spacelift",
-    "rev": "v1.58.0",
+    "rev": "v1.60.0",
     "spdx": "MIT",
     "vendorHash": "sha256-raw9hcAvzBKy8bLbUNM36JZTYYE//r7b3HdZ3qFLtPY="
   },

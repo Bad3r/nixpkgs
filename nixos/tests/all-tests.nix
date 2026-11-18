@@ -1622,6 +1622,7 @@ in
   restic = runTest ./restic.nix;
   restic-rest-server = runTest ./restic-rest-server.nix;
   retroarch = runTest ./retroarch.nix;
+  retroarch-wrapper = runTest ./retroarch-wrapper.nix;
   ringboard = runTest ./ringboard.nix;
   rke2 = import ./rancher {
     inherit lib pkgs;
@@ -2021,7 +2022,6 @@ in
   watt = runTest ./watt.nix;
   webhook = runTest ./webhook.nix;
   weblate = runTest ./web-apps/weblate.nix;
-  wg-access-server = runTest ./wg-access-server.nix;
   whisparr_2 = runTest {
     imports = [ ./whisparr.nix ];
     _module.args.getPackage = pkgs: pkgs.whisparr_2;

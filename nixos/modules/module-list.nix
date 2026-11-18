@@ -185,6 +185,7 @@
   ./programs/bazecor.nix
   ./programs/bcc.nix
   ./programs/benchexec.nix
+  ./programs/brave.nix
   ./programs/browserpass.nix
   ./programs/btrfs-heatmap.nix
   ./programs/calls.nix
@@ -1521,7 +1522,6 @@
   ./services/networking/vwifi.nix
   ./services/networking/webhook.nix
   ./services/networking/websockify.nix
-  ./services/networking/wg-access-server.nix
   ./services/networking/wg-netmanager.nix
   ./services/networking/wg-quick.nix
   ./services/networking/wgautomesh.nix

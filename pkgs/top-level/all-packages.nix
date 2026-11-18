@@ -1149,6 +1149,10 @@ with pkgs;
 
   ### APPLICATIONS/EMULATORS/RETROARCH
 
+  dolphin-emu-primehack = callPackage ../by-name/do/dolphin-emu/package.nix {
+    dolphinVariant = "primehack";
+  };
+
   libretro = recurseIntoAttrs (callPackage ../by-name/li/libretroPackages/packages.nix { });
 
   retroarch = wrapRetroArch { };
@@ -8571,13 +8575,6 @@ with pkgs;
     pname = "sable";
     cinny-unwrapped = sable-unwrapped;
   };
-
-  sweethome3d = recurseIntoAttrs (
-    (callPackage ../applications/misc/sweethome3d { })
-    // (callPackage ../applications/misc/sweethome3d/editors.nix {
-      sweethome3dApp = sweethome3d.application;
-    })
-  );
 
   maestral = with python3Packages; toPythonApplication maestral;
 

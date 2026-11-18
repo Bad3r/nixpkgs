@@ -265,6 +265,7 @@ mapAliases {
 
   _0verkill = throw "'_0verkill' has been removed due to lack of maintenance"; # Added 2025-08-27
   _1password = throw "'_1password' has been renamed to/replaced by '_1password-cli'"; # Converted to throw 2025-10-27
+  _4d-minesweeper = throw "'_4d-minesweeper' has been removed due to a lack of maintenance and upstream being archived"; # Added 2026-11-15
   _9pfs = throw "'9pfs' was removed as it is unmaintained and depends on fuse2, which is deprecated";
   _86Box = warnAlias "'_86Box' has been renamed to '_86box'" _86box; # Added 2026-02-08
   _86Box-with-roms = warnAlias "'_86Box-with-roms' has been renamed to '_86box-with-roms'" _86box-with-roms; # Added 2026-02-08
@@ -336,6 +337,7 @@ mapAliases {
   apacheKafka_3_8 = throw "apacheKafka_2_8 through _4_0 have been removed from nixpkgs as outdated"; # Added 2025-09-27
   apacheKafka_3_9 = throw "apacheKafka_2_8 through _4_0 have been removed from nixpkgs as outdated"; # Added 2026-07-07
   apacheKafka_4_0 = throw "apacheKafka_2_8 through _4_0 have been removed from nixpkgs as outdated"; # Added 2026-07-07
+  apfel-llm = throw "'apfel-llm' has been removed as it is unmaintained upstream."; # Added 2026-11-16
   apmplanner2 = throw "'apmplanner2' has been removed as it depends on insecure&unmaintained qtwebkit"; # Added 2026-04-26
   apparmor-teardown = warnAlias "'apparmor-teardown' has been replaced by 'apparmor-init', which more closely follows intended teardown procedures." apparmor-init; # Added 2026-07-14
   apple-sdk_11 = throw "apple-sdk_11 was removed as Nixpkgs no longer supports macOS 11; see the 25.11 release notes"; # Added 2025-05-10
@@ -494,9 +496,11 @@ mapAliases {
   cargo-raze = throw "'cargo-raze' has been removed, as it is unmaintained"; # Added 2026-05-04
   cargo-sync-readme = throw "'cargo-sync-readme' has been removed because upstream 404s"; # Converted to throw 2025-12-18
   cargo-tauri_1 = throw "'cargo-tauri_1' has been removed as it required webkitgtk 4.0 and libsoup 2.4"; # Added 2026-06-07
+  cargo-vibe = throw "'cargo-vibe' has been removed because upstream 404s"; # Added 2026-11-15
   cargonode = throw "'cargonode' has been removed due to lack of upstream maintenance"; # Added 2025-06-18
   carp = throw "'carp' has been removed due to being broken for more than a year; see RFC 180"; # Added 2026-02-05
   cask = throw "'cask' has been renamed to/replaced by 'emacs.pkgs.cask'"; # Converted to throw 2025-10-27
+  cask-server = throw "'cask-server' has been removed due to being archived upstream"; # Added 2026-11-04
   castopod = throw "'castopod' has been removed due to lack of in-tree maintenance"; # Added 2026-10-18
   catalyst-browser = throw "'catalyst-browser' has been removed due to a lack of maintenance and not satisfying our security criteria for browsers."; # Added 2025-06-25
   cataract = throw "'cataract' has been removed due to a lack of maintenance"; # Added 2025-08-25
@@ -1272,6 +1276,7 @@ mapAliases {
   ibm-sw-tpm2 = throw "ibm-sw-tpm2 has been removed, as it was broken"; # Added 2025-08-25
   icu69 = throw "ICU 69 has been removed as it is obsolete and no longer used by anything in Nixpkgs"; # Added 2026-04-20
   igvm-tooling = throw "'igvm-tooling' has been removed as it is poorly maintained upstream and a dependency has been marked insecure."; # Added 2025-09-03
+  ikill = throw "'ikill' has been removed as it was unmaintained upstream"; # Added 2026-11-06
   ikos = throw "ikos has been removed, as it does not build with supported LLVM versions"; # Added 2025-08-10
   ilmbase = throw "'ilmbase' has been removed as it was unmaintained upstream and has several known vulnerabilities"; # Added 2026-08-28
   imagemagick6 = throw "'imagemagick6' was removed because it is outdated. Use 'imagemagick' instead."; # added 2026-02-27
@@ -1397,6 +1402,7 @@ mapAliases {
   kubei = throw "'kubei' has been renamed to/replaced by 'kubeclarity'"; # Converted to throw 2025-10-27
   kubo-migrator-all-fs-repo-migrations = throw "'kubo-migrator-all-fs-repo-migrations' has been renamed to/replaced by 'kubo-fs-repo-migrations'"; # Converted to throw 2025-10-27
   kup = throw "'kup' has been removed due to outdated KF5 dependencies. A Qt6 version is available at 'kdePackages.kup'."; # Added 2026-05-01
+  kuzu = throw "'kuzu' was removed from nixpkgs because it was broken and the upstream repo is archived"; # Added 2026-11-15
   kwalletcli = throw "'kwalletcli' has been removed, as Plasma 5 has reached end of life. A Qt6 version is available at 'kdePackages.kwallet' with the application 'kwallet-query'."; # Added 2026-05-14
   kwm = throw "'kwm' has been removed since upstream is a 404"; # Added 2025-12-21
   ladspaH = warnAlias "'ladspaH' has been renamed to 'ladspa-header'" ladspa-header; # Added 2026-02-08
@@ -1889,6 +1895,7 @@ mapAliases {
   msalsdk-dbusclient = throw "'msalsdk-dbusclient' has been removed, as it is no longer needed by 'intune-portal'"; # Added 2026-02-11
   msgpack = throw "msgpack has been split into msgpack-c and msgpack-cxx"; # Added 2025-09-14
   msp430NewlibCross = throw "'msp430NewlibCross' has been renamed to/replaced by 'msp430Newlib'"; # Converted to throw 2025-10-27
+  mspds = throw "'mspds' has been removed because it hasn't been building in 2 years. 'mspds-bin' is still available"; # Added 2026-11-15
   mtpfs = throw "'mtpfs' has been removed as it is unmaintained, and depends on the unmaintained fuse2 library"; # Added 2026-08-05
   mullvad-closest = throw "'mullvad-closest' has been removed as it was unmaintained. Consider using 'mullvad-compass' instead."; # Added 2026-01-13
   multipass = throw "multipass was dropped since it was unmaintained."; # Added 2025-11-29
@@ -1967,6 +1974,7 @@ mapAliases {
   nginxShibboleth = throw "'nginxShibboleth' was removed. Add the shibboleth module yourself via services.nginx.modules."; # Added 2026-10-19
   ngn-k = throw "'ngn-k' doesn't build with glibc 2.44 and upstream claims that the implementation is no longer supported"; # Added 2026-09-03
   ngrid = throw "'ngrid' has been removed as it has been unmaintained upstream and broken"; # Added 2025-11-15
+  nh-unwrapped = throw "`nh-unwrapped` has been removed as it was no longer needed, please use `nh` directly"; # Added 2026-10-30
   nhentai = warnAlias "'nhentai' has been renamed to 'doujinshi-dl'" pkgs.doujinshi-dl; # Added 2026-08-27
   nightfox-gtk-theme = throw "'nightfox-gtk-theme' has been removed because it depended on 'gtk-engine-murrine', which was removed because it was unmaintained upstream and depended on GTK 2."; # Added 2026-07-22
   nim1 = throw "'nim1' has reached EOL, please use 'nim'"; # Added 2026-03-06
@@ -2108,6 +2116,7 @@ mapAliases {
   overrideLibcxx = throw "overrideLibcxx has been removed, as it was no longer used and Darwin now uses libc++ from the latest SDK; see the Nixpkgs 25.11 release notes for details"; # Added 2025-09-15
   overrideSDK = throw "overrideSDK has been removed as it was a legacy compatibility stub. See <https://nixos.org/manual/nixpkgs/stable/#sec-darwin-legacy-frameworks-overrides> for migration instructions"; # Added 2025-08-04
   owl = throw "'owl' has been removed as it was broken and unmaintained upstream"; # Added 2026-05-24
+  pa_applet = throw "'pa_applet' has been removed, as it has been unmaintained upstream since 2018"; # Added 2026-11-07
   pactorio = throw "'pactorio' has been removed, as it has been unmaintained upstream since February 2024"; # Added 2026-01-01
   pacup = throw "'pacup' has been renamed to/replaced by 'perlPackages.pacup'"; # Converted to throw 2025-10-27
   PageEdit = throw "'PageEdit' has been renamed to/replaced by 'pageedit'"; # Converted to throw 2025-10-27
@@ -2916,6 +2925,7 @@ mapAliases {
   webkitgtk_4_0 = throw "'webkitgtk_4_0' has been removed, port to `libsoup_3` and switch to `webkitgtk_4_1`"; # Added 2025-10-08
   webmacs = throw "webmacs has been removed as it was unmaintained upstream"; # Added 2026-02-03
   welkin = throw "welkin was removed as it is unmaintained upstream"; # Added 2026-01-01
+  wg-access-server = throw "'wg-access-server' was removed as it was unmaintained within nixpkgs"; # Added 2026-11-14
   whalebird = throw "'whalebird' has been removed because it was using an EOL electron version"; # Added 2026-03-20
   whatsapp-for-linux = throw "'whatsapp-for-linux' has been removed because it was unmaintained and archived upstream. Consider using 'karere' instead"; # Converted to throw 2025-10-27
   whisper = throw "'whisper' was removed as it is unmaintained upstream and vendored insecure outdated libraries"; # Added 2026-05-01
@@ -3033,7 +3043,7 @@ mapAliases {
   xhtml1 = throw "'xhtml1' has been removed because it was superseded in 2018"; # Added 2026-07-24
   xhyve = throw "'xhyve' has been removed because x86_64-darwin is no longer supported"; # Added 2026-10-26
   xinput_calibrator = xinput-calibrator; # Added 2025-08-28
-  xjump = throw "'xjump' has been removed as it is unmaintained"; # Added 2025-08-22
+  xjump = throw "'xjump' has been removed as it is unmaintained, consider using its reimplementation xjump-sdl"; # Added 2025-08-22
   xkeyboardconfig = xkeyboard-config; # Added 2026-02-04
   xkeyboardconfig_custom = xkeyboard-config_custom; # Added 2026-01-19
   xloadimage = throw "'xloadimage' has been removed as it was unmaintained upstream"; # Added 2026-05-05
