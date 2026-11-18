@@ -9,7 +9,7 @@
   nodejs_24,
   nodejs-slim,
   pnpmConfigHook,
-  pnpm_10,
+  pnpm_11,
   rustPlatform,
   rustc,
   versionCheckHook,
@@ -21,25 +21,25 @@
 # A pure Rust build would lack the Prettier plugin functionality.
 stdenv.mkDerivation (finalAttrs: {
   pname = "oxfmt";
-  version = "0.75.0";
+  version = "0.79.0";
 
   src = fetchFromGitHub {
     owner = "oxc-project";
     repo = "oxc";
     tag = "oxfmt_v${finalAttrs.version}";
-    hash = "sha256-7tzZNjDZWiE4fS/Q4IiW5bjpxOda7ikxQhm6SCkMKmw=";
+    hash = "sha256-yhA51CwgFXFUaxIbupoDc/7oyMF46BPoJS9pJco+Sac=";
   };
 
   cargoDeps = rustPlatform.fetchCargoVendor {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-MACrb5UkJTzA8btBrmNBc0k9WTdzir9ckDkHJmi1klY=";
+    hash = "sha256-KX/eU+QgIUs8dtNnbWAjOGRGXWWRkzYb5Zppwohgwmc=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
-    pnpm = pnpm_10;
-    fetcherVersion = 3;
-    hash = "sha256-pDhvndbEIUJAwGSbMUGB0g/Zat25ecjQXu+Jh5h8XwU=";
+    pnpm = pnpm_11;
+    fetcherVersion = 5;
+    hash = "sha256-7PH0zHBmcpIt4OOmG5oZA0WJzeLYPh/5axZQeUNWCWs=";
   };
 
   nativeBuildInputs = [
@@ -48,7 +48,7 @@ stdenv.mkDerivation (finalAttrs: {
     makeBinaryWrapper
     nodejs_24
     pnpmConfigHook
-    pnpm_10
+    pnpm_11
     rustPlatform.cargoSetupHook
     rustc
   ];
