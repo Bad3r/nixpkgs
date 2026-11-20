@@ -1,7 +1,7 @@
 {
   lib,
   fetchFromGitHub,
-  fetchpatch,
+  fetchpatch2,
   stdenv,
   # for passthru.plugins
   pkgs,
@@ -30,11 +30,11 @@ let
     };
 
     patches = [
+      # Fix uic rejecting AddressableItemList<> with Qt 6.12
       # https://github.com/rizinorg/cutter/pull/3670
-      (fetchpatch {
-        name = "cutter-qt-6.12-uic.patch";
-        url = "https://github.com/rizinorg/cutter/commit/bfb65782c0b3e4df4e2f0e4f5284c51848bb8358.patch";
-        hash = "sha256-qhkGX+yr2Tn9twfwk6XWiiPlFpwdjMy7YNofywL9gvY=";
+      (fetchpatch2 {
+        url = "https://github.com/rizinorg/cutter/commit/bfb65782c0b3e4df4e2f0e4f5284c51848bb8358.patch?full_index=1";
+        hash = "sha256-JiJdsleg+tJrRMMQA6EEGM354HCb+dQDeImfr/MYUpc=";
       })
     ];
 

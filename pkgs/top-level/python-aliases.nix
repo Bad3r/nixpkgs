@@ -80,6 +80,7 @@ mapAliases {
   adbc-driver-bigquery = throw "'adbc-driver-bigquery' has been removed due to being archived upstream"; # added 2026-08-05
   adbc-driver-snowflake = throw "'adbc-driver-snowflake' has been removed due to being archived upstream"; # added 2026-08-05
   advocate = throw "'advocate' has been removed due to being archived upstream and unused"; # added 2026-07-01
+  affine-gaps = throw "'affine-gaps' has been renamed to 'affinegaps'"; # Added 2026-11-16
   ailment = throw "'ailment' has been merged into 'angr'"; # Added 2026-08-20
   aioinflux = throw "'aioinflux' was removed because it is abandoned upstream. For InfluxDB v2+ support, please use the official Python client library"; # Added 2026-01-15
   aiosasl = throw "'aiosasl' was removed because it is abandoned upstream and does not work on modern Python versions."; # Added 2026-06-28
@@ -248,7 +249,8 @@ mapAliases {
   duct-py = duct; # added 2026-10-13
   dukpy = throw "'dukpy' was removed as the only consumer pyload-ng was removed"; # added 2026-03-21
   dynd = throw "'dynd' has been removed due to lack of maintenance"; # added 2026-03-24
-  easyeda2ato = throw "easyeda2ato as been removed in favor of atopile-easyda2kicad"; # added 2025-06-08
+  e3-testsuite = throw "e3-testsuite has been removed due to lack of maintenance"; # added 2026-11-17
+  easyeda2ato = throw "easyeda2ato has been removed in favor of atopile-easyda2kicad"; # added 2025-06-08
   EasyProcess = throw "'EasyProcess' has been renamed to/replaced by 'easyprocess'"; # Converted to throw 2025-10-29
   editdistance-s = throw "editdistance-s has been removed since it was added solely for the identity package, which has moved on to ukkonen"; # added 2025-08-04
   elegy = throw "elegy has been removed because it has transitively been marked as broken since 2023."; # Added 2025-10-11
@@ -350,6 +352,7 @@ mapAliases {
   hypothesis_6_136 = throw "'hypothesis_6_136' has been removed as it's not needed anymore"; # Added 2026-08-26
   ibmiotf = throw "'ibmiotf' has been removed as it was unmaintained upstream and the corresponding home-assistant integration was removed"; # Added 2026-05-04
   idna-ssl = throw "'idna-ssl' has been removed as it was archived upstream"; # Added 2026-04-23
+  ignite = pytorch-ignite; # added 2026-11-17
   IMAPClient = throw "'IMAPClient' has been renamed to/replaced by 'imapclient'"; # Converted to throw 2025-10-29
   inlinestyler = throw "inlinestyler has been removed because it is no longer maintained"; # added 2025-08-09
   ionhash = throw "ionhash has been removed due to being unmaintained upstream"; # added 2025-07-30
@@ -364,6 +367,7 @@ mapAliases {
   jaraco_logging = throw "'jaraco_logging' has been renamed to/replaced by 'jaraco-logging'"; # Converted to throw 2025-10-29
   jaraco_stream = throw "'jaraco_stream' has been renamed to/replaced by 'jaraco-stream'"; # Converted to throw 2025-10-29
   jaraco_text = throw "'jaraco_text' has been renamed to/replaced by 'jaraco-text'"; # Converted to throw 2025-10-29
+  jax-jumpy = throw "'jax-jumpy' is unmaintained and incompatible with recent jax versions"; # Added 2026-11-18
   JayDeBeApi = throw "'JayDeBeApi' has been renamed to/replaced by 'jaydebeapi'"; # Converted to throw 2025-10-29
   jfx-bridge = throw "'jfx-bridge' has been removed as it was unmaintained upstream"; # Added 2026-04-05
   jinja2_pluralize = throw "'jinja2_pluralize' has been renamed to/replaced by 'jinja2-pluralize'"; # Converted to throw 2025-10-29
@@ -562,6 +566,7 @@ mapAliases {
   py-eth-sig-utils = throw "py-eth-sig-utils has been removed because it has been marked as broken since at least November 2024."; # Added 2025-10-04
   py-key-value-shared = throw "'py-key-value-shared' has been integrated into 'py-key-value-aio'; use 'py-key-value-aio' instead"; # Added 2026-08-17
   py-key-value-shared-test = throw "'py-key-value-shared-test' has been integrated into 'py-key-value-aio'; use 'py-key-value-aio' instead"; # Added 2026-08-17
+  py-libzfs = libzfs; # added 2026-11-16
   py-multiaddr = multiaddr; # added 2026-06-27
   py-scrypt = scrypt; # added 2025-08-07
   py_stringmatching = throw "'py_stringmatching' has been renamed to/replaced by 'py-stringmatching'"; # Converted to throw 2025-10-29
