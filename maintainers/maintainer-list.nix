@@ -9985,6 +9985,12 @@
     githubId = 189939;
     name = "Santhosh Raju";
   };
+  frai3mega = {
+    email = "frai3mega@213742.xyz";
+    github = "FraI3mega";
+    githubId = 69040313;
+    name = "Franciszek Sośniak";
+  };
   fraioveio = {
     email = "francesco@vecchia.lol";
     github = "FraioVeio";
@@ -16744,7 +16750,7 @@
     keys = [ { fingerprint = "5BE4 98D5 1C24 2CCD C21A  4604 AC6F 4BA0 78E6 7833"; } ];
   };
   leoflo = {
-    email = "noreply@leoflo.me";
+    email = "leonardo@leoflo.net";
     github = "le0flo";
     githubId = 128467278;
     name = "Leonardo";
@@ -23077,6 +23083,12 @@
     githubId = 58092422;
     name = "Patrick";
     keys = [ { fingerprint = "5E4C 3D74 80C2 35FE 2F0B  D23F 7DD6 A72E C899 617D"; } ];
+  };
+  patrickelectric = {
+    email = "patrickelectric@gmail.com";
+    github = "patrickelectric";
+    githubId = 1215497;
+    name = "Patrick José Pereira";
   };
   patryk27 = {
     email = "pwychowaniec@pm.me";

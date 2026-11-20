@@ -9,59 +9,66 @@
   glibcLocales,
   nix-update-script,
 }:
-buildDotnetModule (finalAttrs: {
-  pname = "ilspycmd";
-  version = "11.2";
+buildDotnetModule.override
+  {
+    addNuGetDeps = dotnetCorePackages.addNuGetDeps.override {
+      # ICSharpCode.Decompiler.csproj has a pinned reference to Microsoft.NETCore.App.Ref 8.0.0
+      fetchNupkg = dotnetCorePackages.fetchNupkg.override { allowSdkPackages = true; };
+    };
+  }
+  (finalAttrs: {
+    pname = "ilspycmd";
+    version = "11.2";
 
-  src = fetchFromGitHub {
-    owner = "icsharpcode";
-    repo = "ILSpy";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-0QxVGaWfAfArHHqW8zmPAFHu7X3MmHVLEgDwqF4KS9w=";
-  };
+    src = fetchFromGitHub {
+      owner = "icsharpcode";
+      repo = "ILSpy";
+      tag = "v${finalAttrs.version}";
+      hash = "sha256-0QxVGaWfAfArHHqW8zmPAFHu7X3MmHVLEgDwqF4KS9w=";
+    };
 
-  nativeBuildInputs = [
-    powershell
-  ]
-  ++ lib.optionals stdenvNoCC.hostPlatform.isDarwin [
-    darwin.autoSignDarwinBinariesHook
-  ];
-
-  # https://github.com/NixOS/nixpkgs/issues/38991
-  # bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
-  env.LOCALE_ARCHIVE = lib.optionalString stdenvNoCC.hostPlatform.isLinux "${glibcLocales}/lib/locale/locale-archive";
-
-  dotnet-sdk = dotnetCorePackages.sdk_11_0;
-  dotnet-runtime = dotnetCorePackages.runtime_10_0;
-  # Nixpkgs restores one runtime ID at a time, while upstream locks several.
-  dotnetRestoreFlags = [ "--force-evaluate" ];
-
-  projectFile = "ICSharpCode.ILSpyCmd/ICSharpCode.ILSpyCmd.csproj";
-  nugetDeps = ./deps.json;
-  passthru.updateScript = nix-update-script { };
-
-  # see: https://github.com/tunnelvisionlabs/ReferenceAssemblyAnnotator/issues/94
-  linkNugetPackages = true;
-
-  meta = {
-    description = "Tool for decompiling .NET assemblies and generating portable PDBs";
-    mainProgram = "ilspycmd";
-    homepage = "https://github.com/icsharpcode/ILSpy";
-    changelog = "https://github.com/icsharpcode/ILSpy/releases/tag/${finalAttrs.src.tag}";
-    license = with lib.licenses; [
-      mit
-      # third party dependencies
-      mspl
-      asl20
+    nativeBuildInputs = [
+      powershell
+    ]
+    ++ lib.optionals stdenvNoCC.hostPlatform.isDarwin [
+      darwin.autoSignDarwinBinariesHook
     ];
-    sourceProvenance = with lib.sourceTypes; [
-      fromSource
-      binaryBytecode
-    ];
-    maintainers = with lib.maintainers; [
-      emilytrau
-      tbaldwin
-      bad3r
-    ];
-  };
-})
+
+    # https://github.com/NixOS/nixpkgs/issues/38991
+    # bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+    env.LOCALE_ARCHIVE = lib.optionalString stdenvNoCC.hostPlatform.isLinux "${glibcLocales}/lib/locale/locale-archive";
+
+    dotnet-sdk = dotnetCorePackages.sdk_11_0;
+    dotnet-runtime = dotnetCorePackages.runtime_10_0;
+    # Nixpkgs restores one runtime ID at a time, while upstream locks several.
+    dotnetRestoreFlags = [ "--force-evaluate" ];
+
+    projectFile = "ICSharpCode.ILSpyCmd/ICSharpCode.ILSpyCmd.csproj";
+    nugetDeps = ./deps.json;
+    passthru.updateScript = nix-update-script { };
+
+    # see: https://github.com/tunnelvisionlabs/ReferenceAssemblyAnnotator/issues/94
+    linkNugetPackages = true;
+
+    meta = {
+      description = "Tool for decompiling .NET assemblies and generating portable PDBs";
+      mainProgram = "ilspycmd";
+      homepage = "https://github.com/icsharpcode/ILSpy";
+      changelog = "https://github.com/icsharpcode/ILSpy/releases/tag/${finalAttrs.src.tag}";
+      license = with lib.licenses; [
+        mit
+        # third party dependencies
+        mspl
+        asl20
+      ];
+      sourceProvenance = with lib.sourceTypes; [
+        fromSource
+        binaryBytecode
+      ];
+      maintainers = with lib.maintainers; [
+        emilytrau
+        tbaldwin
+        bad3r
+      ];
+    };
+  })
