@@ -47,6 +47,7 @@
   # needed to fix "Save as Root"
   asar,
   bash,
+  gbm-zygote-preload,
 }:
 
 {
@@ -379,6 +380,7 @@ stdenv.mkDerivation (
             lib.optionalString stdenv.hostPlatform.isLinux
               "--prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ libdbusmenu ]}"
           }
+          ${lib.optionalString stdenv.hostPlatform.isLinux "--prefix LD_PRELOAD : ${gbm-zygote-preload}/lib/gbm-zygote-preload.so --set GBM_ZYGOTE_PRELOAD_EXE $out/lib/${libraryName}/${sourceExecutableName}"}
         --prefix PATH : ${
           lib.makeBinPath (
             [
