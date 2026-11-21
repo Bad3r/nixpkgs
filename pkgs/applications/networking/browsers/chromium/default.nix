@@ -22,6 +22,7 @@
   lib,
   libkrb5,
   widevine-cdm,
+  gbm-zygote-preload,
   nixosTests,
 
   # package customization
@@ -165,6 +166,10 @@ stdenv.mkDerivation {
 
       # libredirect causes chromium to deadlock on startup
       export LD_PRELOAD="\$(echo -n "\$LD_PRELOAD" | ${coreutils}/bin/tr ':' '\n' | ${gnugrep}/bin/grep -v /lib/libredirect\\\\.so$ | ${coreutils}/bin/tr '\n' ':')"
+
+      # Lets the sandboxed GPU process open Mesa's GBM backend.
+      export LD_PRELOAD="${gbm-zygote-preload}/lib/gbm-zygote-preload.so\''${LD_PRELOAD:+:}\$LD_PRELOAD"
+      export GBM_ZYGOTE_PRELOAD_EXE="${browserBinary}"
 
       export XDG_DATA_DIRS=$XDG_ICON_DIRS:$GSETTINGS_SCHEMAS_PATH\''${XDG_DATA_DIRS:+:}\$XDG_DATA_DIRS
 
