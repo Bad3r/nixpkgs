@@ -2,6 +2,7 @@
   lib,
   stdenv,
   makeWrapper,
+  gbm-zygote-preload,
   fetchurl,
   fetchzip,
   wrapGAppsHook3,
@@ -158,7 +159,8 @@ let
 
     preFixup = ''
       makeWrapper "$out/libexec/electron/electron" $out/bin/electron \
-        "''${gappsWrapperArgs[@]}"
+        "''${gappsWrapperArgs[@]}" \
+        --prefix LD_PRELOAD : ${gbm-zygote-preload}/lib/gbm-zygote-preload.so --set GBM_ZYGOTE_PRELOAD_EXE $out/libexec/electron/electron
     '';
 
     postFixup = ''

@@ -1,6 +1,7 @@
 {
   stdenv,
   electron-unwrapped,
+  gbm-zygote-preload,
   wrapGAppsHook3,
   makeWrapper,
   gsettings-desktop-schemas,
@@ -31,7 +32,8 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     makeWrapper "${electron-unwrapped}/libexec/electron/electron" "$out/bin/electron" \
       "''${gappsWrapperArgs[@]}" \
-      --set CHROME_DEVEL_SANDBOX $out/libexec/electron/chrome-sandbox
+      --set CHROME_DEVEL_SANDBOX $out/libexec/electron/chrome-sandbox \
+      --prefix LD_PRELOAD : ${gbm-zygote-preload}/lib/gbm-zygote-preload.so --set GBM_ZYGOTE_PRELOAD_EXE ${electron-unwrapped}/libexec/electron/electron
 
     ln -s ${electron-unwrapped}/libexec $out/libexec
   '';
