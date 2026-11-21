@@ -6751,8 +6751,6 @@ self: super: with self; {
 
   garminconnect-aio = callPackage ../development/python-modules/garminconnect-aio { };
 
-  garth = callPackage ../development/python-modules/garth { };
-
   gassist-text = callPackage ../development/python-modules/gassist-text { };
 
   gast = callPackage ../development/python-modules/gast { };
@@ -15264,6 +15262,8 @@ self: super: with self; {
 
   pyflic = callPackage ../development/python-modules/pyflic { };
 
+  pyflic-ble = callPackage ../development/python-modules/pyflic-ble { };
+
   pyflipper = callPackage ../development/python-modules/pyflipper { };
 
   pyfluidsynth = callPackage ../development/python-modules/pyfluidsynth { };
@@ -21635,8 +21635,6 @@ self: super: with self; {
   tubeup = callPackage ../development/python-modules/tubeup { };
 
   tuf = callPackage ../development/python-modules/tuf { };
-
-  tunigo = callPackage ../development/python-modules/tunigo { };
 
   tunit = callPackage ../development/python-modules/tunit { };
 
